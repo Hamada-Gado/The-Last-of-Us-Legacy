@@ -22,8 +22,8 @@ public class Game {
 		String line = "";
 		String[] info;
 		while(data != -1) {
-			if(data != '\n') {
-				line += data;
+			if(data != '\r' && data != '\n') {
+				line += (char) data;
 			} else {
 				info = line.split(",");
 				switch (info[1]) {
@@ -52,8 +52,14 @@ public class Game {
 							));
 					break;
 				}
+				line = "";
 			}
+			
+			data = reader.read();
+			if(data == '\n') data = reader.read();
 		}
+		
+		reader.close();
 	}
 
 }
