@@ -1,5 +1,9 @@
 package model.world;
-
+/**
+ * A class representing Collectible Cells in the game.
+ * @author Ahmed, Mostafa, Rasheed
+ *
+ */
 import model.collectibles.Collectible;
 
 public class CollectibleCell extends Cell implements Collectible{

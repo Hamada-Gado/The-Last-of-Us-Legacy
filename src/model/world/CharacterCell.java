@@ -1,5 +1,9 @@
 package model.world;
-
+/**
+ * A class representing Character Cells in the game.
+ * @author Ahmed, Mostafa, Rasheed
+ *
+ */
 public class CharacterCell extends Cell{
 	Character character;
 	boolean isSafe;
