@@ -2,7 +2,6 @@ package engine;
 
 import java.io.FileReader;
 import java.util.ArrayList;
-import Heros.csv;
 import model.world.Cell;
 
 /**
