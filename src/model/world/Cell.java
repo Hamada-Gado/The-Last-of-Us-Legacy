@@ -1,5 +1,11 @@
 package model.world;
-
+/**
+ * 
+ * An abstract class representing Cells in the game.
+ * No objects of type Cell can be instantiated.
+ * @author Ahmed, Mostafa, Rasheed
+ *
+ */
 public abstract class Cell {
 	boolean isVisible;
 	public Cell() {
