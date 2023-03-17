@@ -2,6 +2,14 @@ package engine;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+
+import model.characters.Hero;
+import model.characters.Explorer;
+import model.characters.Fighter;
+import model.characters.Medic;
+
+import model.characters.Zombie;
+
 import model.world.Cell;
 
 /**
