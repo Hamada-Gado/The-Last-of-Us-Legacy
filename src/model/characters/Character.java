@@ -43,6 +43,7 @@ public abstract class Character {
 	}
 	
 	public void setCurrentHp(int currentHp) {
+		if(currentHp > maxHp) return;
 		this.currentHp = currentHp;
 	}
 	
