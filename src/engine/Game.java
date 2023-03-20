@@ -22,12 +22,12 @@ import model.world.Cell;
  */
 public class Game {
 	
-	public static ArrayList<Hero> availableHeros;
-	public static ArrayList<Hero> heros;
+	public static ArrayList<Hero> availableHeroes;
+	public static ArrayList<Hero> heroes;
 	public static ArrayList<Zombie> zombies;
 	public static Cell [][] map;
 	
-	public static void loadHeros(String filePath) throws NumberFormatException, IOException  {
+	public static void loadHeroes(String filePath) throws NumberFormatException, IOException  {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
 		String line = "";
 		String[] info;
@@ -35,7 +35,7 @@ public class Game {
 			info = line.split(",");
 			switch (info[1]) {
 			case "FIGH":
-				availableHeros.add(new Fighter(
+				availableHeroes.add(new Fighter(
 						info[0], 
 						Integer.parseInt(info[2]), 
 						Integer.parseInt(info[4]), 
@@ -43,7 +43,7 @@ public class Game {
 						));
 				break;
 			case "EXP":
-				availableHeros.add(new Explorer(
+				availableHeroes.add(new Explorer(
 						info[0], 
 						Integer.parseInt(info[2]), 
 						Integer.parseInt(info[4]), 
@@ -51,7 +51,7 @@ public class Game {
 						));
 				break;
 			case "MED":
-				availableHeros.add(new Medic(
+				availableHeroes.add(new Medic(
 						info[0], 
 						Integer.parseInt(info[2]), 
 						Integer.parseInt(info[4]), 
