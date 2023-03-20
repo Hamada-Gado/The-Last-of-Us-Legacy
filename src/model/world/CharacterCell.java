@@ -15,15 +15,14 @@ public class CharacterCell extends Cell{
 	public Character getCharacter() {
 		return character;
 	}
-	public void setCharacter(Character c) {
-		character.setCurrentHp(c.getCurrentHp());
+	public void setCharacter(Character character) {
+		this.character=character;
 	} 
 	public boolean isSafe() {
 		return isSafe;
 	}
 	public void setSafe(boolean isSafe) {
 		this.isSafe = isSafe;
-		setVisible(isSafe);
 	}
 	
 }
