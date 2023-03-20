@@ -4,6 +4,7 @@ package model.world;
  * @author Ahmed, Mostafa, Rasheed
  *
  */
+import model.characters.Character;
 public class CharacterCell extends Cell{
 	private Character character;
 	private boolean isSafe;
@@ -15,9 +16,9 @@ public class CharacterCell extends Cell{
 	public Character getCharacter() {
 		return character;
 	}
-	public void setCharacter(Character character) {
-		this.character = character;
-	}
+	public void setCharacter(Character c) {
+		character.setCurrentHp(c.getCurrentHp());
+	} 
 	public boolean isSafe() {
 		return isSafe;
 	}

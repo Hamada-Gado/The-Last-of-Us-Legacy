@@ -19,6 +19,7 @@ public abstract class Character {
 		this.name = name;
 		this.maxHp = maxHp;
 		this.attackDmg = attackDmg;
+		this.currentHp= maxHp;
 	}
 	
 	public String getName() {
@@ -56,4 +57,5 @@ public abstract class Character {
 	public void setTarget(Character target) {
 		this.target = target;
 	}
+	
 }
