@@ -2,6 +2,7 @@ package engine;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import model.characters.Hero;
@@ -26,7 +27,7 @@ public class Game {
 	public static ArrayList<Zombie> zombies;
 	public static Cell [][] map;
 	
-	public static void loadHeros(String filePath) throws Exception {
+	public static void loadHeros(String filePath) throws NumberFormatException, IOException  {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
 		String line = "";
 		String[] info;
