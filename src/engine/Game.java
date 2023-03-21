@@ -1,6 +1,7 @@
 package engine;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class Game {
 	public static ArrayList<Zombie> zombies;
 	public static Cell [][] map;
 	
-	public static void loadHeroes(String filePath) throws NumberFormatException, IOException  {
+	public static void loadHeroes(String filePath) throws FileNotFoundException, IOException  {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
 		String line = "";
 		String[] info;
