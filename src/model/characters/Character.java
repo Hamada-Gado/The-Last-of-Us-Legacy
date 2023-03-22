@@ -43,8 +43,9 @@ public abstract class Character {
 	}
 	
 	public void setCurrentHp(int currentHp) {
-		if(currentHp > maxHp) return;
-		this.currentHp = currentHp;
+		if(currentHp > maxHp) currentHp=maxHp;
+		else
+			this.currentHp = currentHp;
 	}
 	
 	public int getAttackDmg() {
