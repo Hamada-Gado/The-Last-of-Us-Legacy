@@ -11,7 +11,6 @@ public class TrapCell extends Cell{
 	private int trapDamage;
 	
 	public TrapCell() {
-		super();
 		trapDamage = (new Random().nextInt(3) + 1) * 10;
 	}
 	
