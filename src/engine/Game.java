@@ -14,6 +14,7 @@ import model.characters.Medic;
 import model.characters.Zombie;
 
 import model.world.Cell;
+import model.world.Disaster;
 
 /**
  *  A class representing the Game itself. This class will represent the main engine of the
@@ -23,9 +24,10 @@ import model.world.Cell;
  */
 public class Game {
 	
-	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();;
-	public static ArrayList<Hero> heroes = new ArrayList<Hero>();;
-	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();;
+	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
+	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
+	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+	public static ArrayList<Disaster> disasters = new ArrayList<Disaster>();
 	public static Cell [][] map;
 	
 	public static void loadHeroes(String filePath) throws FileNotFoundException, IOException  {
