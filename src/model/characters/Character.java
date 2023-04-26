@@ -70,12 +70,12 @@ public abstract class Character {
 		this.target = target;
 	}
 	
-	private boolean targetIsAdjacent() {
+	public boolean targetIsAdjacent() {
 		double distanceSq = location.distanceSq(target.location);
 		return distanceSq == 1 || distanceSq == 2;
 	}
 	
-	protected void applyDamage(int damage) {
+	public void applyDamage(int damage) {
 		setCurrentHp(currentHp - damage);
 	}
 	

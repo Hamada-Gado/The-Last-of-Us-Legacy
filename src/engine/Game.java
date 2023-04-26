@@ -23,6 +23,8 @@ import model.world.Cell;
  */
 public class Game {
 	
+	public static int HEIGHT = 15;
+	public static int WIDTH = 15;
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
