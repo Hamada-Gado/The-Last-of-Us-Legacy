@@ -18,8 +18,4 @@ public class TrapCell extends Cell{
 		return trapDamage;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(new TrapCell().getTrapDamage());
-	}
-	
 }
