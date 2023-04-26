@@ -1,6 +1,10 @@
 package model.characters;
 import java.awt.Point;
 
+import engine.Game;
+import exceptions.InvalidTargetException;
+import exceptions.NotEnoughActionsException;
+
 /**
  * An abstract class representing characters in the game.
  * @author Ahmed, Mostafa, Rasheed
@@ -66,4 +70,28 @@ public abstract class Character {
 		this.target = target;
 	}
 	
+	private boolean targetIsAdjacent() {
+		double distanceSq = location.distanceSq(target.location);
+		return distanceSq == 1 || distanceSq == 2;
+	}
+	
+	protected void applyDamage(int damage) {
+		setCurrentHp(currentHp - damage);
+	}
+	
+	public void attack() throws InvalidTargetException, NotEnoughActionsException {
+		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not Attack as target is not in an adjacent cell.");
+	}
+	
+	public void defend(Character c) {
+		c.applyDamage(attackDmg/2);
+	}
+	
+	public void onCharacterDeath() {
+		if (this instanceof Hero) {
+			Game.heroes.remove(this);
+		} else {
+			Game.zombies.remove(this);
+		}
+	}
 }

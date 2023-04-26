@@ -27,6 +27,7 @@ public class Game {
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
 	public static Cell [][] map;
+
 	
 	public static void loadHeroes(String filePath) throws FileNotFoundException, IOException  {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
