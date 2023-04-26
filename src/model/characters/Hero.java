@@ -2,6 +2,7 @@ package model.characters;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Random;
 
 import engine.Game;
 import exceptions.InvalidTargetException;
@@ -158,6 +159,43 @@ public abstract class Hero extends Character{
 		supplyInventory.get(0).use(this);
 		specialAction = true;
 	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		if (this instanceof Fighter) {
+			return new Fighter(
+				this.getName(),
+				this.getMaxHp(),
+				this.getAttackDmg(),
+				this.maxActions);
+		} else if (this instanceof Medic) {
+			return new 	Explorer(
+				this.getName(),
+				this.getMaxHp(),
+				this.getAttackDmg(),
+				this.maxActions);
+		} else {
+			return new Medic(
+				this.getName(),
+				this.getMaxHp(),
+				this.getAttackDmg(),
+				this.maxActions);
+		}
+	}
 
+
+	public void cure() throws InvalidTargetException, NoAvailableResourcesException, CloneNotSupportedException {
+		if(vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");
+		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not cure zombie as target is not in an adjacent cell.");
+		if (getTarget() instanceof Hero) throw new InvalidTargetException("Can not cure target as target is a hero");			
+		
+		Game.zombies.remove(getTarget());
+		Game.zombies.add(new Zombie());
+		
+		int randIndex = new Random().nextInt(Game.availableHeroes.size());
+		Game.heroes.add((Hero) Game.availableHeroes.get(randIndex).clone());
+		
+		vaccineInventory.get(0).use(this);
+	}
 	
 }
