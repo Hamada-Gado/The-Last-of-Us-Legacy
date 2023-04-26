@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.MovementException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
@@ -135,5 +136,28 @@ public abstract class Hero extends Character{
 		
 		makeAdjacentCellsVisible();
 	}
+	
+	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {
+		if(supplyInventory.isEmpty()) throw new NoAvailableResourcesException("Can not use special as their is no supply");
+		
+		if (this instanceof Medic) {
+			
+			if (!targetIsAdjacent()) throw new InvalidTargetException("Can not use special <Heal> as target is not in an adjacent cell.");
+			if (getTarget() instanceof Zombie) throw new InvalidTargetException("Can not use special <Heal> as target is a zombie");			
+			getTarget().setCurrentHp(Integer.MAX_VALUE);
+		
+		} else if (this instanceof Explorer) {
+			
+			for (int y = 0; y < Game.HEIGHT; y++) {
+				for (int x = 0; x < Game.WIDTH; x++) {
+					Game.map[y][x].setVisible(true);
+				}
+			}
+		}
+		
+		supplyInventory.get(0).use(this);
+		specialAction = true;
+	}
+
 	
 }
