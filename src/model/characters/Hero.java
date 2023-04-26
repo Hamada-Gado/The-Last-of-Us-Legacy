@@ -2,6 +2,8 @@ package model.characters;
 
 import java.util.ArrayList;
 
+import exceptions.InvalidTargetException;
+import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
 
@@ -55,5 +57,17 @@ public abstract class Hero extends Character{
 		return supplyInventory;
 	}
 	
-	
+	@Override
+	public void attack() throws InvalidTargetException, NotEnoughActionsException {
+		super.attack();
+		if(actionsAvailable == 0) {
+			if (this instanceof Fighter)
+				if(!((Fighter) this).isSupplyUsed()) throw new NotEnoughActionsException();
+		} else {
+			throw new NotEnoughActionsException();
+		}
+		
+		getTarget().applyDamage(getAttackDmg());
+		actionsAvailable--;
+	}
 }
