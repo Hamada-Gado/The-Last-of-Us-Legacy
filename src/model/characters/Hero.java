@@ -65,6 +65,7 @@ public abstract class Hero extends Character{
 	@Override
 	public void attack() throws InvalidTargetException, NotEnoughActionsException {
 		super.attack();
+		if (getTarget() instanceof Hero) throw new InvalidTargetException("A hero can not attack a hero");
 		
 		if (this instanceof Fighter && this.specialAction) {
 			getTarget().applyDamage(getAttackDmg());
