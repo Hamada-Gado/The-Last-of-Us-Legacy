@@ -1,8 +1,11 @@
 package model.characters;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
+import engine.Game;
 import exceptions.InvalidTargetException;
+import exceptions.MovementException;
 import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
@@ -74,7 +77,63 @@ public abstract class Hero extends Character{
 			getTarget().onCharacterDeath();
 		} else {			
 			getTarget().defend(this);
-			if (getCurrentHp() == 0) this.onCharacterDeath();
+			if (getCurrentHp() == 0) onCharacterDeath();
 		}
 	}
+	
+	public void makeCellVisible(int y, int x) {
+		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.WIDTH) return;
+		
+		Game.map[y][x].setVisible(true);
+	}
+	
+	public void makeAdjacentCellsVisible() {
+		int y = getLocation().y;
+		int x = getLocation().x;
+		
+		makeCellVisible(y, x-1);
+		makeCellVisible(y, x+1);
+		makeCellVisible(y-1, x);
+		makeCellVisible(y+1, x);
+		makeCellVisible(y-1, x-1);
+		makeCellVisible(y-1, x+1);
+		makeCellVisible(y+1, x-1);
+		makeCellVisible(y+1, x+1);
+	}
+	
+	public void move(Direction d) throws MovementException {
+		switch(d) {
+		case UP:
+			if(getLocation().y == Game.HEIGHT - 1) {
+				throw new MovementException("Can not go UP");
+			} else {
+				setLocation(new Point(getLocation().x, getLocation().y + 1));
+			}
+			break;
+		case DOWN:
+			if(getLocation().y == 0) {
+				throw new MovementException("Can not go DOWN");
+			} else {
+				setLocation(new Point(getLocation().x, getLocation().y - 1));
+			}
+			break;
+		case LEFT:
+			if(getLocation().x == 0) {
+				throw new MovementException("Can not go LEFT");
+			} else {
+				setLocation(new Point(getLocation().x - 1, getLocation().y));
+			}
+			break;
+		case RIGHT:
+			if(getLocation().x == Game.WIDTH - 1) {
+				throw new MovementException("Can not go RIGHT");
+			} else {
+				setLocation(new Point(getLocation().x + 1, getLocation().y));
+			}
+			break;
+		}
+		
+		makeAdjacentCellsVisible();
+	}
+	
 }
