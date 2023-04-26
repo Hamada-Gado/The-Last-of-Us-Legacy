@@ -7,7 +7,7 @@ import model.collectibles.Collectible;
  * @author Ahmed, Mostafa, Rasheed
  *
  */
-public class CollectibleCell extends Cell implements Collectible{
+public class CollectibleCell extends Cell {
 	private Collectible collectible;
 	
 	public CollectibleCell(Collectible collectible) {
