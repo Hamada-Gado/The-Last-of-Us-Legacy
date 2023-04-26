@@ -1,6 +1,7 @@
 package model.characters;
 import java.awt.Point;
 
+import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
 
@@ -79,6 +80,18 @@ public abstract class Character {
 	}
 	
 	public void attack() throws InvalidTargetException, NotEnoughActionsException {
-		if (!targetIsAdjacent()) throw new InvalidTargetException("Target is not in an Adjacent cell.");
+		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not Attack as target is not in an adjacent cell.");
+	}
+	
+	public void defend(Character c) {
+		c.applyDamage(attackDmg/2);
+	}
+	
+	public void onCharacterDeath() {
+		if (this instanceof Hero) {
+			Game.heroes.remove(this);
+		} else {
+			Game.zombies.remove(this);
+		}
 	}
 }

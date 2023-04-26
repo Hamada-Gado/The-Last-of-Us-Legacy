@@ -60,14 +60,21 @@ public abstract class Hero extends Character{
 	@Override
 	public void attack() throws InvalidTargetException, NotEnoughActionsException {
 		super.attack();
-		if(actionsAvailable == 0) {
-			if (this instanceof Fighter)
-				if(!((Fighter) this).isSupplyUsed()) throw new NotEnoughActionsException();
+		
+		if (this instanceof Fighter && this.specialAction) {
+			getTarget().applyDamage(getAttackDmg());
+		} else if(actionsAvailable != 0) {
+			getTarget().applyDamage(getAttackDmg());			
+			actionsAvailable--;
 		} else {
-			throw new NotEnoughActionsException();
+			throw new NotEnoughActionsException("Can not Attack as their is not enough action points");
 		}
 		
-		getTarget().applyDamage(getAttackDmg());
-		actionsAvailable--;
+		if(getTarget().getCurrentHp() == 0) {
+			getTarget().onCharacterDeath();
+		} else {			
+			getTarget().defend(this);
+			if (getCurrentHp() == 0) this.onCharacterDeath();
+		}
 	}
 }
