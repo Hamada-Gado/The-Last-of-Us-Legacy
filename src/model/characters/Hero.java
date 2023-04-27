@@ -170,13 +170,13 @@ public abstract class Hero extends Character{
 				this.getAttackDmg(),
 				this.maxActions);
 		} else if (this instanceof Medic) {
-			return new 	Explorer(
+			return new Medic(
 				this.getName(),
 				this.getMaxHp(),
 				this.getAttackDmg(),
 				this.maxActions);
 		} else {
-			return new Medic(
+			return new Explorer(
 				this.getName(),
 				this.getMaxHp(),
 				this.getAttackDmg(),
