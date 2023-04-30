@@ -11,6 +11,9 @@ import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
+import model.world.Cell;
+import model.world.CollectibleCell;
+import model.world.TrapCell;
 
 /**
  * An abstract class representing characters in the game.
@@ -38,7 +41,7 @@ public abstract class Hero extends Character{
 	}
 
 	public void setActionsAvailable(int actionsAvailable) {
-		if(actionsAvailable <0) this.actionsAvailable=0;
+		if (actionsAvailable < 0) this.actionsAvailable = 0;
 		else this.actionsAvailable = actionsAvailable;
 	}
 
@@ -80,7 +83,7 @@ public abstract class Hero extends Character{
 			getTarget().onCharacterDeath();
 		} else {			
 			getTarget().defend(this);
-			if (getCurrentHp() == 0) onCharacterDeath();
+			onCharacterDeath();
 		}
 	}
 	
@@ -105,35 +108,49 @@ public abstract class Hero extends Character{
 	}
 	
 	public void move(Direction d) throws MovementException {
+		int dx = 0;
+		int dy = 0;
+		
 		switch(d) {
 		case UP:
 			if(getLocation().y == Game.HEIGHT - 1) {
 				throw new MovementException("Can not go UP");
 			} else {
-				setLocation(new Point(getLocation().x, getLocation().y + 1));
+				dy = 1;
 			}
 			break;
 		case DOWN:
 			if(getLocation().y == 0) {
 				throw new MovementException("Can not go DOWN");
 			} else {
-				setLocation(new Point(getLocation().x, getLocation().y - 1));
+				dy = -1;
 			}
 			break;
 		case LEFT:
 			if(getLocation().x == 0) {
 				throw new MovementException("Can not go LEFT");
 			} else {
-				setLocation(new Point(getLocation().x - 1, getLocation().y));
+				dx = -1;
 			}
 			break;
 		case RIGHT:
 			if(getLocation().x == Game.WIDTH - 1) {
 				throw new MovementException("Can not go RIGHT");
 			} else {
-				setLocation(new Point(getLocation().x + 1, getLocation().y));
+				dx = 1;
 			}
 			break;
+		}
+		
+		getLocation().translate(dx, dy);
+		
+		Cell c = Game.map[getLocation().y][getLocation().x];
+		
+		if (c instanceof CollectibleCell) {
+			((CollectibleCell) c).getCollectible().pickUp(this);
+		} else if (c instanceof TrapCell) {
+			applyDamage(((TrapCell) c).getTrapDamage());
+			onCharacterDeath();
 		}
 		
 		makeAdjacentCellsVisible();
@@ -141,49 +158,10 @@ public abstract class Hero extends Character{
 	
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {
 		if(supplyInventory.isEmpty()) throw new NoAvailableResourcesException("Can not use special as their is no supply");
-		
-		if (this instanceof Medic) {
-			
-			if (!targetIsAdjacent()) throw new InvalidTargetException("Can not use special <Heal> as target is not in an adjacent cell.");
-			if (getTarget() instanceof Zombie) throw new InvalidTargetException("Can not use special <Heal> as target is a zombie");			
-			getTarget().setCurrentHp(Integer.MAX_VALUE);
-		
-		} else if (this instanceof Explorer) {
-			
-			for (int y = 0; y < Game.HEIGHT; y++) {
-				for (int x = 0; x < Game.WIDTH; x++) {
-					Game.map[y][x].setVisible(true);
-				}
-			}
-		}
-		
+				
 		supplyInventory.get(0).use(this);
 		specialAction = true;
 	}
-	
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		if (this instanceof Fighter) {
-			return new Fighter(
-				this.getName(),
-				this.getMaxHp(),
-				this.getAttackDmg(),
-				this.maxActions);
-		} else if (this instanceof Medic) {
-			return new Medic(
-				this.getName(),
-				this.getMaxHp(),
-				this.getAttackDmg(),
-				this.maxActions);
-		} else {
-			return new Explorer(
-				this.getName(),
-				this.getMaxHp(),
-				this.getAttackDmg(),
-				this.maxActions);
-		}
-	}
-
 
 	public void cure() throws InvalidTargetException, NoAvailableResourcesException, CloneNotSupportedException {
 		if(vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");

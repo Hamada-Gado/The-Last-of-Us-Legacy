@@ -85,9 +85,12 @@ public abstract class Character {
 	
 	public void defend(Character c) {
 		c.applyDamage(attackDmg/2);
+		c.onCharacterDeath();
 	}
 	
 	public void onCharacterDeath() {
+		if (currentHp > 0) return;
+		
 		if (this instanceof Hero) {
 			Game.heroes.remove(this);
 		} else {
