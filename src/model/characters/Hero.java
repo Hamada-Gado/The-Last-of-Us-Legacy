@@ -1,6 +1,5 @@
 package model.characters;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,6 +11,7 @@ import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
 import model.world.Cell;
+import model.world.CharacterCell;
 import model.world.CollectibleCell;
 import model.world.TrapCell;
 
@@ -87,54 +87,56 @@ public abstract class Hero extends Character{
 		}
 	}
 	
-	public void makeCellVisible(int y, int x) {
+	public void makeCellVisible(int x, int y) {
 		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.WIDTH) return;
 		
 		Game.map[y][x].setVisible(true);
 	}
 	
 	public void makeAdjacentCellsVisible() {
-		int y = getLocation().y;
 		int x = getLocation().x;
+		int y = getLocation().y;
 		
-		makeCellVisible(y, x-1);
-		makeCellVisible(y, x+1);
-		makeCellVisible(y-1, x);
-		makeCellVisible(y+1, x);
-		makeCellVisible(y-1, x-1);
-		makeCellVisible(y-1, x+1);
-		makeCellVisible(y+1, x-1);
-		makeCellVisible(y+1, x+1);
+		makeCellVisible(x, y-1);
+		makeCellVisible(x, y+1);
+		makeCellVisible(x-1, y);
+		makeCellVisible(x+1, y);
+		makeCellVisible(x-1, y-1);
+		makeCellVisible(x-1, y+1);
+		makeCellVisible(x+1, y-1);
+		makeCellVisible(x+1, y+1);
 	}
 	
 	public void move(Direction d) throws MovementException {
+		int x = getLocation().x;
+		int y = getLocation().y;
 		int dx = 0;
 		int dy = 0;
 		
 		switch(d) {
 		case UP:
-			if(getLocation().y == Game.HEIGHT - 1) {
+			if(y == Game.HEIGHT - 1) {
 				throw new MovementException("Can not go UP");
 			} else {
 				dy = 1;
 			}
 			break;
 		case DOWN:
-			if(getLocation().y == 0) {
+			if(y == 0) {
 				throw new MovementException("Can not go DOWN");
 			} else {
 				dy = -1;
 			}
 			break;
 		case LEFT:
-			if(getLocation().x == 0) {
+			if(x == 0) {
 				throw new MovementException("Can not go LEFT");
 			} else {
 				dx = -1;
 			}
 			break;
 		case RIGHT:
-			if(getLocation().x == Game.WIDTH - 1) {
+			if(x == Game.WIDTH - 1) {
 				throw new MovementException("Can not go RIGHT");
 			} else {
 				dx = 1;
@@ -142,9 +144,11 @@ public abstract class Hero extends Character{
 			break;
 		}
 		
+		((CharacterCell) Game.map[y][x]).setCharacter(null);
+		
 		getLocation().translate(dx, dy);
 		
-		Cell c = Game.map[getLocation().y][getLocation().x];
+		Cell c = Game.map[y][x];
 		
 		if (c instanceof CollectibleCell) {
 			((CollectibleCell) c).getCollectible().pickUp(this);
@@ -153,6 +157,9 @@ public abstract class Hero extends Character{
 			onCharacterDeath();
 		}
 		
+		Game.map[y][x] = new CharacterCell(this, true);
+		
+		makeCellVisible(x, y);
 		makeAdjacentCellsVisible();
 	}
 	
@@ -164,15 +171,16 @@ public abstract class Hero extends Character{
 	}
 
 	public void cure() throws InvalidTargetException, NoAvailableResourcesException, CloneNotSupportedException {
+		if (getTarget() instanceof Hero) throw new InvalidTargetException("Can not cure target as target is a hero");			
 		if(vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");
 		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not cure zombie as target is not in an adjacent cell.");
-		if (getTarget() instanceof Hero) throw new InvalidTargetException("Can not cure target as target is a hero");			
 		
 		Game.zombies.remove(getTarget());
 		Game.zombies.add(new Zombie());
 		
 		int randIndex = new Random().nextInt(Game.availableHeroes.size());
-		Game.heroes.add((Hero) Game.availableHeroes.get(randIndex).clone());
+		Game.heroes.add(Game.availableHeroes.get(randIndex));
+		Game.availableHeroes.remove(randIndex);
 		
 		vaccineInventory.get(0).use(this);
 	}
