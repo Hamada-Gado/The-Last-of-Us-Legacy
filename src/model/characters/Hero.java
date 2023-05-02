@@ -185,6 +185,7 @@ public abstract class Hero extends Character{
 		Game.zombies.remove(getTarget());
 		Game.addRandomZombie();
 		
+		Game.vaccinesUsed++;
 		vaccineInventory.get(0).use(this);
 	}
 	

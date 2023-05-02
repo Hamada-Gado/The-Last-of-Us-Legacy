@@ -36,6 +36,7 @@ public class Game {
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+	public static int vaccinesUsed = 0;
 
 	
 	public static void loadHeroes(String filePath) throws FileNotFoundException, IOException  {
@@ -159,6 +160,10 @@ public class Game {
 		
 		for (int i = 0; i < 10; i++) addRandomZombie();
 		
+	}
+	
+	public static boolean checkWin() {
+		return vaccinesUsed == 5 && heroes.size() >= 5;
 	}
 	
 }
