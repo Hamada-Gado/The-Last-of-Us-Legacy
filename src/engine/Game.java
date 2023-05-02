@@ -1,10 +1,12 @@
 package engine;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import model.characters.Hero;
 import model.characters.Explorer;
@@ -14,6 +16,7 @@ import model.characters.Medic;
 import model.characters.Zombie;
 
 import model.world.Cell;
+import model.world.CharacterCell;
 
 /**
  *  A class representing the Game itself. This class will represent the main engine of the
@@ -23,12 +26,12 @@ import model.world.Cell;
  */
 public class Game {
 	
-	public static int HEIGHT = 15;
-	public static int WIDTH = 15;
+	public static final int HEIGHT = 15;
+	public static final int WIDTH = 15;
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
-	public static Cell [][] map;
+	public static Cell [][] map = new Cell[HEIGHT][WIDTH];
 
 	
 	public static void loadHeroes(String filePath) throws FileNotFoundException, IOException  {
@@ -66,6 +69,33 @@ public class Game {
 		}
 		
 		br.close();
+	}
+	
+	public static void addRandomZombie() {
+		Random randGen = new Random();
+		
+		int x, y;
+		Cell c;
+		
+		while(true) {
+			x = randGen.nextInt(WIDTH);
+			y = randGen.nextInt(HEIGHT);
+			c = map[y][x];
+			
+			if (!(c instanceof CharacterCell)) continue;
+			if (((CharacterCell) c).getCharacter() != null) continue;
+			
+			Zombie z = new Zombie();
+			z.setLocation(new Point(x, y));
+			((CharacterCell) c).setCharacter(z);
+			((CharacterCell) c).setSafe(false);
+			
+			break;
+		}
+	}
+	
+	public static void startGame(Hero h) {
+		
 	}
 
 }
