@@ -6,6 +6,7 @@ package exceptions;
  * @author Ahmed, Mostafa, Rasheed
  *
  */
+@SuppressWarnings("serial")
 public class InvalidTargetException extends GameActionException {
 	
 	public InvalidTargetException() {

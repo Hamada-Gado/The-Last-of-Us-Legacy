@@ -1,4 +1,5 @@
 package model.characters;
+
 import java.awt.Point;
 
 import engine.Game;

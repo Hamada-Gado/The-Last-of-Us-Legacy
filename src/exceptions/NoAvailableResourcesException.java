@@ -6,6 +6,7 @@ package exceptions;
  * @author Ahmed, Mostafa, Rasheed
  *
  */
+@SuppressWarnings("serial")
 public class NoAvailableResourcesException extends GameActionException {
 	
 	public NoAvailableResourcesException() {

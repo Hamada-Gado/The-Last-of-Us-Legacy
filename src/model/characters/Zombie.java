@@ -3,7 +3,6 @@ package model.characters;
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
-import model.world.Cell;
 import model.world.CharacterCell;
 
 /**
@@ -14,7 +13,6 @@ import model.world.CharacterCell;
 
 public class Zombie extends Character{
 	private static int ZOMBIES_COUNT = 0;
-	private Cell cell;
 	
 	public Zombie() {
 		super("Zombie " + ++ZOMBIES_COUNT, 40, 10);

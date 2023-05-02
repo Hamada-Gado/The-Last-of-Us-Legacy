@@ -7,6 +7,7 @@ package exceptions;
  * @author Ahmed, Mostafa, Rasheed
  *
  */
+@SuppressWarnings("serial")
 public abstract class GameActionException extends Exception {
 	
 	public GameActionException() {
