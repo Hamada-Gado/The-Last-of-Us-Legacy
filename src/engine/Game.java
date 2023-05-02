@@ -14,9 +14,11 @@ import model.characters.Fighter;
 import model.characters.Medic;
 
 import model.characters.Zombie;
-
+import model.collectibles.Collectible;
+import model.collectibles.Vaccine;
 import model.world.Cell;
 import model.world.CharacterCell;
+import model.world.CollectibleCell;
 
 /**
  *  A class representing the Game itself. This class will represent the main engine of the
@@ -28,10 +30,10 @@ public class Game {
 	
 	public static final int HEIGHT = 15;
 	public static final int WIDTH = 15;
+	public static Cell [][] map = new Cell[HEIGHT][WIDTH];
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
-	public static Cell [][] map = new Cell[HEIGHT][WIDTH];
 
 	
 	public static void loadHeroes(String filePath) throws FileNotFoundException, IOException  {
@@ -87,8 +89,29 @@ public class Game {
 			
 			Zombie z = new Zombie();
 			z.setLocation(new Point(x, y));
+			zombies.add(z);
 			((CharacterCell) c).setCharacter(z);
 			((CharacterCell) c).setSafe(false);
+			
+			break;
+		}
+	}
+	
+	public static void addRandomCollectible(Collectible collectible) {
+		Random randGen = new Random();
+		
+		int x, y;
+		Cell c;
+		
+		while(true) {
+			x = randGen.nextInt(WIDTH);
+			y = randGen.nextInt(HEIGHT);
+			c = map[y][x];
+			
+			if (!(c instanceof CharacterCell)) continue;
+			if (((CharacterCell) c).getCharacter() != null) continue;
+			
+			map[y][x] = new CollectibleCell(collectible);
 			
 			break;
 		}
