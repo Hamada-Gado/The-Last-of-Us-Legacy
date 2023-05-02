@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import exceptions.InvalidTargetException;
+import exceptions.NotEnoughActionsException;
 import model.characters.Hero;
 import model.characters.Explorer;
 import model.characters.Fighter;
@@ -169,5 +171,31 @@ public class Game {
 	public static boolean checkGameOver() {
 		return vaccinesUsed == 5 || heroes.isEmpty();
 	}
+	
+	 public static void endTurn() {
+		 for (Zombie z : zombies) {
+			 try {
+				z.attakAdjacentHero();
+			} catch (InvalidTargetException | NotEnoughActionsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+		 
+		 for (Cell[] cells : map) {
+			 for (Cell c : cells) {
+				 c.setVisible(false);
+			 }
+		 }
+		 
+		 for (Hero h : heroes) {
+			 h.setActionsAvailable(h.getMaxActions());
+			 h.setTarget(null);
+			 h.setSpecialAction(false);
+			 h.makeAdjacentCellsVisible();
+		 }
+		 
+		 addRandomZombie();
+	 }
 	
 }
