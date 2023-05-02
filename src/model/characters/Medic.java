@@ -23,9 +23,7 @@ public class Medic extends Hero{
 		
 		super.useSpecial();
 
-		getTarget().setCurrentHp(Integer.MAX_VALUE);
-	
-	
+		getTarget().setCurrentHp(getTarget().getMaxHp());
 	}
 	
 	@Override

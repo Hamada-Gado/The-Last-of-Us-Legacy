@@ -170,18 +170,22 @@ public abstract class Hero extends Character{
 		specialAction = true;
 	}
 
-	public void cure() throws InvalidTargetException, NoAvailableResourcesException, CloneNotSupportedException {
+	public void cure() throws InvalidTargetException, NoAvailableResourcesException {
 		if (getTarget() instanceof Hero) throw new InvalidTargetException("Can not cure target as target is a hero");			
 		if(vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");
 		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not cure zombie as target is not in an adjacent cell.");
 		
-		Game.zombies.remove(getTarget());
-		Game.zombies.add(new Zombie());
-		
 		int randIndex = new Random().nextInt(Game.availableHeroes.size());
-		Game.heroes.add(Game.availableHeroes.get(randIndex));
+		Hero h = Game.availableHeroes.get(randIndex);
+		Game.heroes.add(h);
 		Game.availableHeroes.remove(randIndex);
 		
+		Game.map[getTarget().getLocation().y][getTarget().getLocation().x] = new CharacterCell(h, true);
+		
+		Game.zombies.remove(getTarget());
+		Game.addRandomZombie();
+		
+		Game.vaccinesUsed++;
 		vaccineInventory.get(0).use(this);
 	}
 	
