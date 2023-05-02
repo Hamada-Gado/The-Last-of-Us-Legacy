@@ -166,4 +166,8 @@ public class Game {
 		return vaccinesUsed == 5 && heroes.size() >= 5;
 	}
 	
+	public static boolean checkGameOver() {
+		return vaccinesUsed == 5 || heroes.isEmpty();
+	}
+	
 }
