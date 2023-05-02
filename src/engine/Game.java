@@ -15,10 +15,12 @@ import model.characters.Medic;
 
 import model.characters.Zombie;
 import model.collectibles.Collectible;
+import model.collectibles.Supply;
 import model.collectibles.Vaccine;
 import model.world.Cell;
 import model.world.CharacterCell;
 import model.world.CollectibleCell;
+import model.world.TrapCell;
 
 /**
  *  A class representing the Game itself. This class will represent the main engine of the
@@ -117,8 +119,46 @@ public class Game {
 		}
 	}
 	
+	public static void addRandomTrap() {
+		Random randGen = new Random();
+		
+		int x, y;
+		Cell c;
+		
+		while(true) {
+			x = randGen.nextInt(WIDTH);
+			y = randGen.nextInt(HEIGHT);
+			c = map[y][x];
+			
+			if (!(c instanceof CharacterCell)) continue;
+			if (((CharacterCell) c).getCharacter() != null) continue;
+			
+			map[y][x] = new TrapCell();
+			
+			break;
+		}
+	}
+	
 	public static void startGame(Hero h) {
 		
+		for (int x = 0; x < WIDTH; x++) {
+			for (int y = 0; y < HEIGHT; y++) {
+				map[y][x] = new CharacterCell(null);
+			}
+		}
+		
+		heroes.add(h);
+		availableHeroes.remove(h);
+		map[0][0] = new CharacterCell(h, true);
+		
+		for (int i = 0; i < 5; i++) {
+			addRandomCollectible(new Vaccine());
+			addRandomCollectible(new Supply());
+			addRandomTrap();
+		}
+		
+		for (int i = 0; i < 10; i++) addRandomZombie();
+		
 	}
-
+	
 }
