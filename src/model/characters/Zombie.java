@@ -30,6 +30,12 @@ public class Zombie extends Character{
 		onCharacterDeath();
 	}
 	
+	@Override
+	public void onCharacterDeath() {
+		super.onCharacterDeath();
+		Game.addRandomZombie();
+	}
+	
 	public Hero getAdjacentHero(int x, int y) {
 		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.WIDTH) return null;
 		if (!(Game.map[y][x] instanceof CharacterCell)) return null;
