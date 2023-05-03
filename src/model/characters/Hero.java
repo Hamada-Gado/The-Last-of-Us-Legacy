@@ -79,12 +79,9 @@ public abstract class Hero extends Character{
 			throw new NotEnoughActionsException("Can not Attack as their is not enough action points");
 		}
 		
-		if(getTarget().getCurrentHp() == 0) {
-			getTarget().onCharacterDeath();
-		} else {			
-			getTarget().defend(this);
-			onCharacterDeath();
-		}
+		getTarget().defend(this);
+		getTarget().onCharacterDeath();
+		onCharacterDeath();
 	}
 	
 	public void makeCellVisible(int x, int y) {

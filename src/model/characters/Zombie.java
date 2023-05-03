@@ -25,12 +25,9 @@ public class Zombie extends Character{
 		
 		getTarget().applyDamage(getAttackDmg());
 		
-		if(getTarget().getCurrentHp() == 0) {
-			getTarget().onCharacterDeath();
-		} else {			
-			getTarget().defend(this);
-			if (getCurrentHp() == 0) this.onCharacterDeath();
-		}
+		getTarget().defend(this);
+		getTarget().onCharacterDeath();
+		onCharacterDeath();
 	}
 	
 	public Hero getAdjacentHero(int x, int y) {
