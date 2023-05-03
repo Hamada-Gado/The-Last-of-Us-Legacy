@@ -158,6 +158,8 @@ public abstract class Hero extends Character{
 		
 		makeCellVisible(x, y);
 		makeAdjacentCellsVisible();
+		
+		actionsAvailable--;
 	}
 	
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {
@@ -183,6 +185,8 @@ public abstract class Hero extends Character{
 		
 		Game.vaccinesUsed++;
 		vaccineInventory.get(0).use(this);
+		
+		actionsAvailable--;
 	}
 	
 }
