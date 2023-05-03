@@ -183,7 +183,6 @@ public abstract class Hero extends Character{
 		Game.map[getTarget().getLocation().y][getTarget().getLocation().x] = new CharacterCell(h, true);
 		
 		Game.zombies.remove(getTarget());
-		Game.addRandomZombie();
 		
 		Game.vaccinesUsed++;
 		vaccineInventory.get(0).use(this);
