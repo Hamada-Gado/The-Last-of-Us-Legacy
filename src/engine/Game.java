@@ -174,6 +174,7 @@ public class Game {
 	
 	 public static void endTurn() {
 		 for (Zombie z : zombies) {
+			 z.setTarget(null);
 			 try {
 				z.attack();
 			} catch (InvalidTargetException | NotEnoughActionsException e) {
@@ -197,5 +198,7 @@ public class Game {
 		 
 		 addRandomZombie();
 	 }
+	 
+	 
 	
 }

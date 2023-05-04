@@ -133,7 +133,7 @@ public abstract class Hero extends Character{
 			}
 			break;
 		case RIGHT:
-			if(x == Game.WIDTH - 1) {
+			if(x >= Game.WIDTH - 1) {
 				throw new MovementException("Can not go RIGHT");
 			} else {
 				dx = 1;
