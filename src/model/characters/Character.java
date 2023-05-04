@@ -25,7 +25,8 @@ public abstract class Character {
 		this.name = name;
 		this.maxHp = maxHp;
 		this.attackDmg = attackDmg;
-		this.currentHp= maxHp;
+		this.currentHp = maxHp;
+		location = new Point(-1, -1);
 	}
 	
 	public String getName() {
