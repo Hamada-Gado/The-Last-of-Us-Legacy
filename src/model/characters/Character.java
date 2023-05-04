@@ -5,6 +5,7 @@ import java.awt.Point;
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
+import model.world.CharacterCell;
 
 /**
  * An abstract class representing characters in the game.
@@ -93,6 +94,8 @@ public abstract class Character {
 	
 	public void onCharacterDeath() {
 		if (currentHp > 0) return;
+		
+		((CharacterCell) Game.map[getLocation().y][getLocation().x]).setCharacter(null);
 		
 		if (this instanceof Hero) {
 			Game.heroes.remove(this);

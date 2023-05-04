@@ -179,7 +179,7 @@ public abstract class Hero extends Character{
 		Game.heroes.add(h);
 		Game.availableHeroes.remove(randIndex);
 		
-		Game.map[getTarget().getLocation().x][getTarget().getLocation().y] = new CharacterCell(h, true);
+		Game.map[getTarget().getLocation().y][getTarget().getLocation().x] = new CharacterCell(h, true);
 		
 		Game.zombies.remove(getTarget());
 		
