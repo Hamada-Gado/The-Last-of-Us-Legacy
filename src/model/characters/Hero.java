@@ -1,7 +1,6 @@
 package model.characters;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import engine.Game;
 import exceptions.InvalidTargetException;
@@ -154,7 +153,7 @@ public abstract class Hero extends Character{
 			onCharacterDeath();
 		}
 		
-		Game.map[y][x] = new CharacterCell(this, true);
+		((CharacterCell) Game.map[y][x]).setCharacter(this);
 		
 		makeCellVisible(x, y);
 		makeAdjacentCellsVisible();
@@ -174,18 +173,10 @@ public abstract class Hero extends Character{
 		if(vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");
 		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not cure zombie as target is not in an adjacent cell.");
 		
-		int randIndex = new Random().nextInt(Game.availableHeroes.size());
-		Hero h = Game.availableHeroes.get(randIndex);
-		Game.heroes.add(h);
-		Game.availableHeroes.remove(randIndex);
-		
-		Game.map[getTarget().getLocation().y][getTarget().getLocation().x] = new CharacterCell(h, true);
-		
-		Game.zombies.remove(getTarget());
-		
 		Game.vaccinesUsed++;
 		vaccineInventory.get(0).use(this);
 		
+		setTarget(null);
 		actionsAvailable--;
 	}
 	
