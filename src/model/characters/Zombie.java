@@ -46,12 +46,8 @@ public class Zombie extends Character{
 		
 		if (target == -1) return;
 		setTarget(heroes[target]);
-		
-
-		
+				
 		getTarget().applyDamage(getAttackDmg());
-		
-		System.out.println(getTarget().getLocation());
 		
 		getTarget().defend(this);
 		getTarget().onCharacterDeath();

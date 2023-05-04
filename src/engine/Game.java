@@ -11,6 +11,7 @@ import java.util.Random;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
 import model.characters.Hero;
+import model.characters.Character;
 import model.characters.Explorer;
 import model.characters.Fighter;
 import model.characters.Medic;
@@ -74,6 +75,38 @@ public class Game {
 		}
 		
 		br.close();
+	}
+	
+	
+	public static void changeCellVisibility(int x, int y, boolean visibility) {
+		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return;
+
+		Game.map[y][x].setVisible(visibility);
+	}
+	
+	public static void changeAdjacentCellsVisibility(Character h, boolean visibility) {
+		int x = h.getLocation().x;
+		int y = h.getLocation().y;
+		
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				changeCellVisibility(x + i, y + j, visibility);
+			}
+		}
+	}
+	
+	public static void resetMapVisibility() {
+		 
+		 for (Cell[] cells : map) {
+			 for (Cell cell : cells) {
+				 cell.setVisible(false);
+			 }
+		 }
+		 
+		 for (Hero hero : heroes) {
+			 changeAdjacentCellsVisibility(hero, true);
+		 }
+		
 	}
 	
 	public static void addRandomZombie() {
@@ -152,7 +185,8 @@ public class Game {
 		heroes.add(h);
 		h.setLocation(new Point(0, 0));
 		map[0][0] = new CharacterCell(h, true);
-		Cell.makeAdjacentCellsVisible(h);
+		changeAdjacentCellsVisibility(h, true);
+		
 		for (int i = 0; i < 5; i++) {
 			addRandomCollectible(new Vaccine());
 			addRandomCollectible(new Supply());
@@ -201,18 +235,15 @@ public class Game {
 			 z.setTarget(null);
 		 }
 		 
-		 for (Cell[] cells : map) {
-			 for (Cell c : cells) {
-				 c.setVisible(false);
-			 }
-		 }
-		 
 		 for (Hero h : heroes) {
 			 h.setActionsAvailable(h.getMaxActions());
 			 h.setTarget(null);
 			 h.setSpecialAction(false);
-			 Cell.makeAdjacentCellsVisible(h);
+			 changeAdjacentCellsVisibility(h, true);
+			 h.onCharacterDeath();
 		 }
+		 
+		 resetMapVisibility();
 		 
 		 addRandomZombie();
 	 }

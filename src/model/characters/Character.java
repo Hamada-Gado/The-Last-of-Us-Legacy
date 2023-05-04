@@ -99,7 +99,9 @@ public abstract class Character {
 		((CharacterCell) Game.map[getLocation().x][getLocation().y]).setCharacter(null);
 		
 		if (this instanceof Hero) {
-			Game.heroes.remove(this);
+			Game.heroes.remove(this);			
+			Game.changeAdjacentCellsVisibility(this, false);
+			
 		} else {
 			Game.zombies.remove(this);
 		}
