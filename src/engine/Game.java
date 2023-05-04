@@ -192,13 +192,13 @@ public class Game {
 	
 	 public static void endTurn() {
 		 for (Zombie z : zombies) {
-			 z.setTarget(null);
 			 try {
 				z.attack();
-			} catch (InvalidTargetException | NotEnoughActionsException e) {
+			 } catch (InvalidTargetException | NotEnoughActionsException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			 }
+			 z.setTarget(null);
 		 }
 		 
 		 for (Cell[] cells : map) {
