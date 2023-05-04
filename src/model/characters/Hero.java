@@ -85,7 +85,8 @@ public abstract class Hero extends Character{
 	}
 	
 	public void makeCellVisible(int x, int y) {
-		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.HEIGHT) return;
+		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return;
+		
 		Game.map[y][x].setVisible(true);
 	}
 	
@@ -178,7 +179,7 @@ public abstract class Hero extends Character{
 		Game.heroes.add(h);
 		Game.availableHeroes.remove(randIndex);
 		
-		Game.map[getTarget().getLocation().y][getTarget().getLocation().x] = new CharacterCell(h, true);
+		Game.map[getTarget().getLocation().x][getTarget().getLocation().y] = new CharacterCell(h, true);
 		
 		Game.zombies.remove(getTarget());
 		

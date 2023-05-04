@@ -155,6 +155,7 @@ public class Game {
 		availableHeroes.remove(h);
 		map[0][0] = new CharacterCell(h, true);
 		h.makeCellVisible(0, 0);
+		h.makeAdjacentCellsVisible();
 		for (int i = 0; i < 5; i++) {
 			addRandomCollectible(new Vaccine());
 			addRandomCollectible(new Supply());
