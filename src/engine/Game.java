@@ -163,6 +163,7 @@ public class Game {
 		for (int i = 0; i < 10; i++) addRandomZombie();
 		
 	}
+	
 	public static boolean noMoreVaccines() {
 		for (Cell[] cells : map) {
 			for (Cell cell : cells) {
@@ -212,8 +213,8 @@ public class Game {
 			 h.setTarget(null);
 			 h.setSpecialAction(false);
 			 h.makeAdjacentCellsVisible();
-			 Point a = h.getLocation();
-			 h.makeCellVisible(a.x, a.y);
+			 Point p = h.getLocation();
+			 h.makeCellVisible(p.x, p.y);
 		 }
 		 
 		 addRandomZombie();

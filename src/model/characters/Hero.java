@@ -1,5 +1,6 @@
 package model.characters;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import engine.Game;
@@ -141,18 +142,26 @@ public abstract class Hero extends Character{
 			break;
 		}
 		
-		((CharacterCell) Game.map[y][x]).setCharacter(null);
+		Point newLocation = new Point(x + dx, y + dy);
 		
-		getLocation().translate(dx, dy);
+		Cell cell = Game.map[y + dy][x + dx];
 		
-		Cell c = Game.map[y][x];
-		
-		if (c instanceof CollectibleCell) {
-			((CollectibleCell) c).getCollectible().pickUp(this);
-		} else if (c instanceof TrapCell) {
-			applyDamage(((TrapCell) c).getTrapDamage());
+		if (cell instanceof CharacterCell) {
+			if (((CharacterCell) cell).getCharacter() != null) {
+				throw new MovementException("Can't move to an occupied cell");
+			}
+		}
+		if (cell instanceof CollectibleCell) {
+			((CollectibleCell) cell).getCollectible().pickUp(this);
+		} else if (cell instanceof TrapCell) {
+			applyDamage(((TrapCell) cell).getTrapDamage());
 			onCharacterDeath();
 		}
+		
+		((CharacterCell) Game.map[y][x]).setCharacter(null);
+		
+		setLocation(newLocation);
+		
 		
 		((CharacterCell) Game.map[y][x]).setCharacter(this);
 		
