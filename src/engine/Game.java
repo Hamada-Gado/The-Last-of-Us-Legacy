@@ -38,8 +38,6 @@ public class Game {
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
-	public static int vaccinesUsed = 0;
-
 	
 	public static void loadHeroes(String filePath) throws FileNotFoundException, IOException  {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -165,13 +163,31 @@ public class Game {
 		for (int i = 0; i < 10; i++) addRandomZombie();
 		
 	}
-	
-	public static boolean checkWin() {
-		return vaccinesUsed == 5 && heroes.size() >= 5;
+	public static boolean noMoreVaccines() {
+		for (Cell[] cells : map) {
+			for (Cell cell : cells) {
+				if (cell instanceof CollectibleCell) {
+					if (((CollectibleCell) cell).getCollectible() instanceof Vaccine) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		for (Hero hero : heroes) {
+			if (hero.getVaccineInventory().size() > 0) return false;
+		}
+		
+		return true;
 	}
 	
+	public static boolean checkWin() {
+		return noMoreVaccines() && heroes.size() >= 5;
+	}
+	
+	
 	public static boolean checkGameOver() {
-		return vaccinesUsed == 5 || heroes.isEmpty();
+		return noMoreVaccines() || heroes.isEmpty();
 	}
 	
 	 public static void endTurn() {
