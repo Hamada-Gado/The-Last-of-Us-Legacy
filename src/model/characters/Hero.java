@@ -112,28 +112,28 @@ public abstract class Hero extends Character{
 		
 		switch(d) {
 		case UP:
-			if(y >= Game.HEIGHT - 1) {
+			if(y == Game.HEIGHT - 1) {
 				throw new MovementException("Can not go UP");
 			} else {
 				dy = 1;
 			}
 			break;
 		case DOWN:
-			if(y <= 0) {
+			if(y == 0) {
 				throw new MovementException("Can not go DOWN");
 			} else {
 				dy = -1;
 			}
 			break;
 		case LEFT:
-			if(x <= 0) {
+			if(x == 0) {
 				throw new MovementException("Can not go LEFT");
 			} else {
 				dx = -1;
 			}
 			break;
 		case RIGHT:
-			if(x >= Game.WIDTH - 1) {
+			if(x == Game.WIDTH - 1) {
 				throw new MovementException("Can not go RIGHT");
 			} else {
 				dx = 1;
