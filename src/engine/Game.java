@@ -175,7 +175,7 @@ public class Game {
 	 public static void endTurn() {
 		 for (Zombie z : zombies) {
 			 try {
-				z.attakAdjacentHero();
+				z.attack();
 			} catch (InvalidTargetException | NotEnoughActionsException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

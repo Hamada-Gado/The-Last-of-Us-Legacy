@@ -20,33 +20,6 @@ public class Zombie extends Character{
 	
 	@Override
 	public void attack() throws InvalidTargetException, NotEnoughActionsException {
-		super.attack();
-		if (getTarget() instanceof Zombie) throw new InvalidTargetException("A zombie can not attack a zombie");
-		
-		getTarget().applyDamage(getAttackDmg());
-		
-		getTarget().defend(this);
-		getTarget().onCharacterDeath();
-		onCharacterDeath();
-	}
-	
-	@Override
-	public void onCharacterDeath() {
-		if (getCurrentHp() > 0) return;
-		
-		super.onCharacterDeath();
-		Game.addRandomZombie();
-	}
-	
-	public Hero getAdjacentHero(int x, int y) {
-		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.WIDTH) return null;
-		if (!(Game.map[y][x] instanceof CharacterCell)) return null;
-		if (!(((CharacterCell) Game.map[y][x]).getCharacter() instanceof Hero)) return null;
-		
-		return (Hero) ((CharacterCell) Game.map[y][x]).getCharacter();
-	}
-	
-	public void attakAdjacentHero() throws InvalidTargetException, NotEnoughActionsException {
 		Hero[] heroes = new Hero[8];
 		
 		int x = getLocation().x;
@@ -72,7 +45,28 @@ public class Zombie extends Character{
 		
 		if (target == -1) return;
 		setTarget(heroes[target]);
-		attack();
+
+		getTarget().applyDamage(getAttackDmg());
+		
+		getTarget().defend(this);
+		getTarget().onCharacterDeath();
+		onCharacterDeath();
+	}
+	
+	@Override
+	public void onCharacterDeath() {
+		if (getCurrentHp() > 0) return;
+		
+		super.onCharacterDeath();
+		Game.addRandomZombie();
+	}
+	
+	public Hero getAdjacentHero(int x, int y) {
+		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.WIDTH) return null;
+		if (!(Game.map[y][x] instanceof CharacterCell)) return null;
+		if (!(((CharacterCell) Game.map[y][x]).getCharacter() instanceof Hero)) return null;
+		
+		return (Hero) ((CharacterCell) Game.map[y][x]).getCharacter();
 	}
 
 }
