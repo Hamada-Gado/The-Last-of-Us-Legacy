@@ -32,6 +32,8 @@ public class Zombie extends Character{
 	
 	@Override
 	public void onCharacterDeath() {
+		if (getCurrentHp() > 0) return;
+		
 		super.onCharacterDeath();
 		Game.addRandomZombie();
 	}
