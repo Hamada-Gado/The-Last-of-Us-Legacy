@@ -162,7 +162,6 @@ public abstract class Hero extends Character{
 		
 		setLocation(newLocation);
 		
-		
 		((CharacterCell) Game.map[y][x]).setCharacter(this);
 		
 		makeCellVisible(x, y);
@@ -173,15 +172,16 @@ public abstract class Hero extends Character{
 	
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {
 		if(supplyInventory.isEmpty()) throw new NoAvailableResourcesException("Can not use special as their is no supply");
-				
+		
 		supplyInventory.get(0).use(this);
 		specialAction = true;
 	}
 
-	public void cure() throws InvalidTargetException, NoAvailableResourcesException {
+	public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
 		if (getTarget() instanceof Hero) throw new InvalidTargetException("Can not cure target as target is a hero");			
-		if(vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");
+		if (vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");
 		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not cure zombie as target is not in an adjacent cell.");
+		if (actionsAvailable == 0) throw new NotEnoughActionsException("Not enough action points to cure zombie");
 		
 		vaccineInventory.get(0).use(this);
 		
