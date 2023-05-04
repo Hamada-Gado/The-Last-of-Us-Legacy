@@ -173,7 +173,7 @@ public abstract class Hero extends Character{
 		if (getTarget() instanceof Hero) throw new InvalidTargetException("Can not cure target as target is a hero");			
 		if(vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");
 		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not cure zombie as target is not in an adjacent cell.");
-		
+
 		Game.vaccinesUsed++;
 		vaccineInventory.get(0).use(this);
 		
