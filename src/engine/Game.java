@@ -87,7 +87,7 @@ public class Game {
 		while(true) {
 			x = randGen.nextInt(WIDTH);
 			y = randGen.nextInt(HEIGHT);
-			c = map[x][y];
+			c = map[y][x];
 			
 			if (!(c instanceof CharacterCell)) continue;
 			if (((CharacterCell) c).getCharacter() != null) continue;
@@ -111,12 +111,12 @@ public class Game {
 		while(true) {
 			x = randGen.nextInt(WIDTH);
 			y = randGen.nextInt(HEIGHT);
-			c = map[x][y];
+			c = map[y][x];
 			
 			if (!(c instanceof CharacterCell)) continue;
 			if (((CharacterCell) c).getCharacter() != null) continue;
 			
-			map[x][y] = new CollectibleCell(collectible);
+			map[y][x] = new CollectibleCell(collectible);
 			
 			break;
 		}
@@ -131,12 +131,12 @@ public class Game {
 		while(true) {
 			x = randGen.nextInt(WIDTH);
 			y = randGen.nextInt(HEIGHT);
-			c = map[x][y];
+			c = map[y][x];
 			
 			if (!(c instanceof CharacterCell)) continue;
 			if (((CharacterCell) c).getCharacter() != null) continue;
 			
-			map[x][y] = new TrapCell();
+			map[y][x] = new TrapCell();
 			
 			break;
 		}
@@ -146,7 +146,7 @@ public class Game {
 		
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
-				map[x][y] = new CharacterCell(null);
+				map[y][x] = new CharacterCell(null);
 			}
 		}
 		

@@ -85,9 +85,8 @@ public abstract class Hero extends Character{
 	}
 	
 	public void makeCellVisible(int x, int y) {
-		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.WIDTH) return;
-		
-		Game.map[x][y].setVisible(true);
+		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.HEIGHT) return;
+		Game.map[y][x].setVisible(true);
 	}
 	
 	public void makeAdjacentCellsVisible() {
@@ -141,11 +140,11 @@ public abstract class Hero extends Character{
 			break;
 		}
 		
-		((CharacterCell) Game.map[x][y]).setCharacter(null);
+		((CharacterCell) Game.map[y][x]).setCharacter(null);
 		
 		getLocation().translate(dx, dy);
 		
-		Cell c = Game.map[x][y];
+		Cell c = Game.map[y][x];
 		
 		if (c instanceof CollectibleCell) {
 			((CollectibleCell) c).getCollectible().pickUp(this);
@@ -154,7 +153,7 @@ public abstract class Hero extends Character{
 			onCharacterDeath();
 		}
 		
-		Game.map[x][y] = new CharacterCell(this, true);
+		Game.map[y][x] = new CharacterCell(this, true);
 		
 		makeCellVisible(x, y);
 		makeAdjacentCellsVisible();
@@ -179,7 +178,7 @@ public abstract class Hero extends Character{
 		Game.heroes.add(h);
 		Game.availableHeroes.remove(randIndex);
 		
-		Game.map[getTarget().getLocation().x][getTarget().getLocation().y] = new CharacterCell(h, true);
+		Game.map[getTarget().getLocation().y][getTarget().getLocation().x] = new CharacterCell(h, true);
 		
 		Game.zombies.remove(getTarget());
 		
