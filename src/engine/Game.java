@@ -150,6 +150,7 @@ public class Game {
 			}
 		}
 		
+		h.setLocation(new Point(0, 0));
 		heroes.add(h);
 		availableHeroes.remove(h);
 		map[0][0] = new CharacterCell(h, true);

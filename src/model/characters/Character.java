@@ -71,7 +71,9 @@ public abstract class Character {
 		this.target = target;
 	}
 	
-	public boolean targetIsAdjacent() {
+	public boolean targetIsAdjacent() throws InvalidTargetException {
+		if (getTarget() == null) throw new InvalidTargetException("Target can not be null");
+		
 		double distanceSq = location.distanceSq(target.location);
 		return distanceSq == 1 || distanceSq == 2;
 	}
