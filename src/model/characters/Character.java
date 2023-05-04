@@ -90,13 +90,13 @@ public abstract class Character {
 	
 	public void defend(Character c) {
 		c.applyDamage(attackDmg/2);
-		c.onCharacterDeath();
 	}
 	
 	public void onCharacterDeath() {
 		if (currentHp > 0) return;
 		
-		((CharacterCell) Game.map[getLocation().y][getLocation().x]).setCharacter(null);
+		//TODO check whether x, y or y, x
+		((CharacterCell) Game.map[getLocation().x][getLocation().y]).setCharacter(null);
 		
 		if (this instanceof Hero) {
 			Game.heroes.remove(this);

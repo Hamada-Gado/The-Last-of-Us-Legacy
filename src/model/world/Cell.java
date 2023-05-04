@@ -32,15 +32,11 @@ public abstract class Cell {
 		int x = h.getLocation().x;
 		int y = h.getLocation().y;
 		
-		makeCellVisible(x, y);
-		makeCellVisible(x, y-1);
-		makeCellVisible(x, y+1);
-		makeCellVisible(x-1, y);
-		makeCellVisible(x+1, y);
-		makeCellVisible(x-1, y-1);
-		makeCellVisible(x-1, y+1);
-		makeCellVisible(x+1, y-1);
-		makeCellVisible(x+1, y+1);
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				makeCellVisible(x + i, y + j);
+			}
+		}
 	}
 	
 }
