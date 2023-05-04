@@ -104,12 +104,13 @@ public abstract class Hero extends Character{
 		makeCellVisible(x+1, y+1);
 	}
 	
-	public void move(Direction d) throws MovementException {
+	public void move(Direction d) throws MovementException,NotEnoughActionsException {
 		int x = getLocation().x;
 		int y = getLocation().y;
 		int dx = 0;
 		int dy = 0;
-		
+		if(actionsAvailable==0)
+			throw new NotEnoughActionsException("Not enough action points to move");
 		switch(d) {
 		case UP:
 			if(y >= Game.HEIGHT - 1) {
