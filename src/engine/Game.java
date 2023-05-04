@@ -153,7 +153,7 @@ public class Game {
 		heroes.add(h);
 		availableHeroes.remove(h);
 		map[0][0] = new CharacterCell(h, true);
-		
+		h.makeCellVisible(0, 0);
 		for (int i = 0; i < 5; i++) {
 			addRandomCollectible(new Vaccine());
 			addRandomCollectible(new Supply());
