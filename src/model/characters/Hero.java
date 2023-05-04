@@ -85,9 +85,9 @@ public abstract class Hero extends Character{
 	}
 	
 	public void makeCellVisible(int x, int y) {
-		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.WIDTH) return;
+		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return;
 		
-		Game.map[x][y].setVisible(true);
+		Game.map[y][x].setVisible(true);
 	}
 	
 	public void makeAdjacentCellsVisible() {
@@ -112,28 +112,28 @@ public abstract class Hero extends Character{
 		
 		switch(d) {
 		case UP:
-			if(y == Game.HEIGHT - 1) {
+			if(y >= Game.HEIGHT - 1) {
 				throw new MovementException("Can not go UP");
 			} else {
 				dy = 1;
 			}
 			break;
 		case DOWN:
-			if(y == 0) {
+			if(y <= 0) {
 				throw new MovementException("Can not go DOWN");
 			} else {
 				dy = -1;
 			}
 			break;
 		case LEFT:
-			if(x == 0) {
+			if(x <= 0) {
 				throw new MovementException("Can not go LEFT");
 			} else {
 				dx = -1;
 			}
 			break;
 		case RIGHT:
-			if(x == Game.WIDTH - 1) {
+			if(x >= Game.WIDTH - 1) {
 				throw new MovementException("Can not go RIGHT");
 			} else {
 				dx = 1;
@@ -141,11 +141,11 @@ public abstract class Hero extends Character{
 			break;
 		}
 		
-		((CharacterCell) Game.map[x][y]).setCharacter(null);
+		((CharacterCell) Game.map[y][x]).setCharacter(null);
 		
 		getLocation().translate(dx, dy);
 		
-		Cell c = Game.map[x][y];
+		Cell c = Game.map[y][x];
 		
 		if (c instanceof CollectibleCell) {
 			((CollectibleCell) c).getCollectible().pickUp(this);
@@ -154,7 +154,7 @@ public abstract class Hero extends Character{
 			onCharacterDeath();
 		}
 		
-		Game.map[x][y] = new CharacterCell(this, true);
+		Game.map[y][x] = new CharacterCell(this, true);
 		
 		makeCellVisible(x, y);
 		makeAdjacentCellsVisible();
