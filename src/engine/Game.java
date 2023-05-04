@@ -196,6 +196,8 @@ public class Game {
 			 h.setTarget(null);
 			 h.setSpecialAction(false);
 			 h.makeAdjacentCellsVisible();
+			 Point a = h.getLocation();
+			 h.makeCellVisible(a.x, a.y);
 		 }
 		 
 		 addRandomZombie();
