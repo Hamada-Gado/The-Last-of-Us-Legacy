@@ -148,12 +148,11 @@ public class Game {
 			}
 		}
 		
-		h.setLocation(new Point(0, 0));
-		heroes.add(h);
 		availableHeroes.remove(h);
+		heroes.add(h);
+		h.setLocation(new Point(0, 0));
 		map[0][0] = new CharacterCell(h, true);
-		h.makeCellVisible(0, 0);
-		h.makeAdjacentCellsVisible();
+		Cell.makeAdjacentCellsVisible(h);
 		for (int i = 0; i < 5; i++) {
 			addRandomCollectible(new Vaccine());
 			addRandomCollectible(new Supply());
@@ -212,9 +211,7 @@ public class Game {
 			 h.setActionsAvailable(h.getMaxActions());
 			 h.setTarget(null);
 			 h.setSpecialAction(false);
-			 h.makeAdjacentCellsVisible();
-			 Point p = h.getLocation();
-			 h.makeCellVisible(p.x, p.y);
+			 Cell.makeAdjacentCellsVisible(h);
 		 }
 		 
 		 addRandomZombie();

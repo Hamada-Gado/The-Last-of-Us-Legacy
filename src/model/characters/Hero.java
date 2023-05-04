@@ -83,89 +83,63 @@ public abstract class Hero extends Character{
 		getTarget().onCharacterDeath();
 		onCharacterDeath();
 	}
-	
-	public void makeCellVisible(int x, int y) {
-		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return;
 
-		Game.map[y][x].setVisible(true);
-	}
-	
-	public void makeAdjacentCellsVisible() {
-		int x = getLocation().x;
-		int y = getLocation().y;
-		
-		makeCellVisible(x, y-1);
-		makeCellVisible(x, y+1);
-		makeCellVisible(x-1, y);
-		makeCellVisible(x+1, y);
-		makeCellVisible(x-1, y-1);
-		makeCellVisible(x-1, y+1);
-		makeCellVisible(x+1, y-1);
-		makeCellVisible(x+1, y+1);
-	}
-	
 	public void move(Direction d) throws MovementException,NotEnoughActionsException {
-		int x = getLocation().x;
-		int y = getLocation().y;
 		int dx = 0;
 		int dy = 0;
-		if(actionsAvailable==0)
+		
+		if(actionsAvailable == 0)
 			throw new NotEnoughActionsException("Not enough action points to move");
+		
 		switch(d) {
 		case UP:
-			if(y == Game.HEIGHT - 1) {
+			if(getLocation().y == Game.HEIGHT - 1) {
 				throw new MovementException("Can not go UP");
-			} else {
-				dy = 1;
 			}
+			dy = 1;
 			break;
 		case DOWN:
-			if(y == 0) {
+			if(getLocation().y == 0) {
 				throw new MovementException("Can not go DOWN");
-			} else {
-				dy = -1;
 			}
+			dy = -1;
 			break;
 		case LEFT:
-			if(x == 0) {
+			if(getLocation().x == 0) {
 				throw new MovementException("Can not go LEFT");
-			} else {
-				dx = -1;
 			}
+			dx = -1;
 			break;
 		case RIGHT:
-			if(x == Game.WIDTH - 1) {
+			if(getLocation().x == Game.WIDTH - 1) {
 				throw new MovementException("Can not go RIGHT");
-			} else {
-				dx = 1;
 			}
+			dx = 1;
 			break;
 		}
 		
-		Point newLocation = new Point(x + dx, y + dy);
+		Point newLocation = new Point(getLocation().x + dx, getLocation().y + dy);
 		
-		Cell cell = Game.map[y + dy][x + dx];
+		Cell cell = Game.map[newLocation.y][newLocation.x];
 		
 		if (cell instanceof CharacterCell) {
 			if (((CharacterCell) cell).getCharacter() != null) {
 				throw new MovementException("Can't move to an occupied cell");
 			}
-		}
-		if (cell instanceof CollectibleCell) {
+		} else if (cell instanceof CollectibleCell) {
 			((CollectibleCell) cell).getCollectible().pickUp(this);
 		} else if (cell instanceof TrapCell) {
 			applyDamage(((TrapCell) cell).getTrapDamage());
 			onCharacterDeath();
 		}
-		
-		((CharacterCell) Game.map[y][x]).setCharacter(null);
+
+		((CharacterCell) Game.map[getLocation().y][getLocation().x]).setCharacter(null);
 		
 		setLocation(newLocation);
 		
-		((CharacterCell) Game.map[y][x]).setCharacter(this);
+		Game.map[getLocation().y][getLocation().x] = new CharacterCell(this);
 		
-		makeCellVisible(x, y);
-		makeAdjacentCellsVisible();
+		Cell.makeAdjacentCellsVisible(this);
 		
 		actionsAvailable--;
 	}
