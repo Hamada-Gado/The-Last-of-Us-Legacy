@@ -93,7 +93,7 @@ public class Game {
 			if (((CharacterCell) c).getCharacter() != null) continue;
 			
 			Zombie z = new Zombie();
-			z.setLocation(new Point(x, y));
+			z.setLocation(new Point(y, x));
 			zombies.add(z);
 			((CharacterCell) c).setCharacter(z);
 			((CharacterCell) c).setSafe(false);
@@ -153,7 +153,7 @@ public class Game {
 		heroes.add(h);
 		availableHeroes.remove(h);
 		map[0][0] = new CharacterCell(h, true);
-		
+		h.makeCellVisible(0, 0);
 		for (int i = 0; i < 5; i++) {
 			addRandomCollectible(new Vaccine());
 			addRandomCollectible(new Supply());
