@@ -85,7 +85,7 @@ public abstract class Hero extends Character{
 	
 	public void makeCellVisible(int x, int y) {
 		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return;
-		
+
 		Game.map[y][x].setVisible(true);
 	}
 	
@@ -112,28 +112,28 @@ public abstract class Hero extends Character{
 			throw new NotEnoughActionsException("Not enough action points to move");
 		switch(d) {
 		case UP:
-			if(y >= Game.HEIGHT - 1) {
+			if(y == Game.HEIGHT - 1) {
 				throw new MovementException("Can not go UP");
 			} else {
 				dy = 1;
 			}
 			break;
 		case DOWN:
-			if(y <= 0) {
+			if(y == 0) {
 				throw new MovementException("Can not go DOWN");
 			} else {
 				dy = -1;
 			}
 			break;
 		case LEFT:
-			if(x <= 0) {
+			if(x == 0) {
 				throw new MovementException("Can not go LEFT");
 			} else {
 				dx = -1;
 			}
 			break;
 		case RIGHT:
-			if(x >= Game.WIDTH - 1) {
+			if(x == Game.WIDTH - 1) {
 				throw new MovementException("Can not go RIGHT");
 			} else {
 				dx = 1;
@@ -173,7 +173,7 @@ public abstract class Hero extends Character{
 		if (getTarget() instanceof Hero) throw new InvalidTargetException("Can not cure target as target is a hero");			
 		if(vaccineInventory.isEmpty()) throw new NoAvailableResourcesException("Can not cure zombie as their is no vaccine");
 		if (!targetIsAdjacent()) throw new InvalidTargetException("Can not cure zombie as target is not in an adjacent cell.");
-
+		
 		Game.vaccinesUsed++;
 		vaccineInventory.get(0).use(this);
 		
