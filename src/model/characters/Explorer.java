@@ -22,7 +22,7 @@ public class Explorer extends Hero{
 
 		for (int y = 0; y < Game.HEIGHT; y++) {
 			for (int x = 0; x < Game.WIDTH; x++) {
-				Game.map[y][x].setVisible(true);
+				Game.map[x][y].setVisible(true);
 			}
 		}
 	

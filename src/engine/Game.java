@@ -81,7 +81,7 @@ public class Game {
 	public static void changeCellVisibility(int x, int y, boolean visibility) {
 		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return;
 
-		Game.map[y][x].setVisible(visibility);
+		Game.map[x][y].setVisible(visibility);
 	}
 	
 	public static void changeAdjacentCellsVisibility(Character h, boolean visibility) {
@@ -118,13 +118,13 @@ public class Game {
 		while(true) {
 			x = randGen.nextInt(WIDTH);
 			y = randGen.nextInt(HEIGHT);
-			c = map[y][x];
+			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
 			if (((CharacterCell) c).getCharacter() != null) continue;
 			
 			Zombie z = new Zombie();
-			z.setLocation(new Point(y, x));
+			z.setLocation(new Point(x, y));
 			zombies.add(z);
 			((CharacterCell) c).setCharacter(z);
 			((CharacterCell) c).setSafe(false);
@@ -142,12 +142,12 @@ public class Game {
 		while(true) {
 			x = randGen.nextInt(WIDTH);
 			y = randGen.nextInt(HEIGHT);
-			c = map[y][x];
+			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
 			if (((CharacterCell) c).getCharacter() != null) continue;
 			
-			map[y][x] = new CollectibleCell(collectible);
+			map[x][y] = new CollectibleCell(collectible);
 			
 			break;
 		}
@@ -162,12 +162,12 @@ public class Game {
 		while(true) {
 			x = randGen.nextInt(WIDTH);
 			y = randGen.nextInt(HEIGHT);
-			c = map[y][x];
+			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
 			if (((CharacterCell) c).getCharacter() != null) continue;
 			
-			map[y][x] = new TrapCell();
+			map[x][y] = new TrapCell();
 			
 			break;
 		}
@@ -177,7 +177,7 @@ public class Game {
 		
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
-				map[y][x] = new CharacterCell(null);
+				map[x][y] = new CharacterCell(null);
 			}
 		}
 		
