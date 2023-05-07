@@ -63,7 +63,7 @@ public class Zombie extends Character{
 	}
 	
 	public Hero getAdjacentHeroes(int x, int y) {
-		if (x < 0 || x >= Game.WIDTH || y < 0 || y >= Game.HEIGHT) return null;
+		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return null;
 		if (!(Game.map[x][y] instanceof CharacterCell)) return null;
 		if (!(((CharacterCell) Game.map[x][y]).getCharacter() instanceof Hero)) return null;
 		

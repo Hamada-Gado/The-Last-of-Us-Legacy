@@ -116,8 +116,8 @@ public class Game {
 		Cell c;
 		
 		while(true) {
-			x = randGen.nextInt(WIDTH);
-			y = randGen.nextInt(HEIGHT);
+			x = randGen.nextInt(HEIGHT);
+			y = randGen.nextInt(WIDTH);
 			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
@@ -140,8 +140,8 @@ public class Game {
 		Cell c;
 		
 		while(true) {
-			x = randGen.nextInt(WIDTH);
-			y = randGen.nextInt(HEIGHT);
+			x = randGen.nextInt(HEIGHT);
+			y = randGen.nextInt(WIDTH);
 			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
@@ -160,8 +160,8 @@ public class Game {
 		Cell c;
 		
 		while(true) {
-			x = randGen.nextInt(WIDTH);
-			y = randGen.nextInt(HEIGHT);
+			x = randGen.nextInt(HEIGHT);
+			y = randGen.nextInt(WIDTH);
 			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
@@ -175,8 +175,8 @@ public class Game {
 	
 	public static void startGame(Hero h) {
 		
-		for (int x = 0; x < WIDTH; x++) {
-			for (int y = 0; y < HEIGHT; y++) {
+		for (int x = 0; x < HEIGHT; x++) {
+			for (int y = 0; y < WIDTH; y++) {
 				map[x][y] = new CharacterCell(null);
 			}
 		}
