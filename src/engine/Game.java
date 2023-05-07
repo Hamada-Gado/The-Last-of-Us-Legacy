@@ -124,7 +124,7 @@ public class Game {
 			if (((CharacterCell) c).getCharacter() != null) continue;
 			
 			Zombie z = new Zombie();
-			z.setLocation(new Point(y, x));
+			z.setLocation(new Point(x, y));
 			zombies.add(z);
 			((CharacterCell) c).setCharacter(z);
 			((CharacterCell) c).setSafe(false);

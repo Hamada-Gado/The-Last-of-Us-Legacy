@@ -130,6 +130,7 @@ public abstract class Hero extends Character{
 			((CollectibleCell) cell).getCollectible().pickUp(this);
 		} else if (cell instanceof TrapCell) {
 			applyDamage(((TrapCell) cell).getTrapDamage());
+			onCharacterDeath();
 		}
 		
 		((CharacterCell) Game.map[getLocation().y][getLocation().x]).setCharacter(null);
@@ -142,8 +143,6 @@ public abstract class Hero extends Character{
 
 		actionsAvailable--;
 		
-		//TODO should I check on the character death every move?
-		onCharacterDeath();
 	}
 	
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {

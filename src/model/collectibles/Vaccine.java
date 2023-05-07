@@ -31,8 +31,8 @@ public class Vaccine implements Collectible{
 		Game.heroes.add(newHero);
 		
 		newHero.setLocation(h.getTarget().getLocation());
-		//TODO check if u should access the cell with (x, y) or (y, x)
-		((CharacterCell) Game.map[h.getTarget().getLocation().x][h.getTarget().getLocation().y]).setCharacter(newHero);
+
+		((CharacterCell) Game.map[h.getTarget().getLocation().y][h.getTarget().getLocation().x]).setCharacter(newHero);
 		
 		Game.zombies.remove(h.getTarget());
 		
