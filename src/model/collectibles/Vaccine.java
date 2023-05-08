@@ -32,7 +32,7 @@ public class Vaccine implements Collectible{
 		
 		newHero.setLocation(h.getTarget().getLocation());
 
-		((CharacterCell) Game.map[h.getTarget().getLocation().y][h.getTarget().getLocation().x]).setCharacter(newHero);
+		((CharacterCell) Game.map[h.getTarget().getLocation().x][h.getTarget().getLocation().y]).setCharacter(newHero);
 		
 		Game.zombies.remove(h.getTarget());
 		

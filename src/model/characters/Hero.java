@@ -93,34 +93,34 @@ public abstract class Hero extends Character{
 		
 		switch(d) {
 		case UP:
-			if(getLocation().y == Game.HEIGHT - 1) {
+			if(getLocation().x == Game.HEIGHT - 1) {
 				throw new MovementException("Can not go UP");
 			}
-			dy = 1;
+			dx = 1;
 			break;
 		case DOWN:
-			if(getLocation().y == 0) {
-				throw new MovementException("Can not go DOWN");
-			}
-			dy = -1;
-			break;
-		case LEFT:
 			if(getLocation().x == 0) {
-				throw new MovementException("Can not go LEFT");
+				throw new MovementException("Can not go DOWN");
 			}
 			dx = -1;
 			break;
+		case LEFT:
+			if(getLocation().y == 0) {
+				throw new MovementException("Can not go LEFT");
+			}
+			dy = -1;
+			break;
 		case RIGHT:
-			if(getLocation().x == Game.WIDTH - 1) {
+			if(getLocation().y == Game.WIDTH - 1) {
 				throw new MovementException("Can not go RIGHT");
 			}
-			dx = 1;
+			dy = 1;
 			break;
 		}
 		
 		Point newLocation = new Point(getLocation().x + dx, getLocation().y + dy);
 		
-		Cell cell = Game.map[newLocation.y][newLocation.x];
+		Cell cell = Game.map[newLocation.x][newLocation.y];
 		
 		if (cell instanceof CharacterCell) {
 			if (((CharacterCell) cell).getCharacter() != null) {
@@ -133,16 +133,16 @@ public abstract class Hero extends Character{
 			onCharacterDeath();
 		}
 		
-		((CharacterCell) Game.map[getLocation().y][getLocation().x]).setCharacter(null);
-		
-		setLocation(newLocation);
-		
-		Game.map[getLocation().y][getLocation().x] = new CharacterCell(this);
-		
-		Game.changeAdjacentCellsVisibility(this, true);
-
+		((CharacterCell) Game.map[getLocation().x][getLocation().y]).setCharacter(null);
 		actionsAvailable--;
-		
+
+		if (this.getCurrentHp() > 0) {
+			setLocation(newLocation);
+			
+			Game.map[getLocation().x][getLocation().y] = new CharacterCell(this);
+			
+			Game.changeAdjacentCellsVisibility(this, true);
+		}
 	}
 	
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {
