@@ -80,8 +80,6 @@ public class Game {
 	
 	public static void changeCellVisibility(int x, int y, boolean visibility) {
 		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return;
-//		System.out.println(x + ", " + y);
-//		System.out.println(visibility);
 
 		Game.map[x][y].setVisible(visibility);
 	}

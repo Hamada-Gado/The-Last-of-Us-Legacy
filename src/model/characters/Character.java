@@ -81,6 +81,7 @@ public abstract class Character {
 	
 	public void applyDamage(int damage) {
 		setCurrentHp(currentHp - damage);
+		onCharacterDeath();
 	}
 	
 	public void attack() throws InvalidTargetException, NotEnoughActionsException {

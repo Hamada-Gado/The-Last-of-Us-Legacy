@@ -48,10 +48,7 @@ public class Zombie extends Character{
 		setTarget(heroes[target]);
 				
 		getTarget().applyDamage(getAttackDmg());
-		
 		getTarget().defend(this);
-		getTarget().onCharacterDeath();
-		onCharacterDeath();
 	}
 	
 	

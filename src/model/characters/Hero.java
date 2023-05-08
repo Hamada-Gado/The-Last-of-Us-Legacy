@@ -80,8 +80,6 @@ public abstract class Hero extends Character{
 		}
 		
 		getTarget().defend(this);
-		getTarget().onCharacterDeath();
-		onCharacterDeath();
 	}
 
 	public void move(Direction d) throws MovementException,NotEnoughActionsException {
@@ -130,7 +128,6 @@ public abstract class Hero extends Character{
 			((CollectibleCell) cell).getCollectible().pickUp(this);
 		} else if (cell instanceof TrapCell) {
 			applyDamage(((TrapCell) cell).getTrapDamage());
-			onCharacterDeath();
 		}
 		
 		((CharacterCell) Game.map[getLocation().x][getLocation().y]).setCharacter(null);
