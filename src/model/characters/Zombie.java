@@ -54,13 +54,7 @@ public class Zombie extends Character{
 		onCharacterDeath();
 	}
 	
-	@Override
-	public void onCharacterDeath() {
-		if (getCurrentHp() > 0) return;
-		
-		super.onCharacterDeath();
-		Game.addRandomZombie();
-	}
+	
 	
 	public Hero getAdjacentHeroes(int x, int y) {
 		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return null;

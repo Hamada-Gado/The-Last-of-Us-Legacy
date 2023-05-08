@@ -1134,7 +1134,7 @@ public class M2PublicTests {
 			Cell cell = m[4][4];
 			Method isVisible = cell.getClass().getMethod("isVisible");
 			boolean visible = (boolean) isVisible.invoke(cell);
-
+			System.out.println(visible);
 			assertTrue("The visibility of cells should not be updated as the hero is dead. Expected visibility = true"
 					+ " but was false ", false == visible);
 

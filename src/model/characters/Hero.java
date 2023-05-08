@@ -130,20 +130,19 @@ public abstract class Hero extends Character{
 			((CollectibleCell) cell).getCollectible().pickUp(this);
 		} else if (cell instanceof TrapCell) {
 			applyDamage(((TrapCell) cell).getTrapDamage());
+			onCharacterDeath();
 		}
 		
 		((CharacterCell) Game.map[getLocation().x][getLocation().y]).setCharacter(null);
-		
-		setLocation(newLocation);
-		
-		Game.map[getLocation().x][getLocation().y] = new CharacterCell(this);
-		
-		Game.changeAdjacentCellsVisibility(this, true);
-
 		actionsAvailable--;
 		
-		//TODO should I check on the character death every move?
-		onCharacterDeath();
+		if (this.getCurrentHp() > 0) {
+			setLocation(newLocation);
+			
+			Game.map[getLocation().x][getLocation().y] = new CharacterCell(this);
+			
+			Game.changeAdjacentCellsVisibility(this, true);
+		}
 	}
 	
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {

@@ -26,7 +26,6 @@ public abstract class Character {
 		this.maxHp = maxHp;
 		this.attackDmg = attackDmg;
 		this.currentHp = maxHp;
-		location = new Point(-1, -1);
 	}
 	
 	public String getName() {
@@ -101,6 +100,7 @@ public abstract class Character {
 			Game.heroes.remove(this);
 		} else {
 			Game.zombies.remove(this);
+			Game.addRandomZombie();
 		}
 	}
 }
