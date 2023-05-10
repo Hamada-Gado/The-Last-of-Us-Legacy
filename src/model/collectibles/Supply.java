@@ -19,6 +19,7 @@ public class Supply implements Collectible{
 
 	@Override
 	public void use(Hero h) {
+		h.setSpecialAction(true);
 		h.getSupplyInventory().remove(this);
 	}
 	

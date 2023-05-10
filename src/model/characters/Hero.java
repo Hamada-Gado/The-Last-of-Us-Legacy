@@ -120,10 +120,8 @@ public abstract class Hero extends Character{
 		
 		Cell cell = Game.map[newLocation.x][newLocation.y];
 		
-		if (cell instanceof CharacterCell) {
-			if (((CharacterCell) cell).getCharacter() != null) {
+		if (cell instanceof CharacterCell && ((CharacterCell) cell).getCharacter() != null) {
 				throw new MovementException("Can't move to an occupied cell");
-			}
 		} else if (cell instanceof CollectibleCell) {
 			((CollectibleCell) cell).getCollectible().pickUp(this);
 		} else if (cell instanceof TrapCell) {
@@ -140,13 +138,13 @@ public abstract class Hero extends Character{
 			
 			Game.changeAdjacentCellsVisibility(this, true);
 		}
+		
 	}
 	
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {
 		if(supplyInventory.isEmpty()) throw new NoAvailableResourcesException("Can not use special as their is no supply");
 		
 		supplyInventory.get(0).use(this);
-		specialAction = true;
 	}
 
 	public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
