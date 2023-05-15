@@ -224,7 +224,6 @@ public class Game {
 	}
 	
 	 public static void endTurn() {
-		 resetMapVisibility();
 		 
 		 for (Zombie z : zombies) {
 			 try {
@@ -236,6 +235,7 @@ public class Game {
 			 z.setTarget(null);
 		 }
 		 
+		 addRandomZombie();
 		 
 		 for (Hero h : heroes) {
 			 h.setActionsAvailable(h.getMaxActions());
@@ -244,8 +244,8 @@ public class Game {
 			 changeAdjacentCellsVisibility(h, true);
 		 }
 		 
+		 resetMapVisibility();
 		 
-		 addRandomZombie();
 	 }
 	 
 	 
