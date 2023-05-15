@@ -33,8 +33,12 @@ import model.world.TrapCell;
  */
 public class Game {
 	
+	public static final int WINDOW_HEIGHT = 1020;
+	public static final int WINDOW_WIDTH = 960;
+	
 	public static final int HEIGHT = 15;
 	public static final int WIDTH = 15;
+	
 	public static Cell [][] map = new Cell[HEIGHT][WIDTH];
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
