@@ -104,4 +104,12 @@ public abstract class Character {
 			Game.addRandomZombie();
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "Name: " + getName() + "\n"
+				+ "HP: " + getCurrentHp() + "\n"
+				+ "Damage: " + getAttackDmg();
+	}
+
 }

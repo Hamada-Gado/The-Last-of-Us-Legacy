@@ -158,5 +158,15 @@ public abstract class Hero extends Character{
 		setTarget(null);
 		actionsAvailable--;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "\n"
+				+ "Type: " + (this instanceof Fighter ? "FIGH" : (this instanceof Medic ? "MED" : "EXP")) + "\n"
+				+ "Action points: " + actionsAvailable + "\n"
+				+ "Special Action: " +  (this instanceof Fighter ? "Attack infinitely until end turn" 
+									:	(this instanceof Medic ? "Heal any Hero"
+									:	"The whole map becomes visible"));
+	}
 	
 }
