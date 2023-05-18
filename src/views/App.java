@@ -15,11 +15,11 @@ public class App extends Application {
 	public static final int WINDOW_HEIGHT = 800;
 	public static final int WINDOW_WIDTH = 960;
 	
+	public static Controller controller;
+	
 	private StartScene startScene = new StartScene();
-	private GameScene gameScene = new GameScene();
-	
+	private GameScene gameScene = new GameScene();	
 	private MyScene currentScene = startScene;
-	
 	private Stage stage;
 	
 	public MyScene getCurrentScene() {
@@ -37,7 +37,7 @@ public class App extends Application {
 		primaryStage.setTitle(TITLE);
 		primaryStage.show();
 		
-		new Controller(this);
+		controller = new Controller(this);
 	}
 	
 	public void changeSceneToGameScene(Hero hero) {

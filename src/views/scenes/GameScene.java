@@ -4,8 +4,6 @@ package views.scenes;
 import engine.Game;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -40,14 +38,21 @@ public class GameScene implements MyScene{
         }        
 		
 		// info of hero
+        infoLabel = new Label();
+        
         
         root.setCenter(gameGrid);
+        root.setRight(infoLabel);
         
 		scene = new Scene(root);
 	}
 	
 	public void setImageInGrid(CellView cellview, int x, int y) {
     	gameGrid.add(cellview.getImageView(), x, y);
+	}
+	
+	public void setInfo(String info) {
+		infoLabel.setText(info);
 	}
 
 	@Override

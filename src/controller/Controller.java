@@ -46,8 +46,7 @@ public class Controller {
 		
 		((StartScene) this.app.getCurrentScene()).updateHeroesPane(heroes);
 	}
-	
-
+		
 	public void setGameGrid() {
 		CellView cellView;
 		Cell cell;
@@ -92,6 +91,10 @@ public class Controller {
 	    	}
 	    }
 		
+	}
+	
+	public void setInfo(String text) {
+		((GameScene) app.getCurrentScene()).setInfo(text);
 	}
 	
 }
