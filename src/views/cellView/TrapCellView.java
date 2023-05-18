@@ -8,7 +8,9 @@ public class TrapCellView extends CellView {
 		super(cell);
 		
 		setCellImage(EMPTY_CELL);
+		
 		setCurrentImage();
+		setImageView();
 	}
 	
 }

@@ -18,5 +18,6 @@ public class CollectibleCellView extends CellView {
 		}
 		
 		setCurrentImage();
+		setImageView();
 	}
 }

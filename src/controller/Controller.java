@@ -50,9 +50,11 @@ public class Controller {
 
 	public void setGameGrid() {
 		CellView cellView;
+		Cell cell;
 		
-		for (Cell[] cells : Game.map) {
-			for (Cell cell : cells) {
+		for (int x = 0; x < Game.ROWS; x++) {
+			for (int y = 0; y < Game.COLS; y++) {
+				cell = Game.map[x][y];
 				
 				if (cell instanceof CharacterCell) {
 					cellView = new CharacterCellView((CharacterCell) cell);
@@ -62,7 +64,7 @@ public class Controller {
 					cellView = new TrapCellView((TrapCell) cell);
 				}
 				
-				((GameScene) app.getCurrentScene()).setImageInGrid(cellView, 0, 0);;
+				((GameScene) app.getCurrentScene()).setImageInGrid(cellView, x, 14 - y);
 			}
 		}
 		
@@ -85,6 +87,7 @@ public class Controller {
 	    	if (heroname.contains(name)) {
 	    		app.changeSceneToGameScene(hero);
 	    		Game.startGame(hero);
+	    		setGameGrid();
 	    		return;
 	    	}
 	    }

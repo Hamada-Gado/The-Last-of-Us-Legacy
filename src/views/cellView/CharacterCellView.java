@@ -26,6 +26,7 @@ public class CharacterCellView extends CellView{
 		}
 	
 		setCurrentImage();
+		setImageView();
 	}
 
 }

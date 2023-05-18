@@ -47,7 +47,7 @@ public class GameScene implements MyScene{
 	}
 	
 	public void setImageInGrid(CellView cellview, int x, int y) {
-    	gameGrid.add(cellview, x, y);
+    	gameGrid.add(cellview.getImageView(), x, y);
 	}
 
 	@Override
