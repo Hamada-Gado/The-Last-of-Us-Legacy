@@ -10,7 +10,16 @@ import engine.Game;
 import javafx.event.Event;
 import javafx.scene.control.TextArea;
 import model.characters.Hero;
+import model.world.Cell;
+import model.world.CharacterCell;
+import model.world.CollectibleCell;
+import model.world.TrapCell;
 import views.App;
+import views.cellView.CellView;
+import views.cellView.CharacterCellView;
+import views.cellView.CollectibleCellView;
+import views.cellView.TrapCellView;
+import views.scenes.GameScene;
 import views.scenes.StartScene;
 
 public class Controller {
@@ -36,6 +45,27 @@ public class Controller {
 		}
 		
 		((StartScene) this.app.getCurrentScene()).updateHeroesPane(heroes);
+	}
+	
+
+	public void setGameGrid() {
+		CellView cellView;
+		
+		for (Cell[] cells : Game.map) {
+			for (Cell cell : cells) {
+				
+				if (cell instanceof CharacterCell) {
+					cellView = new CharacterCellView((CharacterCell) cell);
+				} else if (cell instanceof CollectibleCell) {
+					cellView = new CollectibleCellView((CollectibleCell) cell);
+				} else {
+					cellView = new TrapCellView((TrapCell) cell);
+				}
+				
+				((GameScene) app.getCurrentScene()).setImageInGrid(cellView, 0, 0);;
+			}
+		}
+		
 	}
 	
 	public void goToGameScene(Event event) {

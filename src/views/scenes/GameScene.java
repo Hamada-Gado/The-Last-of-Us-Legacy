@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import views.cellView.CellView;
 
 public class GameScene implements MyScene{
 	
@@ -36,21 +37,7 @@ public class GameScene implements MyScene{
             RowConstraints rowConst = new RowConstraints();
 //            rowConst.setPercentHeight(100.0 / Game.ROWS);
             gameGrid.getRowConstraints().add(rowConst);         
-        }
-        
-        
-        int x, y;
-        Image image = new Image("file:./res/image.png", 45, 45, false, false);
-        ImageView imageView;
-        for (int i = 0; i < Game.COLS * Game.ROWS; i++) {
-        	x = i % Game.COLS;
-        	y = i / Game.ROWS;
-
-        	imageView = new ImageView(image);
-        	
-        	gameGrid.add(imageView, x, y);
-        }
-        
+        }        
 		
 		// info of hero
         
@@ -58,10 +45,15 @@ public class GameScene implements MyScene{
         
 		scene = new Scene(root);
 	}
+	
+	public void setImageInGrid(CellView cellview, int x, int y) {
+    	gameGrid.add(cellview, x, y);
+	}
 
 	@Override
 	public Scene getScene() {
 		return scene;
 	}
+	
 
 }
