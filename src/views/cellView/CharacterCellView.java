@@ -1,7 +1,6 @@
 package views.cellView;
 
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import model.characters.Character;
 import model.characters.Fighter;
@@ -10,7 +9,7 @@ import model.characters.Zombie;
 import model.world.CharacterCell;
 import views.App;
 
-public class CharacterCellView extends CellView {
+public class CharacterCellView extends CellView implements EventHandler<MouseEvent>{
 	
 	public CharacterCellView(CharacterCell cell) {
 		super(cell);
@@ -31,18 +30,20 @@ public class CharacterCellView extends CellView {
 	
 		setCurrentImage();
 		setImageView();
-		getImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
-		
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.getButton() == MouseButton.SECONDARY) {
-					App.controller.setInfo(((CharacterCell) getCell()).getCharacter().toString());
-				}
-			}
-		
-		});
+		getImageView().addEventHandler(MouseEvent.ANY, this);
 	}
 
+	@Override
+	public void handle(MouseEvent event) {
+		if (event.getEventType() == MouseEvent.MOUSE_ENTERED) showInfo();
+		
+	}
+
+	public void showInfo() {
+		if (!getCell().isVisible()) return;
+		if (((CharacterCell) getCell()).getCharacter() == null) return;
+		App.controller.setInfo(((CharacterCell) getCell()).getCharacter().toString());		
+	}
 	
 	
 }

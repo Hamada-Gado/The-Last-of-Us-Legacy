@@ -131,13 +131,13 @@ public abstract class Hero extends Character{
 		((CharacterCell) Game.map[getLocation().x][getLocation().y]).setCharacter(null);
 		actionsAvailable--;
 
-		if (this.getCurrentHp() > 0) {
-			setLocation(newLocation);
-			
-			Game.map[getLocation().x][getLocation().y] = new CharacterCell(this);
-			
-			Game.changeAdjacentCellsVisibility(this, true);
-		}
+		if (this.getCurrentHp() == 0) return;
+		
+		setLocation(newLocation);
+		
+		Game.map[getLocation().x][getLocation().y] = new CharacterCell(this);
+		
+		Game.changeAdjacentCellsVisibility(this, true);
 		
 	}
 	

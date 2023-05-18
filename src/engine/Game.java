@@ -242,7 +242,6 @@ public class Game {
 			 h.setActionsAvailable(h.getMaxActions());
 			 h.setTarget(null);
 			 h.setSpecialAction(false);
-			 changeAdjacentCellsVisibility(h, true);
 		 }
 		 
 		 resetMapVisibility();

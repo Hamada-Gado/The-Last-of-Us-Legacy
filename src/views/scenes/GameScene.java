@@ -2,47 +2,64 @@ package views.scenes;
 
 
 import engine.Game;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import views.cellView.CellView;
 
 public class GameScene implements MyScene{
 	
-	private BorderPane root;
+	public static final int GRID_WIDTH = 50;
+	public static final int GRID_HEIGHT = 50;
+	public static final int TEXT_AREA_WIDHT = 170;
+	
+	private HBox root;
 	private GridPane gameGrid;
-	private Label infoLabel;
+	private VBox logPanel;
+	private TextArea infoTextArea;
 	
 	private Scene scene;
 
 	public GameScene() {
 		
-		root = new BorderPane();
-//		root.setAlignment(gameGrid, Pos.CENTER);
+		root = new HBox();
+		root.setAlignment(Pos.CENTER_LEFT);
+		root.setSpacing(10);
+		root.setPadding(new Insets(5));
 		
 		// game map
 		gameGrid = new GridPane();
 		
 		for (int i = 0; i < Game.COLS; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
-//            colConst.setPercentWidth(100.0 / Game.COLS);
             gameGrid.getColumnConstraints().add(colConst);
         }
         for (int i = 0; i < Game.ROWS; i++) {
             RowConstraints rowConst = new RowConstraints();
-//            rowConst.setPercentHeight(100.0 / Game.ROWS);
             gameGrid.getRowConstraints().add(rowConst);         
-        }        
-		
+        }
+        
+        // log panel to show info for player either illegal moves or number of vaccines
+        logPanel = new VBox();
+        
 		// info of hero
-        infoLabel = new Label();
+        infoTextArea = new TextArea();
+        infoTextArea.setEditable(false);
+        infoTextArea.setWrapText(true);
+        infoTextArea.setPrefWidth(TEXT_AREA_WIDHT);
         
+        VBox.setVgrow(infoTextArea, Priority.ALWAYS);
+        logPanel.getChildren().add(infoTextArea);
         
-        root.setCenter(gameGrid);
-        root.setRight(infoLabel);
+        // add components to root
+        root.getChildren().addAll(gameGrid, logPanel);
         
 		scene = new Scene(root);
 	}
@@ -52,7 +69,7 @@ public class GameScene implements MyScene{
 	}
 	
 	public void setInfo(String info) {
-		infoLabel.setText(info);
+		infoTextArea.setText(info);
 	}
 
 	@Override
