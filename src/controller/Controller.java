@@ -11,7 +11,7 @@ import javafx.event.Event;
 import javafx.scene.control.TextArea;
 import model.characters.Hero;
 import views.App;
-import views.StartScene;
+import views.scenes.StartScene;
 
 public class Controller {
 	

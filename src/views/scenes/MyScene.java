@@ -1,4 +1,4 @@
-package views;
+package views.scenes;
 
 import javafx.scene.Scene;
 

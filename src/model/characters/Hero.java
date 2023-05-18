@@ -91,7 +91,7 @@ public abstract class Hero extends Character{
 		
 		switch(d) {
 		case UP:
-			if(getLocation().x == Game.HEIGHT - 1) {
+			if(getLocation().x == Game.ROWS - 1) {
 				throw new MovementException("Can not go UP");
 			}
 			dx = 1;
@@ -109,7 +109,7 @@ public abstract class Hero extends Character{
 			dy = -1;
 			break;
 		case RIGHT:
-			if(getLocation().y == Game.WIDTH - 1) {
+			if(getLocation().y == Game.COLS - 1) {
 				throw new MovementException("Can not go RIGHT");
 			}
 			dy = 1;

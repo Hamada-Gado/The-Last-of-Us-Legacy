@@ -1,4 +1,4 @@
-package views;
+package views.scenes;
 
 import java.util.ArrayList;
 
@@ -14,6 +14,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import views.App;
 
 public class StartScene implements MyScene {
 	private VBox root;

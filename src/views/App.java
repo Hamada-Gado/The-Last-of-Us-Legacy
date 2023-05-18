@@ -4,6 +4,9 @@ import controller.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.characters.Hero;
+import views.scenes.GameScene;
+import views.scenes.MyScene;
+import views.scenes.StartScene;
 
 public class App extends Application {
 	
@@ -13,7 +16,7 @@ public class App extends Application {
 	public static final int WINDOW_WIDTH = 960;
 	
 	private StartScene startScene = new StartScene();
-	private MyScene gameScene = new GameScene();
+	private GameScene gameScene = new GameScene();
 	
 	private MyScene currentScene = startScene;
 	

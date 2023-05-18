@@ -33,10 +33,10 @@ import model.world.TrapCell;
  */
 public class Game {
 	
-	public static final int HEIGHT = 15;
-	public static final int WIDTH = 15;
+	public static final int ROWS = 15;
+	public static final int COLS = 15;
 	
-	public static Cell [][] map = new Cell[HEIGHT][WIDTH];
+	public static Cell [][] map = new Cell[ROWS][COLS];
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
@@ -80,7 +80,7 @@ public class Game {
 	
 	
 	public static void changeCellVisibility(int x, int y, boolean visibility) {
-		if (x < 0 || x >= Game.HEIGHT || y < 0 || y >= Game.WIDTH) return;
+		if (x < 0 || x >= Game.ROWS || y < 0 || y >= Game.COLS) return;
 
 		Game.map[x][y].setVisible(visibility);
 	}
@@ -117,8 +117,8 @@ public class Game {
 		Cell c;
 		
 		while(true) {
-			x = randGen.nextInt(HEIGHT);
-			y = randGen.nextInt(WIDTH);
+			x = randGen.nextInt(ROWS);
+			y = randGen.nextInt(COLS);
 			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
@@ -140,8 +140,8 @@ public class Game {
 		Cell c;
 		
 		while(true) {
-			x = randGen.nextInt(HEIGHT);
-			y = randGen.nextInt(WIDTH);
+			x = randGen.nextInt(ROWS);
+			y = randGen.nextInt(COLS);
 			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
@@ -160,8 +160,8 @@ public class Game {
 		Cell c;
 		
 		while(true) {
-			x = randGen.nextInt(HEIGHT);
-			y = randGen.nextInt(WIDTH);
+			x = randGen.nextInt(ROWS);
+			y = randGen.nextInt(COLS);
 			c = map[x][y];
 			
 			if (!(c instanceof CharacterCell)) continue;
@@ -175,8 +175,8 @@ public class Game {
 	
 	public static void startGame(Hero h) {
 		
-		for (int x = 0; x < HEIGHT; x++) {
-			for (int y = 0; y < WIDTH; y++) {
+		for (int x = 0; x < ROWS; x++) {
+			for (int y = 0; y < COLS; y++) {
 				map[x][y] = new CharacterCell(null);
 			}
 		}
