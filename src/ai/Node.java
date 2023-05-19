@@ -31,6 +31,18 @@ public class Node implements Comparable<Node> {
 	public int evaluation() {
 		return cost() + heuristic();
 	}
+	
+	public Cell getState() {
+		return state;
+	}
+	
+	public Node getParent() {
+		return parent;
+	}
+	
+	public Direction getAction() {
+		return action;
+	}
 
 	@Override
 	public int compareTo(Node o) {

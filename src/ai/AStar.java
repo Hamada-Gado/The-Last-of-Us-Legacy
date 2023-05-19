@@ -1,8 +1,12 @@
 package ai;
 
 import java.awt.Point;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Stack;
 
 import engine.Game;
 import model.characters.Direction;
@@ -17,6 +21,10 @@ public class AStar {
 		this.maze = maze;
 		this.target = target;
 		this.agent = agent;
+	}	
+	
+	public boolean checkWithInBounds(int x, int y) {
+		return 0 <= x && x < Game.ROWS && 0 <= y && y < Game.COLS;
 	}
 	
 	public HashMap<Direction, Cell> neighbors(Cell state) {
@@ -39,20 +47,53 @@ public class AStar {
 			x = entry.getValue().x;
 			y = entry.getValue().y;
 			
-			if (checkWithInBounds(x, y) && checkForNewState(x, y, currentX, currentY, action))
+			if (checkWithInBounds(x, y))
 				results.put(action, maze[x][y]);
 		}
 		
 		return results;
 	}
 	
-	public boolean checkWithInBounds(int x, int y) {
-		return 0 <= x && x < Game.ROWS && 0 <= y && y < Game.COLS;
-	}
-	
-	public boolean checkForNewState(int x, int y, int currentX, int currentY, Direction action) {
-		return maze[x][y].getConnected().containsValue(maze[currentX][currentY])
-			   || maze[currentX][currentY].getConnected().containsKey(action);
+	public Stack<SimpleImmutableEntry<Direction, Point>> sovle() throws Exception {
+		
+		Node start = new Node(maze[agent.x][agent.y], target, null, null);
+		PriorityQueue<Node> frontier = new PriorityQueue<Node>();
+		frontier.add(start);
+		
+		HashSet<Cell> explored = new HashSet<Cell>();
+		
+		Node node;
+		Stack<SimpleImmutableEntry<Direction, Point>> path;
+		
+		while (true) {
+
+			if (frontier.isEmpty()) {
+				throw new Exception("No solution!!!");
+			}
+			
+			node = frontier.poll();
+			
+			if (node.getState().getPoint().equals(target)) {
+				path = new Stack<SimpleImmutableEntry<Direction, Point>>();
+				
+				while (node.getParent() != null) {
+					path.add(new SimpleImmutableEntry<Direction, Point>(node.getAction(), node.getState().getPoint()));
+					node = node.getParent();
+				}
+				
+				return path;
+			}
+			
+			explored.add(node.getState());
+			
+			for (Map.Entry<Direction, Cell> entry : neighbors(node.getState()).entrySet()) {
+				if (!explored.contains(entry.getValue())) {
+					frontier.add(new Node(entry.getValue(), target, node, entry.getKey()));
+				}
+			}
+				
+		}
+		
 	}
 
 }
