@@ -10,6 +10,7 @@ public class Node implements Comparable<Node> {
 	private Point target;
 	private Node parent;
 	private int steps;
+	private int gain;
 	private Direction action;
 	
 	public Node(Cell state, Point target, Node parent, Direction action) {
@@ -18,6 +19,9 @@ public class Node implements Comparable<Node> {
 		this.parent = parent;
 		this.steps = parent == null ? 0 : parent.steps + 1;
 		this.action = action;
+		
+		gain = parent == null ? 0 : parent.gain;
+		gain += state.isContainsVaccine() || state.isContainsSupply() ? -10 : 0;
 	}
 	
 	public int cost() {
@@ -29,7 +33,7 @@ public class Node implements Comparable<Node> {
 	}
 	
 	public int evaluation() {
-		return cost() + heuristic();
+		return cost() + heuristic() + gain;
 	}
 	
 	public Cell getState() {
@@ -47,6 +51,11 @@ public class Node implements Comparable<Node> {
 	@Override
 	public int compareTo(Node o) {
 		return evaluation() - o.evaluation();
+	}
+	
+	@Override
+	public String toString() {
+		return "Direction: " + (action == null ? "NONE" : action.toString()) + ", Point: " + state.getPoint().toString();
 	}
 
 }

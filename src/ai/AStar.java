@@ -16,11 +16,12 @@ public class AStar {
 	private Cell[][] maze;
 	private Point target;
 	private Point agent;
+	private Stack<SimpleImmutableEntry<Direction, Point>> path;
 	
-	public AStar(Cell[][] maze, Point target, Point agent) {
+	public AStar(Cell[][] maze, Point agent, Point target) {
 		this.maze = maze;
-		this.target = target;
 		this.agent = agent;
+		this.target = target;
 	}	
 	
 	public boolean checkWithInBounds(int x, int y) {
@@ -47,7 +48,7 @@ public class AStar {
 			x = entry.getValue().x;
 			y = entry.getValue().y;
 			
-			if (checkWithInBounds(x, y))
+			if (checkWithInBounds(x, y) && !maze[x][y].isOccupied())
 				results.put(action, maze[x][y]);
 		}
 		
@@ -63,10 +64,9 @@ public class AStar {
 		HashSet<Cell> explored = new HashSet<Cell>();
 		
 		Node node;
-		Stack<SimpleImmutableEntry<Direction, Point>> path;
 		
 		while (true) {
-
+			
 			if (frontier.isEmpty()) {
 				throw new Exception("No solution!!!");
 			}
@@ -77,11 +77,10 @@ public class AStar {
 				path = new Stack<SimpleImmutableEntry<Direction, Point>>();
 				
 				while (node.getParent() != null) {
-					path.add(new SimpleImmutableEntry<Direction, Point>(node.getAction(), node.getState().getPoint()));
+					getPath().add(new SimpleImmutableEntry<Direction, Point>(node.getAction(), node.getState().getPoint()));
 					node = node.getParent();
 				}
-				
-				return path;
+				return getPath();
 			}
 			
 			explored.add(node.getState());
@@ -94,6 +93,10 @@ public class AStar {
 				
 		}
 		
+	}
+
+	public Stack<SimpleImmutableEntry<Direction, Point>> getPath() {
+		return path;
 	}
 
 }
