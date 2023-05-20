@@ -31,10 +31,12 @@ public class Controller {
 	private Hero selectedHero;
 	private KeyHandler keyHandler;
 	private CellView[][] cellViews;
+	private Object infoTextAreaObject;
 
 	public Controller(App app) throws FileNotFoundException, IOException {
 		keyHandler = new KeyHandler(this);
 		cellViews = new CellView[Game.COLS][Game.ROWS];
+		infoTextAreaObject = "";
 		
 		this.app = app;
 		this.app.getGameState().getScene().addEventHandler(KeyEvent.ANY, keyHandler);
@@ -58,11 +60,30 @@ public class Controller {
 	
 	public void update() {
 		updateGameGrid();
+		setInfo(infoTextAreaObject.toString());
 		setError("");
 	}
-		
+	
 	public Hero getSelectedHero() {
 		return selectedHero;
+	}
+	
+	public void setSelectedHero(int x, int y) {
+		Cell cell = Game.map[x][y];
+		
+		if (!(cell instanceof CharacterCell)) return;
+		if (((CharacterCell) cell).getCharacter() == null) return;
+		if (((CharacterCell) cell).getCharacter() instanceof Zombie) return;
+		
+		selectedHero = (Hero) ((CharacterCell) cell).getCharacter();
+	}
+	
+	public void setSelectedHeroTarget(int x, int y) {
+		Cell cell = Game.map[x][y];
+		
+		if (!(cell instanceof CharacterCell)) return;
+		
+		selectedHero.setTarget(((CharacterCell) cell).getCharacter());
 	}
 	
 	public void goToGameState(String text) {
@@ -80,6 +101,7 @@ public class Controller {
 	    	String heroname = hero.toString();
 	    	if (heroname.contains(name)) {
 	    		selectedHero = hero;
+	    		infoTextAreaObject = hero;
 	    		app.changeSceneToGameScene(hero);
 	    		Game.startGame(hero);
 	    		setGameGrid();
@@ -133,7 +155,7 @@ public class Controller {
 				cell = Game.map[x][y];
 				
 				cellViews[x][y] = new CellView(getCellImage(cell), x, y, cell.isVisible());
-				app.getGameState().setImageInGrid(cellViews[x][y], 14 - x, y); // x= 0, y= 0 is left bottom0
+				app.getGameState().setImageInGrid(cellViews[x][y], (Game.ROWS - 1) - x, y); // x= 0, y= 0 is left bottom0
 			}
 		}
 	}
@@ -150,13 +172,23 @@ public class Controller {
 	}
 	
 	public void setInfo(int x, int y) {
+
+//		Point p = GameState.getLocationAtPixel(event.getSceneX(), event.getSceneY());
+		
+//		if (p.x < 0 || p.x >= Game.COLS || p.y < 0 || p.y >= Game.ROWS) return;
+		
 		Cell cell = Game.map[x][y];
 		
 		if (!cell.isVisible()) return;
 		if (!(cell instanceof CharacterCell)) return;
 		if (((CharacterCell) cell).getCharacter() == null) return;
 		
-		app.getGameState().setInfo(((CharacterCell) cell).getCharacter().toString());
+		infoTextAreaObject = ((CharacterCell) cell).getCharacter();
+		app.getGameState().setInfo(infoTextAreaObject.toString());
+	}
+	
+	public void setInfo(String text) {
+		app.getGameState().setInfo(text);
 	}
 	
 	public void setError(String text) {

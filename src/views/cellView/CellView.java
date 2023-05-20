@@ -3,6 +3,7 @@ package views.cellView;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import views.App;
 import views.state.GameState;
@@ -31,7 +32,7 @@ public class CellView implements EventHandler<MouseEvent> {
 		
 		setCurrentImage(visible);
 		setImageView();
-		getImageView().addEventHandler(MouseEvent.ANY, this);
+		getImageView().addEventFilter(MouseEvent.ANY, this);
 	}
 	
 	public Image getCellImage() {
@@ -66,11 +67,16 @@ public class CellView implements EventHandler<MouseEvent> {
 	
 	@Override
 	public void handle(MouseEvent event) {
-		if (event.getEventType() == MouseEvent.MOUSE_ENTERED) showInfo();
-	}
 
-	public void showInfo() {
-		App.controller.setInfo(x, y);		
+		if (event.getEventType() == MouseEvent.MOUSE_ENTERED) App.controller.setInfo(x, y);
+
+		if (event.getButton() == MouseButton.PRIMARY) {
+			App.controller.setSelectedHero(x, y);
+		} else if (event.getButton() == MouseButton.SECONDARY) {
+			App.controller.setSelectedHeroTarget(x, y);
+		}
+		
+		event.consume();
 	}
 	
 }

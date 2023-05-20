@@ -1,5 +1,6 @@
 package views.state;
 
+import java.awt.Point;
 
 import engine.Game;
 import javafx.geometry.Insets;
@@ -18,6 +19,7 @@ public class GameState implements State{
 	
 	public static final int GRID_WIDTH = 50;
 	public static final int GRID_HEIGHT = 50;
+	public static final int MARGIN = 5;
 	public static final int TEXT_AREA_WIDHT = 210;
 	
 	private HBox root;
@@ -33,7 +35,7 @@ public class GameState implements State{
 		root = new HBox();
 		root.setAlignment(Pos.CENTER_LEFT);
 		root.setSpacing(10);
-		root.setPadding(new Insets(5));
+		root.setPadding(new Insets(MARGIN));
 		
 		// game map
 		gameGrid = new GridPane();
@@ -72,9 +74,16 @@ public class GameState implements State{
         
 		scene = new Scene(root);
 	}
+
+	public static Point getLocationAtPixel(double x, double y) {
+		int newX = (Game.ROWS - 1) - (int) ((y - MARGIN) / GRID_HEIGHT);
+		int newY =  (int) ((x - MARGIN) / GRID_WIDTH);
+		
+		return new Point(newX, newY);
+	}
 	
 	public void setImageInGrid(CellView cellview, int x, int y) {
-		// y represents cols & x represents rows
+		// y represents cols & x represents rows in GridPane
     	gameGrid.add(cellview.getImageView(), y, x);
 	}
 	
