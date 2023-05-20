@@ -224,9 +224,10 @@ public class Game {
 		return noMoreVaccines() || heroes.isEmpty();
 	}
 	
-	 public static void endTurn() {
-		 
-		 for (Zombie z : zombies) {
+	@SuppressWarnings("unchecked")
+	public static void endTurn() {
+		 		 
+		 for (Zombie z : (Iterable<Zombie>) zombies.clone()) {
 			 try {
 				z.attack();
 			 } catch (InvalidTargetException | NotEnoughActionsException e) {
