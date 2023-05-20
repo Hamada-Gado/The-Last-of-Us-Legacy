@@ -1,4 +1,4 @@
-package views.scenes;
+package views.state;
 
 
 import engine.Game;
@@ -14,20 +14,21 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import views.cellView.CellView;
 
-public class GameScene implements MyScene{
+public class GameState implements State{
 	
 	public static final int GRID_WIDTH = 50;
 	public static final int GRID_HEIGHT = 50;
-	public static final int TEXT_AREA_WIDHT = 170;
+	public static final int TEXT_AREA_WIDHT = 210;
 	
 	private HBox root;
 	private GridPane gameGrid;
 	private VBox logPanel;
 	private TextArea infoTextArea;
+	private TextArea errorTextArea;
 	
 	private Scene scene;
 
-	public GameScene() {
+	public GameState() {
 		
 		root = new HBox();
 		root.setAlignment(Pos.CENTER_LEFT);
@@ -46,17 +47,25 @@ public class GameScene implements MyScene{
             gameGrid.getRowConstraints().add(rowConst);         
         }
         
-        // log panel to show info for player either illegal moves or number of vaccines
+        // log panel to show info for player or illegal moves
         logPanel = new VBox();
         
 		// info of hero
         infoTextArea = new TextArea();
+        infoTextArea.setStyle("-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00;");
         infoTextArea.setEditable(false);
         infoTextArea.setWrapText(true);
         infoTextArea.setPrefWidth(TEXT_AREA_WIDHT);
-        
-        VBox.setVgrow(infoTextArea, Priority.ALWAYS);
-        logPanel.getChildren().add(infoTextArea);
+                
+        // error because of illegal action
+        errorTextArea = new TextArea();
+        errorTextArea.setStyle("-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #ff0000; -fx-highlight-text-fill: #000000; -fx-text-fill: #ff0000; ");
+        errorTextArea.setEditable(false);
+        errorTextArea.setWrapText(true);
+        errorTextArea.setPrefWidth(TEXT_AREA_WIDHT);
+
+        logPanel.getChildren().addAll(infoTextArea, errorTextArea);
+        logPanel.getChildren().forEach(t -> VBox.setVgrow(t, Priority.ALWAYS));
         
         // add components to root
         root.getChildren().addAll(gameGrid, logPanel);
@@ -65,11 +74,20 @@ public class GameScene implements MyScene{
 	}
 	
 	public void setImageInGrid(CellView cellview, int x, int y) {
-    	gameGrid.add(cellview.getImageView(), x, y);
+		// y represents cols & x represents rows
+    	gameGrid.add(cellview.getImageView(), y, x);
 	}
 	
 	public void setInfo(String info) {
 		infoTextArea.setText(info);
+	}
+	
+	public void setError(String error) {
+		errorTextArea.setText(error);
+	}
+	
+	public GridPane getGameGrid() {
+		return gameGrid;
 	}
 
 	@Override

@@ -1,8 +1,8 @@
-package views.scenes;
+package views.state;
 
 import javafx.scene.Scene;
 
-public interface MyScene{
+public interface State{
 	
 	Scene getScene();
 

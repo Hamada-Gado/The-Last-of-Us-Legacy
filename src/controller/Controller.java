@@ -7,28 +7,37 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import engine.Game;
-import javafx.event.Event;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
+import model.characters.Fighter;
 import model.characters.Hero;
+import model.characters.Medic;
+import model.characters.Zombie;
+import model.collectibles.Collectible;
+import model.collectibles.Vaccine;
+import model.characters.Character;
+import model.characters.Explorer;
 import model.world.Cell;
 import model.world.CharacterCell;
 import model.world.CollectibleCell;
-import model.world.TrapCell;
 import views.App;
 import views.cellView.CellView;
-import views.cellView.CharacterCellView;
-import views.cellView.CollectibleCellView;
-import views.cellView.TrapCellView;
-import views.scenes.GameScene;
-import views.scenes.StartScene;
 
 public class Controller {
 	
 	private App app;
 	private ArrayList<TextArea> heroes;
-	
+	private Hero selectedHero;
+	private KeyHandler keyHandler;
+	private CellView[][] cellViews;
+
 	public Controller(App app) throws FileNotFoundException, IOException {
+		keyHandler = new KeyHandler(this);
+		cellViews = new CellView[Game.COLS][Game.ROWS];
+		
 		this.app = app;
+		this.app.getGameState().getScene().addEventHandler(KeyEvent.ANY, keyHandler);
 		
 		Game.loadHeroes("./res/Heros.csv");
 		heroes = new ArrayList<TextArea>();
@@ -36,41 +45,27 @@ public class Controller {
 		// add heroes images and info ! images not yet implemented
 		for(Hero hero : Game.availableHeroes) {
 			TextArea ta = new TextArea();
-			ta.setPrefSize(300, 120);
+			ta.setPrefSize(300, 140);
 		
 			ta.setEditable(false);
 			ta.setText(hero.toString());
-			ta.setOnMouseClicked((event) -> goToGameScene(event));
+			ta.setOnMouseClicked((event) -> goToGameState(((TextArea) event.getSource()).getText()));
 			heroes.add(ta);
 		}
 		
-		((StartScene) this.app.getCurrentScene()).updateHeroesPane(heroes);
-	}
-		
-	public void setGameGrid() {
-		CellView cellView;
-		Cell cell;
-		
-		for (int x = 0; x < Game.ROWS; x++) {
-			for (int y = 0; y < Game.COLS; y++) {
-				cell = Game.map[x][y];
-				
-				if (cell instanceof CharacterCell) {
-					cellView = new CharacterCellView((CharacterCell) cell);
-				} else if (cell instanceof CollectibleCell) {
-					cellView = new CollectibleCellView((CollectibleCell) cell);
-				} else {
-					cellView = new TrapCellView((TrapCell) cell);
-				}
-				
-				((GameScene) app.getCurrentScene()).setImageInGrid(cellView, x, 14 - y);
-			}
-		}
-		
+		this.app.getStartState().updateHeroesPane(heroes);
 	}
 	
-	public void goToGameScene(Event event) {
-		String text = ((TextArea) event.getSource()).getText();
+	public void update() {
+		updateGameGrid();
+		setError("");
+	}
+		
+	public Hero getSelectedHero() {
+		return selectedHero;
+	}
+	
+	public void goToGameState(String text) {
 		
 		Pattern pattern = Pattern.compile("Name: (.*)", Pattern.CASE_INSENSITIVE);
 	    Matcher matcher = pattern.matcher(text);
@@ -84,6 +79,7 @@ public class Controller {
 	    for (Hero hero : Game.availableHeroes) {
 	    	String heroname = hero.toString();
 	    	if (heroname.contains(name)) {
+	    		selectedHero = hero;
 	    		app.changeSceneToGameScene(hero);
 	    		Game.startGame(hero);
 	    		setGameGrid();
@@ -93,8 +89,79 @@ public class Controller {
 		
 	}
 	
-	public void setInfo(String text) {
-		((GameScene) app.getCurrentScene()).setInfo(text);
+	public Image getCellImage(Cell cell) {
+		Image cellImage;
+		Character character;
+		Collectible collectible;
+
+		if (cell instanceof CharacterCell) {
+			character = ((CharacterCell) cell).getCharacter();
+			
+			if (character instanceof Zombie) {
+				cellImage = CellView.ZOMBIE_IMAGE;
+			} else if (character instanceof Fighter) {
+				cellImage = CellView.FIGHTER_IMAGE;
+			} else if (character instanceof Medic) {
+				cellImage = CellView.MEDIC_IMAGE;
+			} else if (character instanceof Explorer) {
+				cellImage = CellView.EXPLORER_IMAGE;
+			} else {
+				cellImage = CellView.EMPTY_CELL;
+			}
+			
+		} else if (cell instanceof CollectibleCell) {
+			collectible = ((CollectibleCell) cell).getCollectible();
+			
+			if (collectible instanceof Vaccine) {
+				cellImage = CellView.VACCINE_IMAGE;
+			} else {
+				cellImage = CellView.SUPPLY_IMAGE;
+			}
+			
+		} else {
+			cellImage = CellView.EMPTY_CELL;
+		}
+		
+		return cellImage;
 	}
+	
+	public void setGameGrid() {
+		Cell cell;		
+		
+		for (int x = 0; x < Game.ROWS; x++) {
+			for (int y = 0; y < Game.COLS; y++) {
+				cell = Game.map[x][y];
+				
+				cellViews[x][y] = new CellView(getCellImage(cell), x, y, cell.isVisible());
+				app.getGameState().setImageInGrid(cellViews[x][y], 14 - x, y); // x= 0, y= 0 is left bottom0
+			}
+		}
+	}
+	
+	public void updateGameGrid() {
+		Cell cell;		
+		
+		for (int x = 0; x < Game.ROWS; x++) {
+			for (int y = 0; y < Game.COLS; y++) {
+				cell = Game.map[x][y];
+				cellViews[x][y].updateImageView(getCellImage(cell), cell.isVisible());
+			}
+		}	
+	}
+	
+	public void setInfo(int x, int y) {
+		Cell cell = Game.map[x][y];
+		
+		if (!cell.isVisible()) return;
+		if (!(cell instanceof CharacterCell)) return;
+		if (((CharacterCell) cell).getCharacter() == null) return;
+		
+		app.getGameState().setInfo(((CharacterCell) cell).getCharacter().toString());
+	}
+	
+	public void setError(String text) {
+		app.getGameState().setError(text);
+	}
+	
 	
 }

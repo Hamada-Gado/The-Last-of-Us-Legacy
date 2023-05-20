@@ -2,47 +2,57 @@ package views;
 
 import controller.Controller;
 import javafx.application.Application;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.characters.Hero;
-import views.scenes.GameScene;
-import views.scenes.MyScene;
-import views.scenes.StartScene;
+import views.state.GameState;
+import views.state.StartState;
 
 public class App extends Application {
 	
 	public static final String TITLE = "The Last of Us: Legacy";
 
 	public static final int WINDOW_HEIGHT = 800;
-	public static final int WINDOW_WIDTH = 960;
+	public static final int WINDOW_WIDTH = 1000;
 	
 	public static Controller controller;
 	
-	private StartScene startScene = new StartScene();
-	private GameScene gameScene = new GameScene();	
-	private MyScene currentScene = startScene;
+	private StartState startState = new StartState();
+	private GameState gameState = new GameState();
+
 	private Stage stage;
 	
-	public MyScene getCurrentScene() {
-		return currentScene;
+	public StartState getStartState() {
+		return startState;
+	}
+	
+	public GameState getGameState() {
+		return gameState;
+	}
+	
+	public Stage getStage() {
+		return stage;
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		
-		primaryStage.setScene(startScene.getScene());
+		primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+			if (event.getCode() == KeyCode.ESCAPE) System.exit(0);});
 		primaryStage.setWidth(WINDOW_WIDTH);
 		primaryStage.setHeight(WINDOW_HEIGHT);
 		primaryStage.setResizable(false);
 		primaryStage.setTitle(TITLE);
+		primaryStage.setScene(startState.getScene());
 		primaryStage.show();
 		
 		controller = new Controller(this);
 	}
 	
 	public void changeSceneToGameScene(Hero hero) {
-		currentScene = gameScene;
-		stage.setScene(currentScene.getScene());
+		stage.setScene(gameState.getScene());
 		
 	}
 	

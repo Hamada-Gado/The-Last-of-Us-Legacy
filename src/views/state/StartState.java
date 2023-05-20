@@ -1,4 +1,4 @@
-package views.scenes;
+package views.state;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import views.App;
 
-public class StartScene implements MyScene {
+public class StartState implements State {
 	private VBox root;
 
 	private Label titleLabel;
@@ -24,7 +24,7 @@ public class StartScene implements MyScene {
 
 	private Scene scene;
 	
-	public StartScene() {
+	public StartState() {
 		root = new VBox();
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(10);
