@@ -84,7 +84,7 @@ public class GameState implements State{
 	
 	public void setImageInGrid(CellView cellview, int x, int y) {
 		// y represents cols & x represents rows in GridPane
-    	gameGrid.add(cellview.getImageView(), y, x);
+    	gameGrid.add(cellview.getButton(), y, x);
 	}
 	
 	public void setInfo(String info) {

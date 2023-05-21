@@ -24,6 +24,7 @@ import model.world.CollectibleCell;
 import views.App;
 import views.cellView.CellView;
 
+
 public class Controller {
 	
 	private App app;
@@ -47,7 +48,7 @@ public class Controller {
 		// add heroes images and info ! images not yet implemented
 		for(Hero hero : Game.availableHeroes) {
 			TextArea ta = new TextArea();
-			ta.setPrefSize(300, 140);
+			ta.setPrefSize(300, 150);
 		
 			ta.setEditable(false);
 			ta.setText(hero.toString());
@@ -75,6 +76,9 @@ public class Controller {
 		if (((CharacterCell) cell).getCharacter() == null) return;
 		if (((CharacterCell) cell).getCharacter() instanceof Zombie) return;
 		
+
+		cellViews[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(CellView.TRANSPARENT);
+		cellViews[x][y].setBorderStrokeColor(CellView.HERO_COLOR);
 		selectedHero = (Hero) ((CharacterCell) cell).getCharacter();
 	}
 	
@@ -83,6 +87,12 @@ public class Controller {
 		
 		if (!(cell instanceof CharacterCell)) return;
 		
+		if (((CharacterCell) cell).getCharacter() instanceof Zombie) {
+			cellViews[x][y].setBorderStrokeColor(CellView.ZOMBIE_TARGET_COLOR);
+		} else {
+			System.out.println("lol");
+			cellViews[x][y].setBorderStrokeColor(CellView.HERO_TARGET_COLOR);
+		}
 		selectedHero.setTarget(((CharacterCell) cell).getCharacter());
 	}
 	
@@ -155,9 +165,11 @@ public class Controller {
 				cell = Game.map[x][y];
 				
 				cellViews[x][y] = new CellView(getCellImage(cell), x, y, cell.isVisible());
-				app.getGameState().setImageInGrid(cellViews[x][y], (Game.ROWS - 1) - x, y); // x= 0, y= 0 is left bottom0
+				app.getGameState().setImageInGrid(cellViews[x][y], (Game.ROWS - 1) - x, y); // x= 0, y= 0 is left bottom
 			}
 		}
+		
+		cellViews[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(CellView.HERO_COLOR);
 	}
 	
 	public void updateGameGrid() {
@@ -166,9 +178,12 @@ public class Controller {
 		for (int x = 0; x < Game.ROWS; x++) {
 			for (int y = 0; y < Game.COLS; y++) {
 				cell = Game.map[x][y];
-				cellViews[x][y].updateImageView(getCellImage(cell), cell.isVisible());
+				cellViews[x][y].setBorderStrokeColor(CellView.TRANSPARENT);;
+				cellViews[x][y].update(getCellImage(cell), cell.isVisible());
 			}
-		}	
+		}
+		
+		cellViews[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(CellView.HERO_COLOR);
 	}
 	
 	public void setInfo(int x, int y) {
@@ -191,8 +206,8 @@ public class Controller {
 		app.getGameState().setInfo(text);
 	}
 	
-	public void setError(String text) {
-		app.getGameState().setError(text);
+	public void setError(String error) {
+		app.getGameState().setError(error);
 	}
 	
 	
