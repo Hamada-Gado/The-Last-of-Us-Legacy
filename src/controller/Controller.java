@@ -49,7 +49,6 @@ public class Controller {
 		for(Hero hero : Game.availableHeroes) {
 			TextArea ta = new TextArea();
 			ta.setPrefSize(300, 150);
-		
 			ta.setEditable(false);
 			ta.setText(hero.toString());
 			ta.setOnMouseClicked((event) -> goToGameState(((TextArea) event.getSource()).getText()));
@@ -64,7 +63,6 @@ public class Controller {
 		updateGameGrid();
 		setInfo(infoTextAreaObject.toString());
 		setError("");
-		
 		if (Game.checkGameOver()) {
 			gotoEndState(Game.checkWin());
 		}
@@ -102,6 +100,9 @@ public class Controller {
 		selectedHero.setTarget(((CharacterCell) cell).getCharacter());
 	}
 	
+	public void gotoStartState() {
+		app.changeSceneToStartScene();
+	}
 	public void goToGameState(String text) {
 		
 		Pattern pattern = Pattern.compile("Name: (.*)", Pattern.CASE_INSENSITIVE);
