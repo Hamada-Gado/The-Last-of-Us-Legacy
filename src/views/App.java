@@ -2,10 +2,12 @@ package views;
 
 import controller.Controller;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.characters.Hero;
+import views.state.BeginState;
 import views.state.EndState;
 import views.state.GameState;
 import views.state.StartState;
@@ -19,12 +21,15 @@ public class App extends Application {
 	public static final int WINDOW_WIDTH = 1000;
 	
 	public static Controller controller;
-	
+	private BeginState beginState = new BeginState();
+
 	private StartState startState = new StartState();
 	private GameState gameState = new GameState();
 	private EndState endState = new EndState();
 	private Stage stage;
-	
+	public BeginState getBeginState() {
+		return beginState;
+	}
 	public StartState getStartState() {
 		return startState;
 	}
@@ -51,12 +56,15 @@ public class App extends Application {
 		primaryStage.setHeight(WINDOW_HEIGHT);
 		primaryStage.setResizable(false);
 		primaryStage.setTitle(TITLE);
-		primaryStage.setScene(startState.getScene());
+		primaryStage.setScene(beginState.getScene());
 		primaryStage.show();
 		
 		controller = new Controller(this);
 	}
 	
+	public void changeSceneToStartScene() {
+		stage.setScene(startState.getScene());
+	}
 	public void changeSceneToGameScene(Hero hero) {
 		stage.setScene(gameState.getScene());
 		

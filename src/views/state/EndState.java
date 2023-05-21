@@ -21,7 +21,7 @@ public class EndState {
 	
 	public EndState() {
 		root = new VBox();
-		root.setAlignment(Pos.CENTER_LEFT);
+		root.setAlignment(Pos.CENTER);
 		root.setSpacing(10);
 		titleLabel = new Label(App.TITLE);
 		titleLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN, new CornerRadii(5), Insets.EMPTY)));
