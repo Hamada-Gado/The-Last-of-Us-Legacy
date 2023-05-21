@@ -56,12 +56,18 @@ public class Controller {
 		}
 		
 		this.app.getStartState().updateHeroesPane(heroes);
+		
 	}
 	
 	public void update() {
 		updateGameGrid();
 		setInfo(infoTextAreaObject.toString());
 		setError("");
+		
+		if (Game.checkGameOver()) {
+			
+			gotoEndState(Game.checkWin());
+		}
 	}
 	
 	public Hero getSelectedHero() {
@@ -109,6 +115,10 @@ public class Controller {
 	    	}
 	    }
 		
+	}
+	
+	public void gotoEndState(boolean win) {
+		app.changeSceneToEndScene(win);
 	}
 	
 	public Image getCellImage(Cell cell) {
