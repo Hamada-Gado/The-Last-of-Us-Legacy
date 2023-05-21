@@ -65,7 +65,6 @@ public class Controller {
 		setError("");
 		
 		if (Game.checkGameOver()) {
-			
 			gotoEndState(Game.checkWin());
 		}
 	}
