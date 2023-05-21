@@ -39,13 +39,16 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 	public void handle(KeyEvent event) {
 		KeyCode code = event.getCode();
 		
-		try {			
+		if (event.getEventType() == KeyEvent.KEY_PRESSED) {				
+			try {
 			makeAnAction(code);
 			controller.update();
-		} catch(GameActionException e) {
-			controller.setError(e.getMessage());
-		}
+			}
+			catch(GameActionException e) {
+				controller.setError(e.getMessage());
 		
+			}
+		}
 	}
 	
 	public void makeAnAction(KeyCode code) throws GameActionException {
