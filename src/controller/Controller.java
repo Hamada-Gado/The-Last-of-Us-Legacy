@@ -81,8 +81,9 @@ public class Controller {
 		if (((CharacterCell) cell).getCharacter() == null) return;
 		if (((CharacterCell) cell).getCharacter() instanceof Zombie) return;
 		
-
-		cellViews[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(CellView.TRANSPARENT);
+		if (selectedHero != null)
+			cellViews[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(CellView.TRANSPARENT);
+		
 		cellViews[x][y].setBorderStrokeColor(CellView.HERO_COLOR);
 		selectedHero = (Hero) ((CharacterCell) cell).getCharacter();
 	}
@@ -192,15 +193,13 @@ public class Controller {
 			}
 		}
 		
-		cellViews[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(CellView.HERO_COLOR);
+		if (selectedHero.getCurrentHp() > 0)
+			cellViews[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(CellView.HERO_COLOR);
+		else selectedHero = null;
 	}
 	
 	public void setInfo(int x, int y) {
 
-//		Point p = GameState.getLocationAtPixel(event.getSceneX(), event.getSceneY());
-		
-//		if (p.x < 0 || p.x >= Game.COLS || p.y < 0 || p.y >= Game.ROWS) return;
-		
 		Cell cell = Game.map[x][y];
 		
 		if (!cell.isVisible()) return;

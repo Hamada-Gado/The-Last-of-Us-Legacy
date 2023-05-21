@@ -37,6 +37,8 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 
 	@Override
 	public void handle(KeyEvent event) {
+		if (controller.getSelectedHero() == null) return;
+		
 		KeyCode code = event.getCode();
 		
 		if (event.getEventType() == KeyEvent.KEY_PRESSED) {				

@@ -23,13 +23,17 @@ public class EndState {
 		root = new VBox();
 		root.setAlignment(Pos.CENTER_LEFT);
 		root.setSpacing(10);
+		
 		titleLabel = new Label(App.TITLE);
 		titleLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN, new CornerRadii(5), Insets.EMPTY)));
 		titleLabel.setFont(new Font("Arial", 90));	
+		
 		endLabel = new Label();
 		endLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN, new CornerRadii(5), Insets.EMPTY)));
 		endLabel.setFont(new Font("Arial", 40));
+		
 		root.getChildren().addAll(titleLabel, endLabel);
+		
 		scene = new Scene(root);	
 	}
 	
