@@ -44,7 +44,15 @@ public class BeginState {
 		
 		Button rules = new Button("Rules");
 		rules.setPrefSize(100, 50);
-		
+		rules.setOnMouseClicked(new EventHandler<Event>(){
+
+			@Override
+			public void handle(Event arg0) {
+				// TODO Auto-generated method stub
+				App.controller.gotoRulesState();
+			}
+			
+		});
 		Button quit = new Button("Quit");
 		quit.setPrefSize(100, 50);
 		
