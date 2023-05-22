@@ -29,30 +29,12 @@ public class App extends Application {
 	private GameState gameState = new GameState();
 	private EndState endState = new EndState();
 	private Stage stage;
-	public BeginState getBeginState() {
-		return beginState;
-	}
-	public StartState getStartState() {
-		return startState;
-	}
-	
-	public GameState getGameState() {
-		return gameState;
-	}
-	public EndState getEndState() {
-		return endState;
-	}
-	
-	
-	public Stage getStage() {
-		return stage;
-	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		
-		primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+		primaryStage.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
 			if (event.getCode() == KeyCode.ESCAPE) System.exit(0);});
 		primaryStage.setWidth(WINDOW_WIDTH);
 		primaryStage.setHeight(WINDOW_HEIGHT);
@@ -79,6 +61,24 @@ public class App extends Application {
 	public void changeSceneToEndScene(boolean win) {
 		endState.setRoot(win);
 		stage.getScene().setRoot(endState.getRoot());
+	}
+
+	public BeginState getBeginState() {
+		return beginState;
+	}
+	public StartState getStartState() {
+		return startState;
+	}
+	
+	public GameState getGameState() {
+		return gameState;
+	}
+	public EndState getEndState() {
+		return endState;
+	}
+	
+	public Stage getStage() {
+		return stage;
 	}
 	
 	public static void main(String[] args) {

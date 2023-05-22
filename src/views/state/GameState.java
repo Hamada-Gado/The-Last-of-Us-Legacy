@@ -26,13 +26,14 @@ public class GameState {
 	private VBox logPanel;
 	private TextArea infoTextArea;
 	private TextArea errorTextArea;
+	private TextArea actionTextArea;
 
 	public GameState() {
 		
 		root = new HBox();
-		getRoot().setAlignment(Pos.CENTER);
-		getRoot().setSpacing(10);
-		getRoot().setPadding(new Insets(MARGIN));
+		root.setAlignment(Pos.CENTER);
+		root.setSpacing(10);
+		root.setPadding(new Insets(MARGIN));
 		
 		// game map
 		gameGrid = new GridPane();
@@ -43,7 +44,7 @@ public class GameState {
         }
         for (int i = 0; i < Game.ROWS; i++) {
             RowConstraints rowConst = new RowConstraints();
-            gameGrid.getRowConstraints().add(rowConst);         
+            gameGrid.getRowConstraints().add(rowConst);
         }
         
         // log panel to show info for player or illegal moves
@@ -52,19 +53,22 @@ public class GameState {
 		// info of hero
         infoTextArea = new TextArea();
         infoTextArea.setStyle("-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00;");
-        infoTextArea.setEditable(false);
-        infoTextArea.setWrapText(true);
-        infoTextArea.setPrefWidth(TEXT_AREA_WIDHT);
                 
         // error because of illegal action
         errorTextArea = new TextArea();
         errorTextArea.setStyle("-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #ff0000; -fx-highlight-text-fill: #000000; -fx-text-fill: #ff0000; ");
-        errorTextArea.setEditable(false);
-        errorTextArea.setWrapText(true);
-        errorTextArea.setPrefWidth(TEXT_AREA_WIDHT);
-
-        logPanel.getChildren().addAll(infoTextArea, errorTextArea);
-        logPanel.getChildren().forEach(t -> VBox.setVgrow(t, Priority.ALWAYS));
+        
+        // actions taken during the turn
+        actionTextArea = new TextArea();
+        actionTextArea.setStyle("-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffff00; ");
+        
+        logPanel.getChildren().addAll(infoTextArea, errorTextArea, actionTextArea);
+        logPanel.getChildren().forEach(t -> {
+        	((TextArea) t).setEditable(false);
+        	((TextArea) t).setWrapText(true);
+        	((TextArea) t).setPrefWidth(TEXT_AREA_WIDHT);
+        	VBox.setVgrow(t, Priority.ALWAYS);
+        });
         
         // add components to root
         root.getChildren().addAll(gameGrid, logPanel);
@@ -88,6 +92,10 @@ public class GameState {
 	
 	public void setError(String error) {
 		errorTextArea.setText(error);
+	}
+	
+	public void setActionTextArea(String actionText) {
+		actionTextArea.setText(actionText);
 	}
 	
 	public GridPane getGameGrid() {

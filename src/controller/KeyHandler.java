@@ -48,28 +48,48 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 			}
 			catch(GameActionException e) {
 				controller.setError(e.getMessage());
-		
 			}
 		}
 	}
 	
 	public void makeAnAction(KeyCode code) throws GameActionException {
-		if (code == up)
+		int currentHp = controller.getSelectedHero().getCurrentHp();
+		
+		if (code == up) {
 			controller.getSelectedHero().move(Direction.UP);
-		else if (code == down)
+			controller.setActionText("Moved UP");
+		}
+		else if (code == down) {
 			controller.getSelectedHero().move(Direction.DOWN);
-		else if (code == right)
+			controller.setActionText("Moved DOWN");			
+		}
+		else if (code == right) {
 			controller.getSelectedHero().move(Direction.RIGHT);
-		else if (code == left)
+			controller.setActionText("Moved RIGHT");			
+		}
+		else if (code == left) {
 			controller.getSelectedHero().move(Direction.LEFT);
-		else if (code == attack)
+			controller.setActionText("Moved LEFT");
+		}
+		else if (code == attack) {
 			controller.getSelectedHero().attack();
-		else if (code == cure)
+			controller.setActionText("Attacked" + controller.getSelectedHero().getTarget().getName() + "\n" + "Zombie Defended, Damage Taken:" + controller.getSelectedHero().getTarget().getAttackDmg()/2);
+		}
+		else if (code == cure) {
 			controller.getSelectedHero().cure();
-		else if (code == specialAction)
+			controller.setActionText("Cure zombie, a new Hero appeared");
+		}
+		else if (code == specialAction) {
 			controller.getSelectedHero().useSpecial();
-		else if (code == endTurn)
+			controller.setActionText("Special Action is used");
+		}
+		else if (code == endTurn) {
 			Game.endTurn();
+			controller.setActionText("End Turn\nBEWARE all Zombies try to attack");
+		}
+		
+		if ((code == up || code == down || code == right || code == left) && currentHp - controller.getSelectedHero().getCurrentHp() != 0)
+			controller.setActionText("A trap got activated\nDamage Taken: " + (currentHp - controller.getSelectedHero().getCurrentHp()));
 		
 	}
 }
