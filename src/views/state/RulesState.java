@@ -16,7 +16,7 @@ public class RulesState {
 	private VBox root;
 
 	private Label titleLabel;
-	private TextArea infoTextArea;
+	private TextArea rulesTextArea;
 	public RulesState() {
 		root = new VBox();
 		getRoot().setAlignment(Pos.CENTER);
@@ -25,16 +25,16 @@ public class RulesState {
 		titleLabel = new Label(App.TITLE);
 		titleLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN, new CornerRadii(5), Insets.EMPTY)));
 		titleLabel.setFont(new Font("Arial", 90));
-		infoTextArea = new TextArea();
-	    infoTextArea.setPadding(new Insets(5,20,5,20));
-	    infoTextArea.setStyle("-fx-control-inner-background: #F5F5DC; -fx-font-family: Consolas; -fx-highlight-fill: #00008b; -fx-highlight-text-fill: #F5F5DC; -fx-text-fill: #00008b;");
-	    infoTextArea.setFont(new Font("Times New Roman", 12));
-	    infoTextArea.setEditable(false);
-	    infoTextArea.setWrapText(true);
-	    infoTextArea.setPrefWidth(600);
-	    infoTextArea.setPrefHeight(530);
-	    infoTextArea.setText(setRules());
-	    root.getChildren().addAll(titleLabel, infoTextArea);
+		rulesTextArea = new TextArea();
+	    rulesTextArea.setPadding(new Insets(5,20,5,20));
+	    rulesTextArea.setStyle("-fx-control-inner-background: #F5F5DC; -fx-font-family: Consolas; -fx-highlight-fill: #00008b; -fx-highlight-text-fill: #F5F5DC; -fx-text-fill: #00008b;");
+	    rulesTextArea.setFont(new Font("Times New Roman", 12));
+	    rulesTextArea.setEditable(false);
+	    rulesTextArea.setWrapText(true);
+	    rulesTextArea.setPrefWidth(600);
+	    rulesTextArea.setPrefHeight(530);
+	    rulesTextArea.setText(setRules());
+	    root.getChildren().addAll(titleLabel, rulesTextArea);
 	       
 	}
 	public String setRules() {
