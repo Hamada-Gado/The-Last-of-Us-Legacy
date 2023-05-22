@@ -34,7 +34,7 @@ public class App extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		
-		primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+		primaryStage.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
 			if (event.getCode() == KeyCode.ESCAPE) System.exit(0);});
 		primaryStage.setWidth(WINDOW_WIDTH);
 		primaryStage.setHeight(WINDOW_HEIGHT);

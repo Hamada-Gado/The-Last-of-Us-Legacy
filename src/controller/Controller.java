@@ -134,7 +134,7 @@ public class Controller {
 	    		infoTextAreaObject = hero;
 	    		
 	    		app.changeSceneToGameScene(hero);
-	    		app.getStage().getScene().getRoot().addEventHandler(KeyEvent.ANY, keyHandler);
+	    		app.getStage().getScene().getRoot().addEventFilter(KeyEvent.ANY, keyHandler);
 
 	    		Game.startGame(hero);
 	    		setGameGrid();
@@ -247,6 +247,5 @@ public class Controller {
 	public void setActionText(String actionText) {
 		this.actionText = actionText;
 	}
-	
 	
 }
