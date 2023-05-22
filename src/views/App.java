@@ -64,6 +64,9 @@ public class App extends Application {
 		controller = new Controller(this);
 	}
 	
+	public void changeSceneToBeginScene() {
+		stage.getScene().setRoot(beginState.getRoot());
+	}
 	public void changeSceneToRulesScene() {
 		stage.getScene().setRoot(rulesState.getRoot());
 	}

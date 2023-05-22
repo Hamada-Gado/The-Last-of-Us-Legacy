@@ -7,6 +7,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -55,7 +57,15 @@ public class BeginState {
 		});
 		Button quit = new Button("Quit");
 		quit.setPrefSize(100, 50);
-		
+		quit.setOnMouseClicked(new EventHandler<Event>(){
+
+			@Override
+			public void handle(Event arg0) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+			
+		});
 		root.getChildren().addAll(titleLabel,hero, rules, quit);
 	}
 

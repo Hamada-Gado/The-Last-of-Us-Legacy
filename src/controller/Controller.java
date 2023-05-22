@@ -98,6 +98,9 @@ public class Controller {
 		
 		selectedHero.setTarget(((CharacterCell) cell).getCharacter());
 	}
+	public void gotoBeginState() {
+		app.changeSceneToBeginScene();
+	}
 	
 	public void gotoStartState() {
 		app.changeSceneToStartScene();
