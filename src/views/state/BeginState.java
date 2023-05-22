@@ -44,9 +44,9 @@ public class BeginState {
 			
 		});
 		
-		Button rules = new Button("Rules");
-		rules.setPrefSize(100, 50);
-		rules.setOnMouseClicked(new EventHandler<Event>(){
+		Button description = new Button("Description");
+		description.setPrefSize(100, 50);
+		description.setOnMouseClicked(new EventHandler<Event>(){
 
 			@Override
 			public void handle(Event arg0) {
@@ -66,7 +66,7 @@ public class BeginState {
 			}
 			
 		});
-		root.getChildren().addAll(titleLabel,hero, rules, quit);
+		root.getChildren().addAll(titleLabel,hero, description, quit);
 	}
 
 	public VBox getRoot() {
