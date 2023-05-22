@@ -26,8 +26,8 @@ public class Vaccine implements Collectible{
 		
 		int randIndex = new Random().nextInt(Game.availableHeroes.size());
 		Hero newHero = Game.availableHeroes.get(randIndex);
-		Game.availableHeroes.remove(randIndex);
 
+		Game.availableHeroes.remove(randIndex);
 		Game.heroes.add(newHero);
 		
 		newHero.setLocation(h.getTarget().getLocation());
@@ -36,6 +36,7 @@ public class Vaccine implements Collectible{
 		
 		Game.zombies.remove(h.getTarget());
 		
+		Game.changeAdjacentCellsVisibility(newHero, true);
 		
 		h.getVaccineInventory().remove(this);
 	}
