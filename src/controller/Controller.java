@@ -102,6 +102,11 @@ public class Controller {
 	public void gotoStartState() {
 		app.changeSceneToStartScene();
 	}
+	
+	public void gotoRulesState() {
+		app.changeSceneToRulesScene();
+	}
+	
 	public void goToGameState(String text) {
 		
 		Pattern pattern = Pattern.compile("Name: (.*)", Pattern.CASE_INSENSITIVE);

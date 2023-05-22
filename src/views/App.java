@@ -10,6 +10,7 @@ import model.characters.Hero;
 import views.state.BeginState;
 import views.state.EndState;
 import views.state.GameState;
+import views.state.RulesState;
 import views.state.StartState;
 
 public class App extends Application {
@@ -22,6 +23,7 @@ public class App extends Application {
 	
 	public static Controller controller;
 	private BeginState beginState = new BeginState();
+	private RulesState rulesState = new RulesState();
 
 	private StartState startState = new StartState();
 	private GameState gameState = new GameState();
@@ -62,6 +64,9 @@ public class App extends Application {
 		controller = new Controller(this);
 	}
 	
+	public void changeSceneToRulesScene() {
+		stage.getScene().setRoot(rulesState.getRoot());
+	}
 	public void changeSceneToStartScene() {
 		stage.getScene().setRoot(startState.getRoot());
 	}
