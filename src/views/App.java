@@ -56,22 +56,21 @@ public class App extends Application {
 		primaryStage.setHeight(WINDOW_HEIGHT);
 		primaryStage.setResizable(false);
 		primaryStage.setTitle(TITLE);
-		primaryStage.setScene(beginState.getScene());
+		primaryStage.setScene(new Scene(beginState.getRoot()));
 		primaryStage.show();
 		
 		controller = new Controller(this);
 	}
 	
 	public void changeSceneToStartScene() {
-		stage.setScene(startState.getScene());
+		stage.getScene().setRoot(startState.getRoot());
 	}
 	public void changeSceneToGameScene(Hero hero) {
-		stage.setScene(gameState.getScene());
-		
+		stage.getScene().setRoot(gameState.getRoot());
 	}
 	public void changeSceneToEndScene(boolean win) {
-		endState.setScene(win);
-		stage.setScene(endState.getScene());
+		endState.setRoot(win);
+		stage.getScene().setRoot(endState.getRoot());
 	}
 	
 	public static void main(String[] args) {

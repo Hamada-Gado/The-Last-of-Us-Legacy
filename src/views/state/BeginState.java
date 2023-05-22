@@ -1,12 +1,10 @@
 package views.state;
 
 
-import controller.Controller;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -23,16 +21,16 @@ public class BeginState {
 
 	private Label titleLabel;
 
-	private Scene scene;
-	
 	public BeginState() {
 		root = new VBox();
-		root.setAlignment(Pos.CENTER);
-		root.setSpacing(10);
+		getRoot().setAlignment(Pos.CENTER);
+		getRoot().setSpacing(10);
+		
 		titleLabel = new Label(App.TITLE);
 		titleLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN, new CornerRadii(5), Insets.EMPTY)));
 		titleLabel.setFont(new Font("Arial", 90));	
 		Button hero = new Button("Choose Your Hero");
+		
 		hero.setPrefSize(200, 50);
 		hero.setOnMouseClicked(new EventHandler<Event>(){
 
@@ -43,14 +41,17 @@ public class BeginState {
 			}
 			
 		});
+		
 		Button rules = new Button("Rules");
 		rules.setPrefSize(100, 50);
+		
 		Button quit = new Button("Quit");
 		quit.setPrefSize(100, 50);
+		
 		root.getChildren().addAll(titleLabel,hero, rules, quit);
-		scene = new Scene(root);
-		}
-	public Scene getScene() {
-		return scene;
+	}
+
+	public VBox getRoot() {
+		return root;
 	}
 }

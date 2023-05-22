@@ -43,8 +43,8 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 		
 		if (event.getEventType() == KeyEvent.KEY_PRESSED) {				
 			try {
-			makeAnAction(code);
-			controller.update();
+				makeAnAction(code);
+				controller.update();
 			}
 			catch(GameActionException e) {
 				controller.setError(e.getMessage());

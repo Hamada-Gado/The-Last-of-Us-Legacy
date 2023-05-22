@@ -5,7 +5,6 @@ import java.awt.Point;
 import engine.Game;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -15,7 +14,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import views.cellView.CellView;
 
-public class GameState implements State{
+public class GameState {
 	
 	public static final int GRID_WIDTH = 50;
 	public static final int GRID_HEIGHT = 50;
@@ -27,15 +26,13 @@ public class GameState implements State{
 	private VBox logPanel;
 	private TextArea infoTextArea;
 	private TextArea errorTextArea;
-	
-	private Scene scene;
 
 	public GameState() {
 		
 		root = new HBox();
-		root.setAlignment(Pos.CENTER_LEFT);
-		root.setSpacing(10);
-		root.setPadding(new Insets(MARGIN));
+		getRoot().setAlignment(Pos.CENTER);
+		getRoot().setSpacing(10);
+		getRoot().setPadding(new Insets(MARGIN));
 		
 		// game map
 		gameGrid = new GridPane();
@@ -71,8 +68,6 @@ public class GameState implements State{
         
         // add components to root
         root.getChildren().addAll(gameGrid, logPanel);
-        
-		scene = new Scene(root);
 	}
 
 	public static Point getLocationAtPixel(double x, double y) {
@@ -99,9 +94,8 @@ public class GameState implements State{
 		return gameGrid;
 	}
 
-	@Override
-	public Scene getScene() {
-		return scene;
+	public HBox getRoot() {
+		return root;
 	}
 	
 

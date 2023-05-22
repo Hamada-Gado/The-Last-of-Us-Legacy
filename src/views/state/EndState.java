@@ -21,8 +21,8 @@ public class EndState {
 	
 	public EndState() {
 		root = new VBox();
-		root.setAlignment(Pos.CENTER);
-		root.setSpacing(10);
+		getRoot().setAlignment(Pos.CENTER);
+		getRoot().setSpacing(10);
 		
 		titleLabel = new Label(App.TITLE);
 		titleLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN, new CornerRadii(5), Insets.EMPTY)));
@@ -33,11 +33,9 @@ public class EndState {
 		endLabel.setFont(new Font("Arial", 40));
 		
 		root.getChildren().addAll(titleLabel, endLabel);
-		
-		scene = new Scene(root);	
 	}
 	
-	public void setScene(boolean win) {
+	public void setRoot(boolean win) {
 		if(win) {
 			endLabel.setText(App.WIN);
 		}
@@ -47,6 +45,10 @@ public class EndState {
 	
 	public Scene getScene() {
 		return scene;
+	}
+
+	public VBox getRoot() {
+		return root;
 	}
 	
 }

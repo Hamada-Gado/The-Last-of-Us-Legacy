@@ -40,7 +40,6 @@ public class Controller {
 		infoTextAreaObject = "";
 		
 		this.app = app;
-		this.app.getGameState().getScene().addEventHandler(KeyEvent.ANY, keyHandler);
 		
 		Game.loadHeroes("./res/Heros.csv");
 		heroes = new ArrayList<TextArea>();
@@ -94,9 +93,9 @@ public class Controller {
 		if (((CharacterCell) cell).getCharacter() instanceof Zombie) {
 			cellViews[x][y].setBorderStrokeColor(CellView.ZOMBIE_TARGET_COLOR);
 		} else {
-			System.out.println("lol");
 			cellViews[x][y].setBorderStrokeColor(CellView.HERO_TARGET_COLOR);
 		}
+		
 		selectedHero.setTarget(((CharacterCell) cell).getCharacter());
 	}
 	
@@ -119,9 +118,13 @@ public class Controller {
 	    	if (heroname.contains(name)) {
 	    		selectedHero = hero;
 	    		infoTextAreaObject = hero;
+	    		
 	    		app.changeSceneToGameScene(hero);
+	    		app.getStage().getScene().addEventHandler(KeyEvent.ANY, keyHandler);
+
 	    		Game.startGame(hero);
 	    		setGameGrid();
+	    		
 	    		return;
 	    	}
 	    }

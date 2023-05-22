@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
@@ -16,18 +15,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import views.App;
 
-public class StartState implements State {
+public class StartState {
 	private VBox root;
 
 	private Label titleLabel;
 	private FlowPane heroesPane;
 
-	private Scene scene;
-	
 	public StartState() {
 		root = new VBox();
-		root.setAlignment(Pos.CENTER);
-		root.setSpacing(10);
+		getRoot().setAlignment(Pos.CENTER);
+		getRoot().setSpacing(10);
 		
 		// add label with the title as text
 		titleLabel = new Label(App.TITLE);
@@ -42,9 +39,6 @@ public class StartState implements State {
 		
 		// add components to root
 		root.getChildren().addAll(titleLabel, heroesPane);
-		
-		scene = new Scene(root);
-		
 	}
 	
 	public void updateHeroesPane(ArrayList<TextArea> heroesTextArea) {
@@ -53,9 +47,9 @@ public class StartState implements State {
 			heroesPane.getChildren().add(heroTextField);		
 		}
 	}
-	
-	public Scene getScene() {
-		return scene;
+
+	public VBox getRoot() {
+		return root;
 	}
 
 }
