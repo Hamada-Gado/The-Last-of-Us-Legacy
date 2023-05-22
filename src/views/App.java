@@ -27,24 +27,6 @@ public class App extends Application {
 	private GameState gameState = new GameState();
 	private EndState endState = new EndState();
 	private Stage stage;
-	public BeginState getBeginState() {
-		return beginState;
-	}
-	public StartState getStartState() {
-		return startState;
-	}
-	
-	public GameState getGameState() {
-		return gameState;
-	}
-	public EndState getEndState() {
-		return endState;
-	}
-	
-	
-	public Stage getStage() {
-		return stage;
-	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -71,6 +53,24 @@ public class App extends Application {
 	public void changeSceneToEndScene(boolean win) {
 		endState.setRoot(win);
 		stage.getScene().setRoot(endState.getRoot());
+	}
+
+	public BeginState getBeginState() {
+		return beginState;
+	}
+	public StartState getStartState() {
+		return startState;
+	}
+	
+	public GameState getGameState() {
+		return gameState;
+	}
+	public EndState getEndState() {
+		return endState;
+	}
+	
+	public Stage getStage() {
+		return stage;
 	}
 	
 	public static void main(String[] args) {

@@ -23,8 +23,8 @@ public class StartState {
 
 	public StartState() {
 		root = new VBox();
-		getRoot().setAlignment(Pos.CENTER);
-		getRoot().setSpacing(10);
+		root.setAlignment(Pos.CENTER);
+		root.setSpacing(10);
 		
 		// add label with the title as text
 		titleLabel = new Label(App.TITLE);

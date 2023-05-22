@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -33,35 +32,23 @@ public class Controller {
 	private KeyHandler keyHandler;
 	private CellView[][] cellViews;
 	private Object infoTextAreaObject;
+	private String actionText;
 
-	public Controller(App app) throws FileNotFoundException, IOException {
+	public Controller(App app) {
 		keyHandler = new KeyHandler(this);
 		cellViews = new CellView[Game.COLS][Game.ROWS];
 		infoTextAreaObject = "";
+		actionText = "";
 		
 		this.app = app;
-		
-		Game.loadHeroes("./res/Heros.csv");
-		heroes = new ArrayList<TextArea>();
-		
-		// add heroes images and info ! images not yet implemented
-		for(Hero hero : Game.availableHeroes) {
-			TextArea ta = new TextArea();
-			ta.setPrefSize(300, 150);
-			ta.setEditable(false);
-			ta.setText(hero.toString());
-			ta.setOnMouseClicked((event) -> goToGameState(((TextArea) event.getSource()).getText()));
-			heroes.add(ta);
-		}
-		
-		this.app.getStartState().updateHeroesPane(heroes);
-		
 	}
 	
 	public void update() {
 		updateGameGrid();
 		setInfo(infoTextAreaObject.toString());
+		setActionTextArea(actionText);
 		setError("");
+		
 		if (Game.checkGameOver()) {
 			gotoEndState(Game.checkWin());
 		}
@@ -100,6 +87,28 @@ public class Controller {
 	}
 	
 	public void gotoStartState() {
+		
+		try {
+			Game.loadHeroes("./res/Heros.csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		heroes = new ArrayList<TextArea>();
+				
+
+		// add heroes images and info ! images not yet implemented
+		for(Hero hero : Game.availableHeroes) {
+			TextArea ta = new TextArea();
+			ta.setPrefSize(300, 150);
+			ta.setEditable(false);
+			ta.setText(hero.toString());
+			ta.setOnMouseClicked((event) -> goToGameState(((TextArea) event.getSource()).getText()));
+			heroes.add(ta);
+		}
+		
+		this.app.getStartState().updateHeroesPane(heroes);
 		app.changeSceneToStartScene();
 	}
 	public void goToGameState(String text) {
@@ -120,7 +129,7 @@ public class Controller {
 	    		infoTextAreaObject = hero;
 	    		
 	    		app.changeSceneToGameScene(hero);
-	    		app.getStage().getScene().addEventHandler(KeyEvent.ANY, keyHandler);
+	    		app.getStage().getScene().getRoot().addEventHandler(KeyEvent.ANY, keyHandler);
 
 	    		Game.startGame(hero);
 	    		setGameGrid();
@@ -220,6 +229,18 @@ public class Controller {
 	
 	public void setError(String error) {
 		app.getGameState().setError(error);
+	}
+	
+	public void setActionTextArea(String actionText) {
+		app.getGameState().setActionTextArea(actionText);
+	}
+
+	public String getActionText() {
+		return actionText;
+	}
+
+	public void setActionText(String actionText) {
+		this.actionText = actionText;
 	}
 	
 	
