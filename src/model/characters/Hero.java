@@ -164,6 +164,8 @@ public abstract class Hero extends Character{
 		return super.toString() + "\n"
 				+ "Type: " + (this instanceof Fighter ? "FIGH" : (this instanceof Medic ? "MED" : "EXP")) + "\n"
 				+ "Action points: " + actionsAvailable + "\n"
+				+ "Supplies: " + supplyInventory.size() + "\n"
+				+ "Vaccines: " + vaccineInventory.size() + "\n"
 				+ "Special Action: " +  (this instanceof Fighter ? "Attack infinitely until end turn" 
 									:	(this instanceof Medic ? "Heal any Hero"
 									:	"The whole map becomes visible"));

@@ -16,7 +16,7 @@ public class Medic extends Hero{
 	}
 	
 	public boolean targetIsAdjacentToHeal() throws InvalidTargetException {
-		if (getTarget() == null) throw new InvalidTargetException("Target can not be null");
+		if (getTarget() == null) throw new InvalidTargetException("No Target is selected");
 		
 		double distanceSq = getLocation().distanceSq(getTarget().getLocation());
 		return distanceSq ==  0 || distanceSq == 1 || distanceSq == 2;
@@ -24,11 +24,12 @@ public class Medic extends Hero{
 	
 	@Override
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException  {
-		if (getTarget() instanceof Zombie) 
-			throw new InvalidTargetException("Can not use special <Heal> as target is a zombie");			
 		
 		if (!targetIsAdjacentToHeal()) 
 			throw new InvalidTargetException("Can not use special <Heal> as target is not in an adjacent cell.");		
+		
+		if (getTarget() instanceof Zombie) 
+			throw new InvalidTargetException("Can not use special <Heal> as target is a zombie");			
 		
 		super.useSpecial();
 
