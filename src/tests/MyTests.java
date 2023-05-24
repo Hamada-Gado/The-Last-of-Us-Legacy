@@ -9,8 +9,8 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 
 import org.junit.Test;
 
-import ai.AStar;
-import ai.Cell;
+import ai.path_finding.AStar;
+import ai.path_finding.Cell;
 import model.characters.Direction;
 
 public class MyTests {

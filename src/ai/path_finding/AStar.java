@@ -1,4 +1,4 @@
-package ai;
+package ai.path_finding;
 
 import java.awt.Point;
 import java.util.AbstractMap.SimpleImmutableEntry;
