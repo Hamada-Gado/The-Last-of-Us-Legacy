@@ -22,6 +22,7 @@ import model.world.CharacterCell;
 import model.world.CollectibleCell;
 import views.App;
 import views.cellView.CellView;
+import views.cellView.ImagesLoader;
 
 
 public class Controller {
@@ -161,13 +162,13 @@ public class Controller {
 			character = ((CharacterCell) cell).getCharacter();
 			
 			if (character instanceof Zombie) {
-				cellImage = CellView.ZOMBIE_IMAGE;
+				cellImage = ImagesLoader.getZombieImage();
 			} else if (character instanceof Fighter) {
-				cellImage = CellView.FIGHTER_IMAGE;
+				cellImage = ImagesLoader.getWarriorImage();
 			} else if (character instanceof Medic) {
-				cellImage = CellView.MEDIC_IMAGE;
+				cellImage = ImagesLoader.getMedicImage();
 			} else if (character instanceof Explorer) {
-				cellImage = CellView.EXPLORER_IMAGE;
+				cellImage = ImagesLoader.getExplorerImage();
 			} else {
 				cellImage = CellView.EMPTY_CELL;
 			}
