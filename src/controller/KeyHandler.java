@@ -74,6 +74,8 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 		else if (code == attack) {
 			controller.getSelectedHero().attack();
 			controller.setActionText("Attacked" + controller.getSelectedHero().getTarget().getName() + "\n" + "Zombie Defended, Damage Taken:" + controller.getSelectedHero().getTarget().getAttackDmg()/2);
+			if (controller.getSelectedHero().getTarget().getCurrentHp() <= 0) 
+				controller.getSelectedHero().setTarget(null);
 		}
 		else if (code == cure) {
 			controller.getSelectedHero().cure();

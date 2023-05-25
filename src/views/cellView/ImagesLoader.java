@@ -13,9 +13,9 @@ public class ImagesLoader {
 	public static final int IMAGE_WIDTH = 48;
 	public static final int IMAGE_HEIGHT = 48;
 	
+	public static final String WARRIOR = "Warrior";
 	public static final String EXPLORER = "Explorer";
 	public static final String MEDIC = "Medic";
-	public static final String WARRIOR = "Warrior";
 	public static final String ZOMBIE = "Zombie";
 	
 	public static final String IDLE = "Idle";
@@ -31,9 +31,11 @@ public class ImagesLoader {
 	
 	public static final String BASE_PATH = "file:res";
 	public static final String[] CHARACTERS = {WARRIOR, EXPLORER, MEDIC, ZOMBIE};
-	public static final String[] POSITION = {IDLE, WALK, ATTACK, HURT, DEATH};
+	public static final String[] STATE = {IDLE, WALK, ATTACK, HURT, DEATH};
 	public static final String[] DIRECTIONS = {DOWN, UP, LEFT, RIGHT};
-	
+
+	// character -> direction -> pattern -> image
+	public static HashMap<String, HashMap<String, HashMap<String, Image[]>>> charactersImages = new HashMap<String, HashMap<String, HashMap<String, Image[]>>>();
 	// direction -> pattern -> image
 	private static HashMap<String, HashMap<String, Image[]>> warriorImages = new HashMap<String, HashMap<String, Image[]>>();
 	private static HashMap<String, HashMap<String, Image[]>> explorerImages = new HashMap<String, HashMap<String, Image[]>>();
@@ -44,13 +46,7 @@ public class ImagesLoader {
 	private static Image explorerImage;
 	private static Image medicImage;
 	private static Image zombieImage;
-	
-	private static int frame_counter = 0;
-	private static int current_frame = 1;
-	
-	private static String direction;
-	private static String current_postion;
-	
+		
 	private ImagesLoader() {}
 	
 	public static void update() {
@@ -103,6 +99,11 @@ public class ImagesLoader {
     }
 	
 	public static void get_images() {
+		charactersImages.put(WARRIOR, warriorImages);
+		charactersImages.put(EXPLORER, explorerImages);
+		charactersImages.put(MEDIC, medicImages);
+		charactersImages.put(ZOMBIE, zombieImages);
+		
 		get_warrior_images();
 		get_explorer_image();
 		get_medic_images();
@@ -112,13 +113,13 @@ public class ImagesLoader {
 	public static void get_warrior_images() {
 		for (String direction : DIRECTIONS) {
 			warriorImages.put(direction, new HashMap<String, Image[]>());
-			for (String position : POSITION) {
-				String path = BASE_PATH + "/" + CHARACTERS[0] + "/" + direction + "/" + CHARACTERS[0] + direction + position + ".png";
+			for (String state : STATE) {
+				String path = BASE_PATH + "/" + CHARACTERS[0] + "/" + direction + "/" + CHARACTERS[0] + direction + state + ".png";
 				
 				Image im = new Image(path);
 				int frames = (int) (im.getWidth() / 48);
 				
-				warriorImages.get(direction).put(position, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
+				warriorImages.get(direction).put(state, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
 			}
 		}
 		
@@ -128,13 +129,13 @@ public class ImagesLoader {
 	public static void get_explorer_image() {
 		for (String direction : DIRECTIONS) {
 			explorerImages.put(direction, new HashMap<String, Image[]>());
-			for (String position : POSITION) {
-				String path = BASE_PATH + "/" + CHARACTERS[1] + "/" + direction + "/" + CHARACTERS[1] + direction + position + ".png";
+			for (String state : STATE) {
+				String path = BASE_PATH + "/" + CHARACTERS[1] + "/" + direction + "/" + CHARACTERS[1] + direction + state + ".png";
 				
 				Image im = new Image(path);
 				int frames = (int) (im.getWidth() / 48);
 				
-				explorerImages.get(direction).put(position, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
+				explorerImages.get(direction).put(state, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
 			}
 		}
 		
@@ -144,13 +145,13 @@ public class ImagesLoader {
 	public static void get_medic_images() {
 		for (String direction : DIRECTIONS) {
 			medicImages.put(direction, new HashMap<String, Image[]>());
-			for (String position : POSITION) {
-				String path = BASE_PATH + "/" + CHARACTERS[2] + "/" + direction + "/" + CHARACTERS[2] + direction + position + ".png";
+			for (String state : STATE) {
+				String path = BASE_PATH + "/" + CHARACTERS[2] + "/" + direction + "/" + CHARACTERS[2] + direction + state + ".png";
 				
 				Image im = new Image(path);
 				int frames = (int) (im.getWidth() / 48);
 				
-				medicImages.get(direction).put(position, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
+				medicImages.get(direction).put(state, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
 			}
 		}
 		
@@ -160,14 +161,14 @@ public class ImagesLoader {
 	public static void get_zombie_image() {
 		for (String direction : DIRECTIONS) {
 			zombieImages.put(direction, new HashMap<String, Image[]>());
-			for (String position : POSITION) {
-				String path = BASE_PATH + "/" + CHARACTERS[3] + "/" + direction + "/" + CHARACTERS[3] + direction + position + ".png";
+			for (String state : STATE) {
+				String path = BASE_PATH + "/" + CHARACTERS[3] + "/" + direction + "/" + CHARACTERS[3] + direction + state + ".png";
 
 				Image im = new Image(path);
 				int frames = (int) (im.getWidth() / 48);
 				
 				
-				zombieImages.get(direction).put(position, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
+				zombieImages.get(direction).put(state, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
 			}
 		}
 		

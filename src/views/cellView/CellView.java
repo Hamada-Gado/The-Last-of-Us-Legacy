@@ -24,10 +24,6 @@ public class CellView implements EventHandler<MouseEvent> {
 		
 	public static final double BORDER_WIDTH = 3;
 	
-//	public static final Image ZOMBIE_IMAGE = new Image("file:./res/zombie.jpg", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
-//	public static final Image FIGHTER_IMAGE = new Image("file:./res/fighter.png", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
-//	public static final Image MEDIC_IMAGE = new Image("file:./res/medic.jpg", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
-//	public static final Image EXPLORER_IMAGE = new Image("file:./res/explorer.gif", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
 	public static final Image SUPPLY_IMAGE = new Image("file:./res/supply.jpg", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
 	public static final Image VACCINE_IMAGE = new Image("file:./res/vaccine.jpg", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
 	public static final Image EMPTY_CELL = new Image("file:./res/background.png", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
