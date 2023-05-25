@@ -165,14 +165,19 @@ public class Controller {
 			
 			if (character instanceof Zombie) {
 				cellImage = ImageLoader.getZombieImage();
+				
 			} else if (character instanceof Fighter) {
-				cellImage = ImageLoader.getWarriorImage();
+				cellImage = ImageLoader.getFighterImage();
+				
 			} else if (character instanceof Medic) {
 				cellImage = ImageLoader.getMedicImage();
+
 			} else if (character instanceof Explorer) {
 				cellImage = ImageLoader.getExplorerImage();
+
 			} else {
 				cellImage = ImageLoader.EMPTY_CELL;
+
 			}
 			
 		} else if (cell instanceof CollectibleCell) {
@@ -180,8 +185,10 @@ public class Controller {
 			
 			if (collectible instanceof Vaccine) {
 				cellImage = ImageLoader.VACCINE_IMAGE;
+				
 			} else {
 				cellImage = ImageLoader.SUPPLY_IMAGE;
+
 			}
 			
 		} else {
@@ -212,7 +219,7 @@ public class Controller {
 		for (int x = 0; x < Game.ROWS; x++) {
 			for (int y = 0; y < Game.COLS; y++) {
 				cell = Game.map[x][y];
-				imageCells[x][y].setBorderStrokeColor(ImageCell.TRANSPARENT);;
+				imageCells[x][y].setBorderStrokeColor(ImageCell.TRANSPARENT);
 				imageCells[x][y].update(getCellImage(cell), cell.isVisible());
 			}
 		}
