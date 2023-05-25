@@ -1,4 +1,4 @@
-package views.cellView;
+package views.images;
 
 import java.util.HashMap;
 
@@ -8,7 +8,9 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-public class ImagesLoader {
+public class ImageLoader {
+	//TODO change all .png to .gif when images are ready
+	//TODO remove size constraint to when images are ready
 	
 	public static final int IMAGE_WIDTH = 48;
 	public static final int IMAGE_HEIGHT = 48;
@@ -35,57 +37,58 @@ public class ImagesLoader {
 	public static final String[] DIRECTIONS = {DOWN, UP, LEFT, RIGHT};
 
 	// character -> direction -> pattern -> image
-	public static HashMap<String, HashMap<String, HashMap<String, Image[]>>> charactersImages = new HashMap<String, HashMap<String, HashMap<String, Image[]>>>();
+	public static HashMap<String, HashMap<String, HashMap<String, Image>>> charactersImages = new HashMap<String, HashMap<String, HashMap<String, Image>>>();
 	// direction -> pattern -> image
-	private static HashMap<String, HashMap<String, Image[]>> warriorImages = new HashMap<String, HashMap<String, Image[]>>();
-	private static HashMap<String, HashMap<String, Image[]>> explorerImages = new HashMap<String, HashMap<String, Image[]>>();
-	private static HashMap<String, HashMap<String, Image[]>> medicImages = new HashMap<String, HashMap<String, Image[]>>();
-	private static HashMap<String, HashMap<String, Image[]>> zombieImages = new HashMap<String, HashMap<String, Image[]>>();
+	private static HashMap<String, HashMap<String, Image>> warriorImages = new HashMap<String, HashMap<String, Image>>();
+	private static HashMap<String, HashMap<String, Image>> explorerImages = new HashMap<String, HashMap<String, Image>>();
+	private static HashMap<String, HashMap<String, Image>> medicImages = new HashMap<String, HashMap<String, Image>>();
+	private static HashMap<String, HashMap<String, Image>> zombieImages = new HashMap<String, HashMap<String, Image>>();
+
+	public static final Image SUPPLY_IMAGE = new Image("file:./res/supply.jpg", 48, 48, false, false);
+	public static final Image VACCINE_IMAGE = new Image("file:./res/vaccine.jpg", 48, 48, false, false);
+	public static final Image EMPTY_CELL = new Image("file:./res/background.png", 48, 48, false, false);
+	public static final Image NOT_VISIBLE_CELL_IMAGE = new Image("file:./res/not visible.png", 48, 48, false, false);
 	
 	private static Image warriorImage;
 	private static Image explorerImage;
 	private static Image medicImage;
 	private static Image zombieImage;
+	
 		
-	private ImagesLoader() {}
+	private ImageLoader() {}
 	
 	public static void update() {
 		
 	}
 	
-	public static Image[] get_farmes_of_image(int frames, int w, int h,  String pathFile ) {
+	public static Image[] get_farmes_of_image(int frames, int width, int hight,  String pathFile ) {
 
-        Image[] imgs =  new Image[ frames ];
+        Image[] imgs =  new Image[frames];
 
         //img that contains all frames
-        Image stripImg = new Image( pathFile );
+        Image stripImg = new Image(pathFile);
         PixelReader pr =  stripImg.getPixelReader();
         PixelWriter pw = null;
 
         for( int i = 0; i < frames ; i++) {
 
-            WritableImage wImg = new WritableImage( w, h );
+            WritableImage wImg = new WritableImage( width, hight );
 
             pw = wImg.getPixelWriter();
 
-            for( int readY = 0 ; readY < h; readY++ )
-            {
+            for( int readY = 0 ; readY < hight; readY++ ) {
 
-                int ww = (w * i);
-                for( int readX = ww; readX < ww + w; readX++ )
+                int w = (width * i);
+                for( int readX = w; readX < w + width; readX++ )
                 {
                     //get pixel at X  & Y position
                     Color color = pr.getColor( readX, readY );
 
                     //set pixel to writableimage through pixel writer
-                    pw.setColor(readX - ww, readY, color);
+                    pw.setColor(readX - w, readY, color);
 
-                }//X
-
-
-            }//Y
-
-
+                }
+            }
             //finally new image is stored
             imgs[ i ] = wImg;
         }
@@ -112,67 +115,52 @@ public class ImagesLoader {
 	
 	public static void get_warrior_images() {
 		for (String direction : DIRECTIONS) {
-			warriorImages.put(direction, new HashMap<String, Image[]>());
+			warriorImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
 				String path = BASE_PATH + "/" + CHARACTERS[0] + "/" + direction + "/" + CHARACTERS[0] + direction + state + ".png";
-				
-				Image im = new Image(path);
-				int frames = (int) (im.getWidth() / 48);
-				
-				warriorImages.get(direction).put(state, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
+				warriorImages.get(direction).put(state, new Image(path, 48, 48, false, false));
 			}
 		}
 		
-		warriorImage = warriorImages.get(RIGHT).get(IDLE)[0];
+		//TODO remove next line
+		warriorImages.get(RIGHT).put(IDLE, new Image("file:res/Warrior/Down/WarriorDownIdle.gif"));
+		warriorImage = warriorImages.get(RIGHT).get(IDLE);
 	}
 
 	public static void get_explorer_image() {
 		for (String direction : DIRECTIONS) {
-			explorerImages.put(direction, new HashMap<String, Image[]>());
+			explorerImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
 				String path = BASE_PATH + "/" + CHARACTERS[1] + "/" + direction + "/" + CHARACTERS[1] + direction + state + ".png";
-				
-				Image im = new Image(path);
-				int frames = (int) (im.getWidth() / 48);
-				
-				explorerImages.get(direction).put(state, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
+				explorerImages.get(direction).put(state, new Image(path, 48, 48, false, false));
 			}
 		}
 		
-		explorerImage = explorerImages.get(RIGHT).get(IDLE)[0];
+		explorerImage = explorerImages.get(RIGHT).get(IDLE);
 	}
 
 	public static void get_medic_images() {
 		for (String direction : DIRECTIONS) {
-			medicImages.put(direction, new HashMap<String, Image[]>());
+			medicImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
 				String path = BASE_PATH + "/" + CHARACTERS[2] + "/" + direction + "/" + CHARACTERS[2] + direction + state + ".png";
-				
-				Image im = new Image(path);
-				int frames = (int) (im.getWidth() / 48);
-				
-				medicImages.get(direction).put(state, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
+				medicImages.get(direction).put(state, new Image(path, 48, 48, false, false));
 			}
 		}
 		
-		medicImage = medicImages.get(RIGHT).get(IDLE)[0];
+		medicImage = medicImages.get(RIGHT).get(IDLE);
 	}
 
 	public static void get_zombie_image() {
 		for (String direction : DIRECTIONS) {
-			zombieImages.put(direction, new HashMap<String, Image[]>());
+			zombieImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
 				String path = BASE_PATH + "/" + CHARACTERS[3] + "/" + direction + "/" + CHARACTERS[3] + direction + state + ".png";
-
-				Image im = new Image(path);
-				int frames = (int) (im.getWidth() / 48);
-				
-				
-				zombieImages.get(direction).put(state, get_farmes_of_image(frames, IMAGE_WIDTH, IMAGE_HEIGHT, path));
+				zombieImages.get(direction).put(state, new Image(path, 48, 48, false, false));
 			}
 		}
 		
-		zombieImage = zombieImages.get(RIGHT).get(IDLE)[0];
+		zombieImage = zombieImages.get(RIGHT).get(IDLE);
 	}
 
 	public static Image getWarriorImage() {
@@ -180,7 +168,7 @@ public class ImagesLoader {
 	}
 
 	public static void setWarriorImage(Image warriorImage) {
-		ImagesLoader.warriorImage = warriorImage;
+		ImageLoader.warriorImage = warriorImage;
 	}
 
 	public static Image getExplorerImage() {
@@ -188,7 +176,7 @@ public class ImagesLoader {
 	}
 
 	public static void setExplorerImage(Image explorerImage) {
-		ImagesLoader.explorerImage = explorerImage;
+		ImageLoader.explorerImage = explorerImage;
 	}
 
 	public static Image getMedicImage() {
@@ -196,7 +184,7 @@ public class ImagesLoader {
 	}
 
 	public static void setMedicImage(Image medicImage) {
-		ImagesLoader.medicImage = medicImage;
+		ImageLoader.medicImage = medicImage;
 	}
 
 	public static Image getZombieImage() {
@@ -204,7 +192,7 @@ public class ImagesLoader {
 	}
 
 	public static void setZombieImage(Image zombieImage) {
-		ImagesLoader.zombieImage = zombieImage;
+		ImageLoader.zombieImage = zombieImage;
 	}
 	
 }
