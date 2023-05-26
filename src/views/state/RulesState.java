@@ -4,10 +4,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -23,19 +28,23 @@ public class RulesState {
 		root = new VBox();
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(30);
+		BackgroundImage myBI= new BackgroundImage(new Image("file:./res//backgrounds/game.png",App.WINDOW_WIDTH,App.WINDOW_HEIGHT,false,true),
+		        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+		          BackgroundSize.DEFAULT);
+		root.setBackground(new Background(myBI));
+		titleLabel = new Label(App.TITLE);
+        titleLabel.setStyle("-fx-control-inner-background: #000000; -fx-highlight-fill: #dce775; -fx-highlight-text-fill: #000000; -fx-text-fill: #dce775; ");
+		titleLabel.setFont(new Font("Arial", 90));	
 		root.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if(event.getCode() == KeyCode.BACK_SPACE) {
 				App.controller.gotoBeginState();
 			}
 		});
 		
-		titleLabel = new Label(App.TITLE);
-		titleLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN, new CornerRadii(5), Insets.EMPTY)));
-		titleLabel.setFont(new Font("Arial", 90));
 		rulesTextArea = new TextArea();
 	    rulesTextArea.setPadding(new Insets(5,20,5,20));
-	    rulesTextArea.setStyle("-fx-control-inner-background: #F5F5DC; -fx-font-family: Consolas; -fx-highlight-fill: #00008b; -fx-highlight-text-fill: #F5F5DC; -fx-text-fill: #00008b;");
-	    rulesTextArea.setFont(new Font("Times New Roman", 12));
+        rulesTextArea.setStyle("-fx-control-inner-background: #00254d; -fx-highlight-fill: #dce775; -fx-highlight-text-fill: #00254d; -fx-text-fill: #dce775; ");
+	    rulesTextArea.setFont(new Font("Times New Roman", 15));
 	    rulesTextArea.setEditable(false);
 	    rulesTextArea.setWrapText(true);
 	    rulesTextArea.setPrefWidth(600);
