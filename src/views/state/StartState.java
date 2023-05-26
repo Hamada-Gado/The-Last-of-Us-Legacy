@@ -29,7 +29,7 @@ public class StartState {
 	public StartState() {
 		root = new VBox();
 		root.setAlignment(Pos.CENTER);
-		root.setSpacing(10);
+		root.setSpacing(20);
 		BackgroundImage myBI= new BackgroundImage(new Image("file:./res//backgrounds/game.png",App.WINDOW_WIDTH,App.WINDOW_HEIGHT,false,true),
 		        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 		          BackgroundSize.DEFAULT);
@@ -42,8 +42,8 @@ public class StartState {
 		// add heroes pane that contains available heroes in the start of the game
 		heroesPane = new FlowPane();
 		heroesPane.setAlignment(Pos.CENTER);
-		heroesPane.setHgap(10);
-		heroesPane.setVgap(10);
+		heroesPane.setHgap(15);
+		heroesPane.setVgap(20);
 		
 		// add components to root
 		root.getChildren().addAll(titleLabel, heroesPane);
