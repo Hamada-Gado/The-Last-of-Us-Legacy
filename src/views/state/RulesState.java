@@ -83,7 +83,7 @@ public class RulesState {
 				+ "		• Fighter: Can attack as many times in a turn without costing action points, for 1 turn"
 				+ "	whenever a supply is used.\r\n"
 				+ "	Possible actions that can be done by a character:\r\n"
-				+ "		• Move: using <awsd>\r\n"
+				+ "		• Move: using <wasd>\r\n"
 				+ "		• Attack a zombie: using <j>\r\n"
 				+ "		• Cure a zombie: using <k>\r\n"
 				+ "		• Use their class dependant unique action: using <l>\r\n"

@@ -27,13 +27,10 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 	
 	private HashMap<KeyCode, String> states;
 	private HashMap<KeyCode, Direction> directions;
-	
-	private boolean inAction;
-	
+
 	public KeyHandler(Controller controller) {
 		this.controller = controller;
-		inAction = false;
-		
+
 		up = KeyCode.W;
 		down = KeyCode.S;
 		right = KeyCode.D;
@@ -53,8 +50,8 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 		states.put(left, ImageLoader.MOVE);
 		
 		states.put(attack, ImageLoader.ATTACK);
+		states.put(specialAction, ImageLoader.SPECIAL);
 		states.put(cure, ImageLoader.IDLE);
-		states.put(specialAction, ImageLoader.IDLE);
 		states.put(endTurn, ImageLoader.IDLE);
 		
 		
@@ -71,7 +68,6 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 		if (controller.getSelectedHero() == null) return;
 		int previousHp = controller.getSelectedHero().getCurrentHp();
 		
-		inAction = true;
 		KeyCode code = event.getCode();
 		
 		if (event.getEventType() == KeyEvent.KEY_PRESSED) {				
@@ -79,14 +75,12 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 				makeAnAction(code, previousHp);
 				controller.update();
 				controller.updateGameGrid();
-				animate(code);
+				animateSelectedHeroAfterAction(code);
 			}
 			catch(GameActionException e) {
 				controller.setError(e.getMessage());
 			}
 		}
-		
-		inAction = false;
 	}
 	
 	public void makeAnAction(KeyCode code, int previousHp) throws GameActionException {
@@ -130,7 +124,7 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 	}
 	
 	
-	public void animate(KeyCode code) {
+	public void animateSelectedHeroAfterAction(KeyCode code) {
 		int x = controller.getSelectedHero().getLocation().x;
 		int y = controller.getSelectedHero().getLocation().y;
 		
@@ -140,15 +134,20 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 		Direction direction = (code == up || code == down || code == right || code == left) ? directions.get(code) : imageCell.getDirection();
 		String state = controller.getSelectedHero().getCurrentHp() > 0 ? states.get(code) : ImageLoader.DEATH;
 		
-		controller.getImageCells()[x][y].setDirection(direction);
-		controller.getImageCells()[x][y].update(ImageLoader.getCharacterImage(type, direction, state), true);
+		animate(x, y, type, direction, state);
+	}
+	
+	public void animate(int x, int y, String type, Direction direction, String state) {
+		ImageCell imageCell = controller.getImageCells()[x][y];
+
+		imageCell.setDirection(direction);
+		imageCell.update(ImageLoader.getCharacterImage(type, direction, state), true);
 				
 		new java.util.Timer().schedule( 
 		        new java.util.TimerTask() {
 		            @Override
 		            public void run() {
-		            	if (!inAction)
-		            		controller.updateGameGrid();
+		            	controller.updateGameGrid();
 		            	
 		            	if (controller.getSelectedHero() == null) return;
 		        		if (controller.getSelectedHero().getCurrentHp() > 0)

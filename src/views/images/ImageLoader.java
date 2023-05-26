@@ -25,10 +25,11 @@ public class ImageLoader {
 	public static final String MOVE = "Move";
 	public static final String ATTACK = "Attack";
 	public static final String DEATH = "Death";
+	public static final String SPECIAL = "Special";
 	
 	public static final String BASE_PATH = "file:res";
 	public static final String[] CHARACTERS = {FIGHTER, EXPLORER, MEDIC, ZOMBIE};
-	public static final String[] STATE = {IDLE, MOVE, ATTACK, DEATH};
+	public static final String[] STATE = {IDLE, MOVE, ATTACK, DEATH, SPECIAL};
 	public static final Direction[] DIRECTIONS = {Direction.DOWN, Direction.UP, Direction.LEFT, Direction.RIGHT};
 
 	// character -> direction -> pattern -> image
@@ -136,7 +137,7 @@ public class ImageLoader {
 		for (Direction direction : DIRECTIONS) {
 			medicImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
-				String path = BASE_PATH + "/" + CHARACTERS[2] + "/" + direction + "/" + CHARACTERS[2] + direction + state + ".png";
+				String path = BASE_PATH + "/" + CHARACTERS[2] + "/" + direction + "/" + CHARACTERS[2] + direction + state + ".gif";
 				medicImages.get(direction).put(state, new Image(path, 48, 48, false, false));
 			}
 		}

@@ -2,7 +2,6 @@ package views.state;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -41,26 +40,30 @@ public class ControlsState {
 		controlsTextArea = new TextArea();
 		controlsTextArea.setPadding(new Insets(5,20,5,20));
 	    controlsTextArea.setStyle("-fx-control-inner-background: #00254d; -fx-highlight-fill: #dce775; -fx-highlight-text-fill: #00254d; -fx-text-fill: #dce775; ");
-        controlsTextArea.setFont(new Font("Times New Roman", 40));
+        controlsTextArea.setFont(new Font("Times New Roman", 28));
 	    controlsTextArea.setEditable(false);
 	    controlsTextArea.setWrapText(true);
 	    controlsTextArea.setPrefWidth(600);
 	    controlsTextArea.setPrefHeight(530);
 	    controlsTextArea.setText(setControls());
 		root.getChildren().addAll(titleLabel, controlsTextArea);
+	}
 		
-}
 	public String setControls() {
 		return "Movement :\r\n "
-				+ "		up --> W\r\n"
-				+ "		down --> S\r\n"
-				+ "		right --> D\r\n"
-				+ "		left --> A\r\n"
+				+ "		up → W\r\n"
+				+ "		down → S\r\n"
+				+ "		right → D\r\n"
+				+ "		left → A\r\n"
 				+ "Actions :\r\n "
-				+ "		attack --> J\r\n"
-				+ "		cure --> K\r\n"
-				+ "		specialAction --> L\r\n"
-				+ "		endTurn --> H";
+				+ "		attack → J\r\n"
+				+ "		cure → K\r\n"
+				+ "		specialAction → L\r\n"
+				+ "		endTurn → H\r\n"
+				+ "Target :\r\n"
+				+ "		Select Character → Left Mouse Click\r\n"
+				+ "		Select Character target → Right Mouse Click\r\n"
+				+ "		Selected Character info → Hover Over Character\r\n";
 	}
 	public VBox getRoot() {
 		return root;

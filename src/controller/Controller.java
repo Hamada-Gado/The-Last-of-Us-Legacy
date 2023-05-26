@@ -45,16 +45,6 @@ public class Controller {
 		
 		this.app = app;
 	}
-	
-	public void update() {
-		setInfo(infoTextAreaObject.toString());
-		setActionTextArea(actionText);
-		setError("");
-		
-		if (Game.checkGameOver()) {
-			gotoEndState(Game.checkWin());
-		}
-	}
 
 	public void gotoBeginState() {
 		app.changeSceneToBeginScene();
@@ -166,6 +156,16 @@ public class Controller {
 		return image;
 	}
 	
+	public void update() {
+		setInfo(infoTextAreaObject.toString());
+		setActionTextArea(actionText);
+		setError("");
+		
+		if (Game.checkGameOver()) {
+			gotoEndState(Game.checkWin());
+		}
+	}
+		
 	public void setGameGrid() {
 		Cell cell;		
 		
@@ -190,6 +190,10 @@ public class Controller {
 				getImageCells()[x][y].setBorderStrokeColor(ImageCell.TRANSPARENT);
 				getImageCells()[x][y].update(getIdleCellImage(cell, getImageCells()[x][y].getDirection()), cell.isVisible());
 			}
+		}
+		
+		if (selectedHero != null) {
+			getImageCells()[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(ImageCell.HERO_COLOR);
 		}
 	}
 	
@@ -250,6 +254,8 @@ public class Controller {
 	public void setSelectedHeroTarget(int x, int y) {
 		Cell cell = Game.map[x][y];
 		
+		if (!(cell instanceof CharacterCell)) return;
+		if (((CharacterCell) cell).getCharacter() == null) return;
 		if (!(cell instanceof CharacterCell)) return;
 		
 		if (selectedHero.getTarget() != null)
