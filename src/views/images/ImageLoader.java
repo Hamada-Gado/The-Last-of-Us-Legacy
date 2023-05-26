@@ -3,10 +3,6 @@ package views.images;
 import java.util.HashMap;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
 import model.characters.Direction;
 
 public class ImageLoader {
@@ -57,46 +53,6 @@ public class ImageLoader {
 		
 	}
 	
-	public static Image[] get_farmes_of_image(int frames, int width, int hight,  String pathFile ) {
-
-        Image[] imgs =  new Image[frames];
-
-        //img that contains all frames
-        Image stripImg = new Image(pathFile);
-        PixelReader pr =  stripImg.getPixelReader();
-        PixelWriter pw = null;
-
-        for( int i = 0; i < frames ; i++) {
-
-            WritableImage wImg = new WritableImage( width, hight );
-
-            pw = wImg.getPixelWriter();
-
-            for( int readY = 0 ; readY < hight; readY++ ) {
-
-                int w = (width * i);
-                for( int readX = w; readX < w + width; readX++ )
-                {
-                    //get pixel at X  & Y position
-                    Color color = pr.getColor( readX, readY );
-
-                    //set pixel to writableimage through pixel writer
-                    pw.setColor(readX - w, readY, color);
-
-                }
-            }
-            //finally new image is stored
-            imgs[ i ] = wImg;
-        }
-
-
-        stripImg = null;
-        pr = null;
-        pw = null;
-         
-        return imgs;
-    }
-	
 	public static void get_images() {
 		characterImages.put(FIGHTER, fighterImages);
 		characterImages.put(EXPLORER, explorerImages);
@@ -126,7 +82,7 @@ public class ImageLoader {
 			explorerImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
 				String path = BASE_PATH + "/" + CHARACTERS[1] + "/" + direction + "/" + CHARACTERS[1] + direction + state + ".gif";
-				explorerImages.get(direction).put(state, new Image(path, 48, 48, false, false));
+				explorerImages.get(direction).put(state, new Image(path));
 			}
 		}
 		
@@ -138,7 +94,7 @@ public class ImageLoader {
 			medicImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
 				String path = BASE_PATH + "/" + CHARACTERS[2] + "/" + direction + "/" + CHARACTERS[2] + direction + state + ".gif";
-				medicImages.get(direction).put(state, new Image(path, 48, 48, false, false));
+				medicImages.get(direction).put(state, new Image(path));
 			}
 		}
 		
@@ -149,8 +105,8 @@ public class ImageLoader {
 		for (Direction direction : DIRECTIONS) {
 			zombieImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
-				String path = BASE_PATH + "/" + CHARACTERS[3] + "/" + direction + "/" + CHARACTERS[3] + direction + state + ".png";
-				zombieImages.get(direction).put(state, new Image(path, 48, 48, false, false));
+				String path = BASE_PATH + "/" + CHARACTERS[3] + "/" + direction + "/" + CHARACTERS[3] + direction + state + ".gif";
+				zombieImages.get(direction).put(state, new Image(path));
 			}
 		}
 		
