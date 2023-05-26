@@ -69,13 +69,14 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 	@Override
 	public void handle(KeyEvent event) {
 		if (controller.getSelectedHero() == null) return;
+		int previousHp = controller.getSelectedHero().getCurrentHp();
 		
 		inAction = true;
 		KeyCode code = event.getCode();
 		
 		if (event.getEventType() == KeyEvent.KEY_PRESSED) {				
 			try {
-				makeAnAction(code);
+				makeAnAction(code, previousHp);
 				controller.update();
 				controller.updateGameGrid();
 				animate(code);
@@ -88,9 +89,7 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 		inAction = false;
 	}
 	
-	public void makeAnAction(KeyCode code) throws GameActionException {
-		int currentHp = controller.getSelectedHero().getCurrentHp();
-		
+	public void makeAnAction(KeyCode code, int previousHp) throws GameActionException {
 		if (code == up) {
 			controller.getSelectedHero().move(directions.get(code));
 			controller.setActionText("Moved UP");
@@ -125,8 +124,8 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 			controller.setActionText("End Turn\nBEWARE all Zombies try to attack");
 		}
 		
-		if ((code == up || code == down || code == right || code == left) && currentHp - controller.getSelectedHero().getCurrentHp() != 0)
-			controller.setActionText("A trap got activated\nDamage Taken: " + (currentHp - controller.getSelectedHero().getCurrentHp()));
+		if ((code == up || code == down || code == right || code == left) && previousHp - controller.getSelectedHero().getCurrentHp() != 0)
+			controller.setActionText("A trap got activated\nDamage Taken: " + (previousHp - controller.getSelectedHero().getCurrentHp()));
 		
 	}
 	
@@ -139,9 +138,10 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 
 		String type = controller.getSelectedHero().getClass().getSimpleName();
 		Direction direction = (code == up || code == down || code == right || code == left) ? directions.get(code) : imageCell.getDirection();
+		String state = controller.getSelectedHero().getCurrentHp() > 0 ? states.get(code) : ImageLoader.DEATH;
 		
 		controller.getImageCells()[x][y].setDirection(direction);
-		controller.getImageCells()[x][y].update(ImageLoader.getCharacterImage(type, direction, states.get(code)), true);
+		controller.getImageCells()[x][y].update(ImageLoader.getCharacterImage(type, direction, state), true);
 				
 		new java.util.Timer().schedule( 
 		        new java.util.TimerTask() {
@@ -149,6 +149,11 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 		            public void run() {
 		            	if (!inAction)
 		            		controller.updateGameGrid();
+		            	
+		            	if (controller.getSelectedHero() == null) return;
+		        		if (controller.getSelectedHero().getCurrentHp() > 0)
+		        			controller.getImageCells()[controller.getSelectedHero().getLocation().x][controller.getSelectedHero().getLocation().y].setBorderStrokeColor(ImageCell.HERO_COLOR);
+		        		else controller.setSelectedHero(null);
 		            }
 		        }, 
 		        1000

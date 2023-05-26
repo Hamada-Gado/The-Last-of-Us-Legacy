@@ -102,7 +102,7 @@ public class Controller {
 	    for (Hero hero : Game.availableHeroes) {
 	    	String heroname = hero.toString();
 	    	if (heroname.contains(name)) {
-	    		selectedHero = hero;
+	    		setSelectedHero(hero);
 	    		infoTextAreaObject = hero;
 	    		
 	    		app.changeSceneToGameScene(hero);
@@ -189,10 +189,6 @@ public class Controller {
 				getImageCells()[x][y].update(getIdleCellImage(cell, getImageCells()[x][y].getDirection()), cell.isVisible());
 			}
 		}
-		
-		if (selectedHero.getCurrentHp() > 0)
-			getImageCells()[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(ImageCell.HERO_COLOR);
-		else selectedHero = null;
 	}
 	
 	public void setInfo(int x, int y) {
@@ -229,6 +225,10 @@ public class Controller {
 	
 	public Hero getSelectedHero() {
 		return selectedHero;
+	}
+
+	public void setSelectedHero(Hero selectedHero) {
+		this.selectedHero = selectedHero;
 	}
 
 	public void setSelectedHero(int x, int y) {
