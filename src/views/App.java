@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.characters.Hero;
 import views.images.ImageLoader;
 import views.state.BeginState;
+import views.state.ControlsState;
 import views.state.EndState;
 import views.state.GameState;
 import views.state.RulesState;
@@ -29,6 +30,7 @@ public class App extends Application {
 	public static Controller controller;
 	private BeginState beginState = new BeginState();
 	private RulesState rulesState = new RulesState();
+	private ControlsState controlsState = new ControlsState();
 
 	private StartState startState = new StartState();
 	private GameState gameState = new GameState();
@@ -59,6 +61,9 @@ public class App extends Application {
 	}
 	public void changeSceneToRulesScene() {
 		stage.getScene().setRoot(rulesState.getRoot());
+	}
+	public void changeSceneToControlsScene() {
+		stage.getScene().setRoot(controlsState.getRoot());
 	}
 	public void changeSceneToStartScene() {
 		stage.getScene().setRoot(startState.getRoot());

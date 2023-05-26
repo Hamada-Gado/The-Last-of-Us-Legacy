@@ -58,6 +58,18 @@ public class BeginState {
 			}
 			
 		});
+		Button controls = new Button("Controls");
+		controls.setStyle("-fx-background-color: #dce775; "); 
+		controls.setPrefSize(100, 50);
+		controls.setOnMouseClicked(new EventHandler<Event>(){
+
+			@Override
+			public void handle(Event arg0) {
+				// TODO Auto-generated method stub
+				App.controller.gotoControlsState();
+			}
+			
+		});
 		Button quit = new Button("Quit");
 		quit.setStyle("-fx-background-color: #dce775; "); 
 		quit.setPrefSize(100, 50);
@@ -70,7 +82,7 @@ public class BeginState {
 			}
 			
 		});
-		root.getChildren().addAll(titleLabel,hero, description, quit);
+		root.getChildren().addAll(titleLabel,hero, description, controls, quit);
 	}
 
 	public VBox getRoot() {
