@@ -159,7 +159,7 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 		        1000
 		);
 	}
-	
+
 	public void getDirectionOfTarget() {
 		//TODO get direction of target to face him when attacking or curing
 	}
