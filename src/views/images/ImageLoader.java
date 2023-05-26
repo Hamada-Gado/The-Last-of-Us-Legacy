@@ -125,7 +125,7 @@ public class ImageLoader {
 		for (Direction direction : DIRECTIONS) {
 			explorerImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
-				String path = BASE_PATH + "/" + CHARACTERS[1] + "/" + direction + "/" + CHARACTERS[1] + direction + state + ".png";
+				String path = BASE_PATH + "/" + CHARACTERS[1] + "/" + direction + "/" + CHARACTERS[1] + direction + state + ".gif";
 				explorerImages.get(direction).put(state, new Image(path, 48, 48, false, false));
 			}
 		}
