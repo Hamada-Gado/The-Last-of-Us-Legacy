@@ -113,13 +113,11 @@ public class ImageLoader {
 		for (Direction direction : DIRECTIONS) {
 			fighterImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
-				String path = BASE_PATH + "/" + CHARACTERS[0] + "/" + direction + "/" + CHARACTERS[0] + direction + state + ".png";
+				String path = BASE_PATH + "/" + CHARACTERS[0] + "/" + direction + "/" + CHARACTERS[0] + direction + state + ".gif";
 				fighterImages.get(direction).put(state, new Image(path, 48, 48, false, false));
 			}
 		}
 		
-		//TODO remove next line
-		fighterImages.get(Direction.RIGHT).put(IDLE, new Image("file:res/Warrior/Down/WarriorDownIdle.gif"));
 		fighterImage = fighterImages.get(Direction.RIGHT).get(IDLE);
 	}
 

@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import model.characters.Direction;
 import views.App;
 import views.state.GameState;
 
@@ -25,16 +26,19 @@ public class ImageCell implements EventHandler<MouseEvent> {
 	public static final double BORDER_WIDTH = 2;
 	
 	private int x, y;
+	private Direction direction;
 	private Image image;
 	private Image currentImage;
 	private ImageView imageView;
 	private Button button;
 	
-	public ImageCell(Image cellImage, int x, int y, boolean visible) {
-		this.image = cellImage;
-		imageView = new ImageView();
+	public ImageCell(Image image, int x, int y, boolean visible) {
+		this.image = image;
 		this.x = x;
 		this.y = y;
+		
+		setDirection(Direction.RIGHT);
+		imageView = new ImageView();
 		
 		setCurrentImage(visible);
 		setImageView();
@@ -50,6 +54,14 @@ public class ImageCell implements EventHandler<MouseEvent> {
 		setBorderStrokeColor(TRANSPARENT);
 	}
 	
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
 	public Image getImage() {
 		return image;
 	}
