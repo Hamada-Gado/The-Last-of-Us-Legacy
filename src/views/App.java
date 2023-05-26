@@ -11,6 +11,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.characters.Hero;
 import views.images.ImageLoader;
 import views.state.BeginState;
@@ -44,8 +45,12 @@ public class App extends Application {
 		try {			
 			Media sound=new Media(new File("./res/sounds/wrong-place-129242.mp3").toURI().toString());
 			MediaPlayer mediaPlayer=new MediaPlayer(sound);
-			mediaPlayer.play();			
-		} catch (MediaException e) {
+			mediaPlayer.play();	
+			mediaPlayer.setOnEndOfMedia(new Runnable() {
+			       public void run() {
+			         mediaPlayer.seek(Duration.ZERO);
+			       }
+			   });		} catch (MediaException e) {
 			// TODO: handle exception
 			System.err.println("Couldn't find sound files");
 			e.printStackTrace();
