@@ -25,7 +25,7 @@ public class BeginState {
 	public BeginState() {
 		root = new VBox();
 		root.setAlignment(Pos.CENTER);
-		root.setSpacing(10);
+		root.setSpacing(25);
 		BackgroundImage myBI= new BackgroundImage(new Image("file:./res//backgrounds/game.png",App.WINDOW_WIDTH,App.WINDOW_HEIGHT,false,true),
 		        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 		          BackgroundSize.DEFAULT);
