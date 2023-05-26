@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import model.characters.Direction;
 
 public class ImageLoader {
-	//TODO change all .png to .gif when images are ready
 	//TODO remove size constraint to when images are ready
 	
 	public static final int IMAGE_WIDTH = 48;

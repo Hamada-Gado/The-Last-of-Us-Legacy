@@ -2,12 +2,13 @@ package views;
 
 import java.io.File;
 
-import controller.Controller;
+import views.controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import model.characters.Hero;
@@ -38,11 +39,17 @@ public class App extends Application {
 	private Stage stage;
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) {
 		stage = primaryStage;
-		Media sound=new Media(new File("./res//sounds/wrong-place-129242.mp3").toURI().toString());
-		MediaPlayer mediaPlayer=new MediaPlayer(sound);
-		mediaPlayer.play();
+		try {			
+			Media sound=new Media(new File("./res/sounds/wrong-place-129242.mp3").toURI().toString());
+			MediaPlayer mediaPlayer=new MediaPlayer(sound);
+			mediaPlayer.play();			
+		} catch (MediaException e) {
+			// TODO: handle exception
+			System.err.println("Couldn't find sound files");
+			e.printStackTrace();
+		}
 		primaryStage.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
 			if (event.getCode() == KeyCode.ESCAPE) System.exit(0);});
 		primaryStage.setWidth(WINDOW_WIDTH);
