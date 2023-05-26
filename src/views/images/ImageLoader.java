@@ -24,12 +24,11 @@ public class ImageLoader {
 	public static final String IDLE = "Idle";
 	public static final String MOVE = "Move";
 	public static final String ATTACK = "Attack";
-	public static final String HURT = "Hurt";
 	public static final String DEATH = "Death";
 	
 	public static final String BASE_PATH = "file:res";
 	public static final String[] CHARACTERS = {FIGHTER, EXPLORER, MEDIC, ZOMBIE};
-	public static final String[] STATE = {IDLE, MOVE, ATTACK, HURT, DEATH};
+	public static final String[] STATE = {IDLE, MOVE, ATTACK, DEATH};
 	public static final Direction[] DIRECTIONS = {Direction.DOWN, Direction.UP, Direction.LEFT, Direction.RIGHT};
 
 	// character -> direction -> pattern -> image
@@ -113,13 +112,11 @@ public class ImageLoader {
 		for (Direction direction : DIRECTIONS) {
 			fighterImages.put(direction, new HashMap<String, Image>());
 			for (String state : STATE) {
-				String path = BASE_PATH + "/" + CHARACTERS[0] + "/" + direction + "/" + CHARACTERS[0] + direction + state + ".png";
+				String path = BASE_PATH + "/" + CHARACTERS[0] + "/" + direction + "/" + CHARACTERS[0] + direction + state + ".gif";
 				fighterImages.get(direction).put(state, new Image(path, 48, 48, false, false));
 			}
 		}
 		
-		//TODO remove next line
-		fighterImages.get(Direction.RIGHT).put(IDLE, new Image("file:res/Warrior/Down/WarriorDownIdle.gif"));
 		fighterImage = fighterImages.get(Direction.RIGHT).get(IDLE);
 	}
 

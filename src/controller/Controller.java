@@ -16,6 +16,7 @@ import model.characters.Zombie;
 import model.collectibles.Collectible;
 import model.collectibles.Vaccine;
 import model.characters.Character;
+import model.characters.Direction;
 import model.characters.Explorer;
 import model.world.Cell;
 import model.world.CharacterCell;
@@ -46,7 +47,6 @@ public class Controller {
 	}
 	
 	public void update() {
-		updateGameGrid();
 		setInfo(infoTextAreaObject.toString());
 		setActionTextArea(actionText);
 		setError("");
@@ -55,41 +55,7 @@ public class Controller {
 			gotoEndState(Game.checkWin());
 		}
 	}
-	
-	public Hero getSelectedHero() {
-		return selectedHero;
-	}
-	
-	public void setSelectedHero(int x, int y) {
-		Cell cell = Game.map[x][y];
-		
-		if (!(cell instanceof CharacterCell)) return;
-		if (((CharacterCell) cell).getCharacter() == null) return;
-		if (((CharacterCell) cell).getCharacter() instanceof Zombie) return;
-		
-		if (selectedHero != null)
-			imageCells[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(ImageCell.TRANSPARENT);
-		
-		imageCells[x][y].setBorderStrokeColor(ImageCell.HERO_COLOR);
-		selectedHero = (Hero) ((CharacterCell) cell).getCharacter();
-	}
-	
-	public void setSelectedHeroTarget(int x, int y) {
-		Cell cell = Game.map[x][y];
-		
-		if (!(cell instanceof CharacterCell)) return;
-		
-		if (selectedHero.getTarget() != null)
-			imageCells[selectedHero.getTarget().getLocation().x][selectedHero.getTarget().getLocation().y].setBorderStrokeColor(ImageCell.TRANSPARENT);
-		
-		if (((CharacterCell) cell).getCharacter() instanceof Zombie) {
-			imageCells[x][y].setBorderStrokeColor(ImageCell.ZOMBIE_TARGET_COLOR);
-		} else {
-			imageCells[x][y].setBorderStrokeColor(ImageCell.HERO_TARGET_COLOR);
-		}
-		
-		selectedHero.setTarget(((CharacterCell) cell).getCharacter());
-	}
+
 	public void gotoBeginState() {
 		app.changeSceneToBeginScene();
 	}
@@ -136,7 +102,7 @@ public class Controller {
 	    for (Hero hero : Game.availableHeroes) {
 	    	String heroname = hero.toString();
 	    	if (heroname.contains(name)) {
-	    		selectedHero = hero;
+	    		setSelectedHero(hero);
 	    		infoTextAreaObject = hero;
 	    		
 	    		app.changeSceneToGameScene(hero);
@@ -155,8 +121,8 @@ public class Controller {
 		app.changeSceneToEndScene(win);
 	}
 	
-	public Image getCellImage(Cell cell) {
-		Image cellImage;
+	public Image getIdleCellImage(Cell cell, Direction direction) {
+		Image image;
 		Character character;
 		Collectible collectible;
 
@@ -164,19 +130,19 @@ public class Controller {
 			character = ((CharacterCell) cell).getCharacter();
 			
 			if (character instanceof Zombie) {
-				cellImage = ImageLoader.getZombieImage();
+				image = ImageLoader.getCharacterImage("Zombie", direction, "Idle");
 				
 			} else if (character instanceof Fighter) {
-				cellImage = ImageLoader.getFighterImage();
+				image = ImageLoader.getCharacterImage("Fighter", direction, "Idle");
 				
 			} else if (character instanceof Medic) {
-				cellImage = ImageLoader.getMedicImage();
+				image = ImageLoader.getCharacterImage("Medic", direction, "Idle");
 
 			} else if (character instanceof Explorer) {
-				cellImage = ImageLoader.getExplorerImage();
+				image = ImageLoader.getCharacterImage("Explorer", direction, "Idle");
 
 			} else {
-				cellImage = ImageLoader.EMPTY_CELL;
+				image = ImageLoader.EMPTY_CELL;
 
 			}
 			
@@ -184,18 +150,18 @@ public class Controller {
 			collectible = ((CollectibleCell) cell).getCollectible();
 			
 			if (collectible instanceof Vaccine) {
-				cellImage = ImageLoader.VACCINE_IMAGE;
+				image = ImageLoader.VACCINE_IMAGE;
 				
 			} else {
-				cellImage = ImageLoader.SUPPLY_IMAGE;
+				image = ImageLoader.SUPPLY_IMAGE;
 
 			}
 			
 		} else {
-			cellImage = ImageLoader.EMPTY_CELL;
+			image = ImageLoader.EMPTY_CELL;
 		}
 		
-		return cellImage;
+		return image;
 	}
 	
 	public void setGameGrid() {
@@ -205,12 +171,12 @@ public class Controller {
 			for (int y = 0; y < Game.COLS; y++) {
 				cell = Game.map[x][y];
 				
-				imageCells[x][y] = new ImageCell(getCellImage(cell), x, y, cell.isVisible());
-				app.getGameState().setImageInGrid(imageCells[x][y], (Game.ROWS - 1) - x, y); // x= 0, y= 0 is left bottom
+				getImageCells()[x][y] = new ImageCell(getIdleCellImage(cell, Direction.RIGHT), x, y, cell.isVisible());
+				app.getGameState().setImageInGrid(getImageCells()[x][y], (Game.ROWS - 1) - x, y); // x= 0, y= 0 is left bottom
 			}
 		}
 		
-		imageCells[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(ImageCell.HERO_COLOR);
+		getImageCells()[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(ImageCell.HERO_COLOR);
 	}
 	
 	public void updateGameGrid() {
@@ -219,14 +185,10 @@ public class Controller {
 		for (int x = 0; x < Game.ROWS; x++) {
 			for (int y = 0; y < Game.COLS; y++) {
 				cell = Game.map[x][y];
-				imageCells[x][y].setBorderStrokeColor(ImageCell.TRANSPARENT);
-				imageCells[x][y].update(getCellImage(cell), cell.isVisible());
+				getImageCells()[x][y].setBorderStrokeColor(ImageCell.TRANSPARENT);
+				getImageCells()[x][y].update(getIdleCellImage(cell, getImageCells()[x][y].getDirection()), cell.isVisible());
 			}
 		}
-		
-		if (selectedHero.getCurrentHp() > 0)
-			imageCells[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(ImageCell.HERO_COLOR);
-		else selectedHero = null;
 	}
 	
 	public void setInfo(int x, int y) {
@@ -259,6 +221,50 @@ public class Controller {
 
 	public void setActionText(String actionText) {
 		this.actionText = actionText;
+	}
+	
+	public Hero getSelectedHero() {
+		return selectedHero;
+	}
+
+	public void setSelectedHero(Hero selectedHero) {
+		this.selectedHero = selectedHero;
+	}
+
+	public void setSelectedHero(int x, int y) {
+		Cell cell = Game.map[x][y];
+		
+		if (!(cell instanceof CharacterCell)) return;
+		if (((CharacterCell) cell).getCharacter() == null) return;
+		if (((CharacterCell) cell).getCharacter() instanceof Zombie) return;
+		
+		if (selectedHero != null)
+			getImageCells()[selectedHero.getLocation().x][selectedHero.getLocation().y].setBorderStrokeColor(ImageCell.TRANSPARENT);
+		
+		getImageCells()[x][y].setBorderStrokeColor(ImageCell.HERO_COLOR);
+		selectedHero = (Hero) ((CharacterCell) cell).getCharacter();
+	}
+	
+	public void setSelectedHeroTarget(int x, int y) {
+		Cell cell = Game.map[x][y];
+		
+		if (!(cell instanceof CharacterCell)) return;
+		
+		if (selectedHero.getTarget() != null)
+			getImageCells()[selectedHero.getTarget().getLocation().x][selectedHero.getTarget().getLocation().y].setBorderStrokeColor(ImageCell.TRANSPARENT);
+		
+		if (((CharacterCell) cell).getCharacter() instanceof Zombie) {
+			getImageCells()[x][y].setBorderStrokeColor(ImageCell.ZOMBIE_TARGET_COLOR);
+		} else {
+			getImageCells()[x][y].setBorderStrokeColor(ImageCell.HERO_TARGET_COLOR);
+		}
+		
+		selectedHero.setTarget(((CharacterCell) cell).getCharacter());
+	}
+	
+	
+	public ImageCell[][] getImageCells() {
+		return imageCells;
 	}
 	
 }
