@@ -7,7 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.characters.Hero;
-import views.cellView.ImagesLoader;
+import views.images.ImageLoader;
 import views.state.BeginState;
 import views.state.EndState;
 import views.state.GameState;
@@ -45,7 +45,7 @@ public class App extends Application {
 		primaryStage.show();
 		
 		controller = new Controller(this);
-		ImagesLoader.get_images();
+		ImageLoader.get_images();
 	}
 	
 	public void changeSceneToBeginScene() {

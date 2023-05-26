@@ -1,4 +1,4 @@
-package views.cellView;
+package views.images;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -15,28 +15,23 @@ import javafx.scene.paint.Color;
 import views.App;
 import views.state.GameState;
 
-public class CellView implements EventHandler<MouseEvent> {
+public class ImageCell implements EventHandler<MouseEvent> {
 	
 	public static final Color TRANSPARENT = Color.TRANSPARENT;
 	public static final Color HERO_COLOR = Color.DARKBLUE;
 	public static final Color ZOMBIE_TARGET_COLOR = Color.INDIANRED;
 	public static final Color HERO_TARGET_COLOR = Color.LIMEGREEN;
 		
-	public static final double BORDER_WIDTH = 3;
-	
-	public static final Image SUPPLY_IMAGE = new Image("file:./res/supply.jpg", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
-	public static final Image VACCINE_IMAGE = new Image("file:./res/vaccine.jpg", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
-	public static final Image EMPTY_CELL = new Image("file:./res/background.png", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
-	public static final Image NOT_VISIBLE_CELL_IMAGE = new Image("file:./res/not visible.png", GameState.GRID_WIDTH - BORDER_WIDTH, GameState.GRID_HEIGHT - BORDER_WIDTH, false, false);
+	public static final double BORDER_WIDTH = 2;
 	
 	private int x, y;
-	private Image cellImage;
+	private Image image;
 	private Image currentImage;
 	private ImageView imageView;
 	private Button button;
 	
-	public CellView(Image cellImage, int x, int y, boolean visible) {
-		this.cellImage = cellImage;
+	public ImageCell(Image cellImage, int x, int y, boolean visible) {
+		this.image = cellImage;
 		imageView = new ImageView();
 		this.x = x;
 		this.y = y;
@@ -55,19 +50,19 @@ public class CellView implements EventHandler<MouseEvent> {
 		setBorderStrokeColor(TRANSPARENT);
 	}
 	
-	public Image getCellImage() {
-		return cellImage;
+	public Image getImage() {
+		return image;
 	}
 	
-	public void setCellImage(Image cellImage) {
-		this.cellImage = cellImage;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 	
 	public void setCurrentImage(boolean visible) {
 		if (visible) {
-			currentImage = cellImage;
+			currentImage = image;
 		} else {
-			currentImage = NOT_VISIBLE_CELL_IMAGE;
+			currentImage = ImageLoader.NOT_VISIBLE_CELL_IMAGE;
 		}
 	}
 
@@ -91,8 +86,8 @@ public class CellView implements EventHandler<MouseEvent> {
 		return button;
 	}
 	
-	public void update(Image cellImage, boolean visible) {
-		setCellImage(cellImage);
+	public void update(Image image, boolean visible) {
+		setImage(image);
 		setCurrentImage(visible);
 		setImageView();
 	}

@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import views.cellView.CellView;
+import views.images.ImageCell;
 
 public class GameState {
 	
@@ -81,7 +81,7 @@ public class GameState {
 		return new Point(newX, newY);
 	}
 	
-	public void setImageInGrid(CellView cellview, int x, int y) {
+	public void setImageInGrid(ImageCell cellview, int x, int y) {
 		// y represents cols & x represents rows in GridPane
     	gameGrid.add(cellview.getButton(), y, x);
 	}
