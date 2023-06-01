@@ -4,13 +4,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import views.App;
 
@@ -23,19 +25,23 @@ public class RulesState {
 		root = new VBox();
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(30);
+		BackgroundImage myBI= new BackgroundImage(new Image("file:./res//backgrounds/game.png",App.WINDOW_WIDTH,App.WINDOW_HEIGHT,false,true),
+		        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+		          BackgroundSize.DEFAULT);
+		root.setBackground(new Background(myBI));
+		titleLabel = new Label(App.TITLE);
+        titleLabel.setStyle("-fx-control-inner-background: #000000; -fx-highlight-fill: #dce775; -fx-highlight-text-fill: #000000; -fx-text-fill: #dce775; ");
+		titleLabel.setFont(new Font("Arial", 90));	
 		root.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 			if(event.getCode() == KeyCode.BACK_SPACE) {
 				App.controller.gotoBeginState();
 			}
 		});
 		
-		titleLabel = new Label(App.TITLE);
-		titleLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN, new CornerRadii(5), Insets.EMPTY)));
-		titleLabel.setFont(new Font("Arial", 90));
 		rulesTextArea = new TextArea();
 	    rulesTextArea.setPadding(new Insets(5,20,5,20));
-	    rulesTextArea.setStyle("-fx-control-inner-background: #F5F5DC; -fx-font-family: Consolas; -fx-highlight-fill: #00008b; -fx-highlight-text-fill: #F5F5DC; -fx-text-fill: #00008b;");
-	    rulesTextArea.setFont(new Font("Times New Roman", 12));
+        rulesTextArea.setStyle("-fx-control-inner-background: #00254d; -fx-highlight-fill: #dce775; -fx-highlight-text-fill: #00254d; -fx-text-fill: #dce775; ");
+	    rulesTextArea.setFont(new Font("Times New Roman", 15));
 	    rulesTextArea.setEditable(false);
 	    rulesTextArea.setWrapText(true);
 	    rulesTextArea.setPrefWidth(600);
@@ -53,8 +59,8 @@ public class RulesState {
 				+ "zombies. The objective of the game for the player is to survive as long as it takes in order to "
 				+ "cure a sufficient number of zombies enough to build a community to survive the apocalypse. "
 				+ "\r\n"
-				+ "		1\r\n"
 				+ "\r\n"
+				+ "1.\r\n"
 				+ "	Characters\r\n"
 				+ "\r\n"
 				+ "	Characters in the game are split into Heroes or Zombies.\r\n"
@@ -77,13 +83,13 @@ public class RulesState {
 				+ "		• Fighter: Can attack as many times in a turn without costing action points, for 1 turn"
 				+ "	whenever a supply is used.\r\n"
 				+ "	Possible actions that can be done by a character:\r\n"
-				+ "		• Move\r\n"
-				+ "		• Attack a zombie\r\n"
-				+ "		• Cure a zombie\r\n"
-				+ "		• Use their class dependant unique action\r\n"
+				+ "		• Move: using <wasd>\r\n"
+				+ "		• Attack a zombie: using <j>\r\n"
+				+ "		• Cure a zombie: using <k>\r\n"
+				+ "		• Use their class dependant unique action: using <l>\r\n"
+				+"		• EndTurn: using <h>"	
 				+"\r\n"
-				+ "		2\r\n"
-				+ "\r\n"
+				+ "2.\r\n"
 				+ "	Zombies\r\n"
 				+ "\r\n"
 				+ "	Zombies are the types of characters that threaten the player during the game. Zombies cannot "
@@ -102,15 +108,15 @@ public class RulesState {
 				+ "only win the game once all vaccines have been collected and used. Vaccines are also the "
 				+ "only means through which players can cure zombies and recruit new heroes."
 				+ "\r\n"
-				+ "		3\r\n"
 				+ "\r\n"
+				+ "3.\r\n"
 				+ "	Supplies\r\n"
 				+ "\r\n"
 				+ " Supplies are the other type of collectible available in the game. Supplies "
 				+ "enable the carrying hero to use their special action."
 				+ "\r\n"
-				+ "		4\r\n"
 				+ "\r\n"
+				+ "4.\r\n"
 				+ "\r Gameplay Flow\r\n"
 				+ "\r\n"
 				+ "	The player starts off in a 15x15 grid map with just one hero and 10 zombies. The player can "

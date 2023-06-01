@@ -1,13 +1,21 @@
 package views;
 
-import controller.Controller;
+import java.io.File;
+
+import views.controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.characters.Hero;
+import views.images.ImageLoader;
 import views.state.BeginState;
+import views.state.ControlsState;
 import views.state.EndState;
 import views.state.GameState;
 import views.state.RulesState;
@@ -24,6 +32,7 @@ public class App extends Application {
 	public static Controller controller;
 	private BeginState beginState = new BeginState();
 	private RulesState rulesState = new RulesState();
+	private ControlsState controlsState = new ControlsState();
 
 	private StartState startState = new StartState();
 	private GameState gameState = new GameState();
@@ -31,9 +40,21 @@ public class App extends Application {
 	private Stage stage;
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) {
 		stage = primaryStage;
-		
+		try {			
+			Media sound=new Media(new File("./res/sounds/wrong-place-129242.mp3").toURI().toString());
+			MediaPlayer mediaPlayer=new MediaPlayer(sound);
+			mediaPlayer.play();	
+			mediaPlayer.setOnEndOfMedia(new Runnable() {
+			       public void run() {
+			         mediaPlayer.seek(Duration.ZERO);
+			       }
+			   });		} catch (MediaException e) {
+			// TODO: handle exception
+			System.err.println("Couldn't find sound files");
+			e.printStackTrace();
+		}
 		primaryStage.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
 			if (event.getCode() == KeyCode.ESCAPE) System.exit(0);});
 		primaryStage.setWidth(WINDOW_WIDTH);
@@ -44,6 +65,7 @@ public class App extends Application {
 		primaryStage.show();
 		
 		controller = new Controller(this);
+		ImageLoader.get_images();
 	}
 	
 	public void changeSceneToBeginScene() {
@@ -51,6 +73,9 @@ public class App extends Application {
 	}
 	public void changeSceneToRulesScene() {
 		stage.getScene().setRoot(rulesState.getRoot());
+	}
+	public void changeSceneToControlsScene() {
+		stage.getScene().setRoot(controlsState.getRoot());
 	}
 	public void changeSceneToStartScene() {
 		stage.getScene().setRoot(startState.getRoot());

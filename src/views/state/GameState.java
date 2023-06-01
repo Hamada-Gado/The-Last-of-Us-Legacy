@@ -6,13 +6,20 @@ import engine.Game;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import views.cellView.CellView;
+import views.App;
+import views.images.ImageCell;
 
 public class GameState {
 	
@@ -34,7 +41,10 @@ public class GameState {
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(10);
 		root.setPadding(new Insets(MARGIN));
-		
+		BackgroundImage myBI= new BackgroundImage(new Image("file:./res//backgrounds/game.png",App.WINDOW_WIDTH,App.WINDOW_HEIGHT,false,true),
+		        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+		          BackgroundSize.DEFAULT);
+		root.setBackground(new Background(myBI));
 		// game map
 		gameGrid = new GridPane();
 		
@@ -52,15 +62,15 @@ public class GameState {
         
 		// info of hero
         infoTextArea = new TextArea();
-        infoTextArea.setStyle("-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00;");
-                
+        infoTextArea.setStyle("-fx-control-inner-background: #00254d; -fx-highlight-fill: #dce775; -fx-highlight-text-fill: #00254d; -fx-text-fill: #dce775; ");                
         // error because of illegal action
         errorTextArea = new TextArea();
-        errorTextArea.setStyle("-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #ff0000; -fx-highlight-text-fill: #000000; -fx-text-fill: #ff0000; ");
+        errorTextArea.setStyle("-fx-control-inner-background: #00254d; -fx-highlight-fill: #dce775; -fx-highlight-text-fill: #00254d; -fx-text-fill: #dce775; ");                
+
         
         // actions taken during the turn
         actionTextArea = new TextArea();
-        actionTextArea.setStyle("-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #ffff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #ffff00; ");
+        actionTextArea.setStyle("-fx-control-inner-background: #00254d; -fx-highlight-fill: #dce775; -fx-highlight-text-fill: #00254d; -fx-text-fill: #dce775; ");                
         
         logPanel.getChildren().addAll(infoTextArea, errorTextArea, actionTextArea);
         logPanel.getChildren().forEach(t -> {
@@ -81,7 +91,7 @@ public class GameState {
 		return new Point(newX, newY);
 	}
 	
-	public void setImageInGrid(CellView cellview, int x, int y) {
+	public void setImageInGrid(ImageCell cellview, int x, int y) {
 		// y represents cols & x represents rows in GridPane
     	gameGrid.add(cellview.getButton(), y, x);
 	}
