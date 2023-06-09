@@ -47,10 +47,13 @@ public class App extends Application {
 			MediaPlayer mediaPlayer=new MediaPlayer(sound);
 			mediaPlayer.play();	
 			mediaPlayer.setOnEndOfMedia(new Runnable() {
-			       public void run() {
-			         mediaPlayer.seek(Duration.ZERO);
-			       }
-			   });		} catch (MediaException e) {
+		   			public void run() {
+		   				mediaPlayer.seek(Duration.ZERO);
+		   			}
+				}
+			);
+			
+		} catch (MediaException e) {
 			// TODO: handle exception
 			System.err.println("Couldn't find sound files");
 			e.printStackTrace();
